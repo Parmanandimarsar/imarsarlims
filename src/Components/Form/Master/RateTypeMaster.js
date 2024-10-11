@@ -1,18 +1,11 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { DataGrid } from "@mui/x-data-grid";
-import {
-  Switch,
-  IconButton,
-  Checkbox,
-  FormGroup,
-  FormControlLabel,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Switch, Checkbox } from "@mui/material";
+import { MasterRateTypeColumns } from "../../TableField/TablefieldsColumns";
 import * as Yup from "yup";
 import {
   Grid,
-  Button,
   TextField,
   FormControl,
   FormLabel,
@@ -27,6 +20,8 @@ import {
 const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
 
 const RateTypeMaster = () => {
+  const [editRow, setEditRow] = useState(null);
+  const [activeFilter, setActiveFilter] = useState("all");
   const [rows, setRows] = useState([
     {
       id: 1,
@@ -34,10 +29,7 @@ const RateTypeMaster = () => {
       center: ["Emidas info system", "UAT DEMO"],
       active: true,
     },
-    
   ]);
-
-  const [editRow, setEditRow] = useState(null);
 
   const initialValues = {
     rateType: "",
@@ -45,59 +37,14 @@ const RateTypeMaster = () => {
     active: false,
   };
 
-  const columns = [
-    { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
-    {
-      field: "rateType",
-      headerName: "Rate Type",
-      width: 200,
-      disableColumnMenu: true,
-    },
-    {
-      field: "center",
-      headerName: "Center",
-      width: 600,
-      headerAlign: "center",
-      disableColumnMenu: true,
-      renderCell: (params) => (
-        <div className="w-full text-center">{params.value.join(", ")}</div>
-      ),
-    },
-    // {Array.isArray(params.value) ? params.value.join(", ") : ""}
-    {
-      field: "active",
-      headerName: "Active",
-      width: 150,
-      disableColumnMenu: true,
-      renderCell: (params) => (
-        <div className="flex justify-center items-center">
-          <Switch
-            size="small"
-            checked={params.value}
-            onChange={() => handleToggleActive(params.row)}
-          />
-        </div>
-      ),
-    },
-    {
-      field: "actions",
-      headerName: "Edit",
-      width: 100,
-      disableColumnMenu: true,
-      renderCell: (params) => (
-        <div className="flex justify-center items-center">
-          <IconButton
-            aria-label="edit"
-            color="primary"
-            onClick={() => handleEdit(params.row)}
-          >
-            <EditIcon sx={{ fontSize: "15px" }} />
-          </IconButton>
-        </div>
-      ),
-    },
-  ];
-
+  const handleFilter = () => {
+    if (activeFilter === "active") {
+      return rows.filter((row) => row.active === true);
+    } else if (activeFilter === "inactive") {
+      return rows.filter((row) => row.active === false);
+    }
+    return rows;
+  };
   // Validation schema
   const validationSchema = Yup.object().shape({
     rateType: Yup.string().required("Rate type is required"),
@@ -137,6 +84,30 @@ const RateTypeMaster = () => {
     resetForm();
     setSubmitting(false);
   };
+  const convertToCSV = (rows) => {
+    const headers = ["S.No", "Rate Type", "Center", "Active"];
+    const csvRows = [
+      headers.join(","), // Join headers
+      ...rows.map((row) =>
+        [
+          row.id,
+          row.rateType,
+          `"${row.center.join(", ")}"`, // Convert array to comma-separated string
+          row.active ? "Active" : "Inactive", // Convert boolean to string
+        ].join(",")
+      ),
+    ];
+    return csvRows.join("\n");
+  };
+  const exportToCSV = () => {
+    const csvData = convertToCSV(rows); // Get CSV string
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "rate_type_master.csv"); // File name
+    link.click();
+  };
 
   return (
     <div className="mb-[50px] pl-2">
@@ -170,6 +141,7 @@ const RateTypeMaster = () => {
                         <FormControl fullWidth>
                           <Field
                             as={TextField}
+                            className="mandatoryfield"
                             name="rateType"
                             fullWidth
                             placeholder="Enter Rate Type"
@@ -179,7 +151,7 @@ const RateTypeMaster = () => {
                           <ErrorMessage
                             name="rateType"
                             component="div"
-                            className="text-red-600 text-xs"
+                            className="text-red-600 text-[10px]"
                           />
                         </FormControl>
                       </Grid>
@@ -203,6 +175,7 @@ const RateTypeMaster = () => {
                         <FormControl fullWidth>
                           <Select
                             multiple
+                            className="mandatoryfield"
                             value={values.center}
                             onChange={(event) => {
                               const {
@@ -230,30 +203,52 @@ const RateTypeMaster = () => {
                           <ErrorMessage
                             name="center"
                             component="div"
-                            className="text-red-600 text-xs"
+                            className="text-red-600 text-[10px]"
                           />
                         </FormControl>
                       </Grid>
                     </Grid>
                   </FormControl>
                 </Grid>
-
+                <button
+                  type="submit"
+                  className="border px-5 mt-3 rounded-lg project-thim text-white"
+                >
+                  {editRow ? "Update" : "Save"}
+                </button>
                 <div className="flex items-end ml-auto justify-end">
+                  <div>
+                    <FormControl sx={{ width: 150 }}>
+                      <Select
+                        className="p-1  text-white"
+                        value={activeFilter}
+                        onChange={(e) => setActiveFilter(e.target.value)}
+                      >
+                        <MenuItem value="all">All</MenuItem>
+                        <MenuItem value="active">Active</MenuItem>
+                        <MenuItem value="inactive">Inactive</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
                   <button
-                    type="submit"
                     className="border p-1 px-3 rounded-lg project-thim text-white"
+                    onClick={exportToCSV}
                   >
-                    {editRow ? "Update" : "Save"}
+                    Export
                   </button>
                 </div>
               </Grid>
 
               <Divider className="divider" />
-              <div className="h-[300px] w-full p-4">
+              <div className="h-[300px] w-full">
                 <DataGrid
                   className="datagridtable"
-                  rows={rows}
-                  columns={columns}
+                  rows={handleFilter()}
+                  columns={MasterRateTypeColumns(
+                    handleToggleActive,
+                    handleEdit,
+                    Switch
+                  )}
                   pageSize={5}
                   rowsPerPageOptions={[5]}
                   columnHeaderHeight={20}
