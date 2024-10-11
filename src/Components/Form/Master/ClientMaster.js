@@ -32,7 +32,7 @@ const ClientMaster = () => {
     // centrePincode: "",
     state: "",
     // centreEmailID: "",
-    // creditPeriod: "",
+  
     // minCashBooking: "",
     paymentMode: "",
     clientmrp: "",
