@@ -46,12 +46,7 @@
   font-weight: 600 !important;
 }
 
-/* global dataGridTable header */
-.css-yrdy0g-MuiDataGrid-columnHeaderRow {
-  /* background-color: #093E53 !important; */
-  background-color: #17a2b8de !important;
-  color: #fff !important;
-}
+
 
 /* form lable  */
 .formlableborder {
@@ -120,6 +115,18 @@ padding: 0px !important;
   background-color: #e9ecef !important;
   border-radius: 8px !important;
 }
+/* global dataGridTable header */
+
+.datagridtable .css-yrdy0g-MuiDataGrid-columnHeaderRow{
+  background: linear-gradient(#17a2b8) !important;
+  background-color: #17a2b8de !important;
+  color: #fff !important;
+  font-size: 11px !important;
+}
+
+.datagridtable .css-s1v7zr-MuiDataGrid-virtualScrollerRenderZone {
+  font-size: 11px !important;
+}
 /*datagrid field dropdown */
 
 /* datagridfild dropdown menu option */
@@ -131,9 +138,7 @@ padding: 0px !important;
   color: rgb(68, 65, 65) !important;
   background: none !important;
 }
-/* .css-1h4bzp1-MuiButtonBase-root-MuiMenuItem-root.Mui-selected{
-  background: #2c63b4 !important; 
-} */
+
 
 .css-1h4bzp1-MuiButtonBase-root-MuiMenuItem-root:hover {
   color: #fff !important;
