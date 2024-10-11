@@ -1,13 +1,3 @@
-// import React from 'react'
-
-// const DeliveryInvoice = () => {
-//   return (
-//     <div>DeliveryInvoice</div>
-//   )
-// }
-
-// export default DeliveryInvoice
-
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -19,15 +9,12 @@ import {
   FormLabel,
   Select,
   MenuItem,
-  RadioGroup,
   FormControlLabel,
-  Radio,
   Box,
   Typography,
   Divider,
   Checkbox,
 } from "@mui/material";
-import SideNav from "../../../Pages/MainLayout/SideNav";
 import TrcDetailsModal from "./TrcDetailsModal";
 
 const DeliveryInvoice = () => {
@@ -113,13 +100,10 @@ const DeliveryInvoice = () => {
   };
   return (
     <div className="w-full flex">
-     
       <div className=" mb-[50px] pl-2">
         <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
           <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-            <Typography >
-              Delivery Invoice
-            </Typography>
+            <Typography>Delivery Invoice</Typography>
           </Box>
           <Divider className="divider" />
           <Formik
@@ -962,40 +946,48 @@ const DeliveryInvoice = () => {
 
                 <div>
                   <FormControlLabel
-                    control={<Checkbox sx={{ transform: "scale(0.8)" }}/>}
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
                     label="Print After Save"
                   />
 
                   {/* Subsidy Invoice */}
                   <FormControlLabel
-                    control={<Checkbox sx={{ transform: "scale(0.8)" }}/>}
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
                     label="Subsidy Invoice"
                     size="small"
                   />
 
                   {/* Send SMS After Save */}
                   <FormControlLabel
-                    control={<Checkbox sx={{ transform: "scale(0.8)" }}/>}
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
                     label="Send SMS After Save"
                     size="small"
                   />
 
                   {/* Invoice */}
-                  <FormControlLabel control={<Checkbox sx={{ transform: "scale(0.8)" }}/>} size="small" label="Invoice" />
+                  <FormControlLabel
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
+                    size="small"
+                    label="Invoice"
+                  />
 
                   {/* Sale Certificate */}
                   <FormControlLabel
-                    control={<Checkbox sx={{ transform: "scale(0.8)" }}/>}
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
                     label="Sale Certificate"
                     size="small"
                   />
 
                   {/* Form No.20 */}
-                  <FormControlLabel control={<Checkbox sx={{ transform: "scale(0.8)" }}/>} size="small" label="Form No.20" />
+                  <FormControlLabel
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
+                    size="small"
+                    label="Form No.20"
+                  />
 
                   {/* Invoice With Access Form No.19 */}
                   <FormControlLabel
-                    control={<Checkbox sx={{ transform: "scale(0.8)" }}/>}
+                    control={<Checkbox sx={{ transform: "scale(0.8)" }} />}
                     label="Invoice With Access Form No.19"
                   />
                 </div>

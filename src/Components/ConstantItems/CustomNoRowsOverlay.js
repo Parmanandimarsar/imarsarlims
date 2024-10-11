@@ -6,14 +6,14 @@ const CustomNoRowsOverlay = () => {
     <GridOverlay>
       <Box
       sx={{
-        height: "20px", 
+        height: "15px", 
         display: "flex", 
         justifyContent: "center",
         alignItems: "center",
         color: "gray", 
       }}
       >
-        <Typography variant="h6">No data found</Typography>
+        <Typography >No data found</Typography>
       </Box>
     </GridOverlay>
   );

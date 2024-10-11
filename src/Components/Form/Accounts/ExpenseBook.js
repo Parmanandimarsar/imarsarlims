@@ -16,7 +16,6 @@ import {
 import Grid from "@mui/material/Grid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import SideNave from "../../../Pages/MainLayout/SideNav";
 import { DataGrid } from "@mui/x-data-grid";
 import { AccountExpenseBookTable } from "../../TableField/TablefieldsColumns";
 const ExpenseBook = () => {
@@ -138,9 +137,7 @@ const ExpenseBook = () => {
     <div className="  mb-[50px] pl-2">
       <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
         <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-          <Typography >
-            Expense Book
-          </Typography>
+          <Typography>Expense Book</Typography>
         </Box>
         <Divider className="divider" />
         <div className=" pl-1 pr-1">

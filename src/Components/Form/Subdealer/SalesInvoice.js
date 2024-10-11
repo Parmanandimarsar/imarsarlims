@@ -13,7 +13,6 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import SideNave from "../../../Pages/MainLayout/SideNav";
 
 const SalesInvoice = () => {
   // Initial values

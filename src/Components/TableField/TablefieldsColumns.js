@@ -55,6 +55,7 @@ export const MasterLedgerGroupTable=[
 
 export const MasterDistrictStateTable = (handleEdit) => [
   { field: "id", headerName: "ID", width: 70 },
+  { field: "zone", headerName: "Zone", width: 150 },
   { field: "state", headerName: "State", width: 150 },
   { field: "district", headerName: "District", width: 150 },
   { field: "city", headerName: "City", width: 150 },

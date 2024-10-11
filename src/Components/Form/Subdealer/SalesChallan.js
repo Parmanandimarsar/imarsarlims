@@ -13,7 +13,6 @@ import {
 import Grid from "@mui/material/Grid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import SideNave from "../../../Pages/MainLayout/SideNav";
 
 const SalesChallan = () => {
   // Validation schema
@@ -92,9 +91,7 @@ const SalesChallan = () => {
     <div className=" mb-[50px] pl-2">
       <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
         <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-          <Typography >
-            Sales Challan
-          </Typography>
+          <Typography>Sales Challan</Typography>
         </Box>
         <Divider className="divider" />
         <Formik

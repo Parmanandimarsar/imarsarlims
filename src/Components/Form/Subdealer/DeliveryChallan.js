@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -18,12 +16,11 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import SideNav from "../../../Pages/MainLayout/SideNav";
 import AccessDetailsDeliveryModal from "./AccessDetailsDeliveryModal";
 
 const DeliveryChallan = () => {
   // Initial values
-  const [detailModalOpen,setDetailModalOpen]=useState(false)
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
   const initialValues = {
     vsChallanNo: "",
     date: "",
@@ -108,19 +105,15 @@ const DeliveryChallan = () => {
       setSubmitting(false);
     }, 400);
   };
-const handeAccessDetails=()=>{
-    setDetailModalOpen(!detailModalOpen)
-}
+  const handeAccessDetails = () => {
+    setDetailModalOpen(!detailModalOpen);
+  };
   return (
     <div className="w-full flex">
-     
-
       <div className="  mb-[50px] pl-2">
         <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
           <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-            <Typography >
-            Delivery Challan
-            </Typography>
+            <Typography>Delivery Challan</Typography>
           </Box>
           <Divider className="divider" />
           <Formik
@@ -1082,7 +1075,7 @@ const handeAccessDetails=()=>{
                     className="p-2"
                     onClick={handeAccessDetails}
                   >
-                  Access Details
+                    Access Details
                   </Button>
                   <Button
                     size="small"
@@ -1096,8 +1089,7 @@ const handeAccessDetails=()=>{
                   <Button
                     size="small"
                     type="button"
-                    
-                   variant="contained"
+                    variant="contained"
                     className="p-2 bg-sky-600"
                   >
                     New
@@ -1148,7 +1140,10 @@ const handeAccessDetails=()=>{
           </Formik>
         </Box>
       </div>
-      <AccessDetailsDeliveryModal detailModalOpen={detailModalOpen} handeAccessDetails={handeAccessDetails}/>
+      <AccessDetailsDeliveryModal
+        detailModalOpen={detailModalOpen}
+        handeAccessDetails={handeAccessDetails}
+      />
     </div>
   );
 };

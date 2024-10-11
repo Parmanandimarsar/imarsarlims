@@ -10,13 +10,10 @@ import {
   FormLabel,
   Divider,
   Paper,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import SideNave from "../../../Pages/MainLayout/SideNav";
 import { DataGrid } from "@mui/x-data-grid";
 import { AccountReceiptTable } from "../../TableField/TablefieldsColumns";
 const Receipt = () => {
@@ -325,7 +322,6 @@ const Receipt = () => {
           </Grid>
         </div>
         <div className="border border-[#338691] mt-2 rounded-lg ml-1 mr-1">
-          
           <Paper
             sx={{
               minHeight: 100,

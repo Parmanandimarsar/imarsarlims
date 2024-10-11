@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   Dialog,
@@ -12,7 +11,6 @@ import {
   Select,
   MenuItem,
   TextField,
-  Typography,
   Box,
   Divider,
   IconButton,
@@ -33,7 +31,9 @@ const TrcDetailsModal = ({ detailModalOpen, handelModalOpen }) => {
   const validationSchema = Yup.object().shape({
     trcDate: Yup.date().required("TRC Date is required"),
     trcNo: Yup.string().required("TRC No is required"),
-    placeOfPermanentRegi: Yup.string().required("Place of Permanent Registration is required"),
+    placeOfPermanentRegi: Yup.string().required(
+      "Place of Permanent Registration is required"
+    ),
   });
 
   // Form submission handler
@@ -55,17 +55,17 @@ const TrcDetailsModal = ({ detailModalOpen, handelModalOpen }) => {
       <Box className="project-thim text-white rounded-sm">
         <DialogTitle>TRC Details</DialogTitle>
         <IconButton
-        aria-label="close"
-        onClick={handelModalOpen}
-        sx={(theme) => ({
-          position: "absolute",
-          right: 5,
-          top: -3,
-          color: theme.palette.grey[500],
-        })}
-      >
-        <CloseIcon />
-      </IconButton>
+          aria-label="close"
+          onClick={handelModalOpen}
+          sx={(theme) => ({
+            position: "absolute",
+            right: 5,
+            top: -3,
+            color: theme.palette.grey[500],
+          })}
+        >
+          <CloseIcon />
+        </IconButton>
       </Box>
       <Divider className="divider" />
       <DialogContent>
@@ -166,10 +166,7 @@ const TrcDetailsModal = ({ detailModalOpen, handelModalOpen }) => {
                 >
                   Submit
                 </Button>
-                <Button
-                  onClick={handelModalOpen}
-                  color="secondary"
-                >
+                <Button onClick={handelModalOpen} color="secondary">
                   Cancel
                 </Button>
               </DialogActions>

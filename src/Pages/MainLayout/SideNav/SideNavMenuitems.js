@@ -6,18 +6,17 @@ export const menuItems = [
       icon: <MailIcon />,
       subItems: [
        
-        { text: "Vehical-Master", link: "/vehical-master", icon: <MailIcon /> },
-        { text: "Letter-Details", link: "/letter-details", icon: <MailIcon /> },
-        { text: "Opening-Master", link: "/opening-stocks", icon: <MailIcon /> },
+        { text: "Client-Master", link: "/client-master", icon: <MailIcon /> },
+        { text: "Employee-Master", link: "employee-master", icon: <MailIcon /> },
+        { text: "Rate-Type-Master", link: "/rate-type-master", icon: <MailIcon /> },
         { text: "Ledger-Master", link: "/ledger-master", icon: <MailIcon /> },
         { text: "Temp-Addresh", link: "/ledger-temp-addresh", icon: <MailIcon /> },
         { text: "Labour-Master", link: "/labour-master", icon: <MailIcon /> },
         { text: "Misc-Master", link: "/miscmaster", icon: <MailIcon /> },
         { text: "HSNCode Master", link: "/hsncode-master", icon: <MailIcon /> },
         { text: "Parts Master", link: "/parts-master", icon: <MailIcon /> },
-        { text: "Location Master", link: "/location-master", icon: <MailIcon /> },
         { text: "Ledger Group", link: "/ledger-group", icon: <MailIcon /> },
-        { text: "Distric State Master", link: "/distric-state-master", icon: <MailIcon /> },
+        { text: "Location Master", link: "/location-master", icon: <MailIcon /> },
       ],
     },
     {
