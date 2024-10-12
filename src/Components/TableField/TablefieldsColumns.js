@@ -1,5 +1,61 @@
 import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit"; 
+
+
+
+
+export const MasterRateTypeColumns= (handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "rateType",
+    headerName: "Rate Type",
+    width: 200,
+    disableColumnMenu: true,
+  },
+  {
+    field: "center",
+    headerName: "Center",
+    width: 600,
+    headerAlign: "center",
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="w-full text-center">{params.value.join(", ")}</div>
+    ),
+  },
+  // {Array.isArray(params.value) ? params.value.join(", ") : ""}
+  {
+    field: "active",
+    headerName: "Active",
+    width: 220,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
 export const MasterHSNCodeTable=[
   { field: "id", headerName: "Sr. No", width: 130 ,
     sortable: true, 

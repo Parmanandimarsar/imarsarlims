@@ -15,7 +15,6 @@ const Navbar = ({ setMenuEnabled, menuEnabled }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [hoveredMenuIndex, setHoveredMenuIndex] = useState(null);
   const [submenuAnchorEl, setSubmenuAnchorEl] = useState(null);
-  
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -26,7 +25,8 @@ const Navbar = ({ setMenuEnabled, menuEnabled }) => {
   };
 
   const handleSubmenuOpen = (event, index) => {
-    if (menuEnabled) { // Only open if menu is enabled
+    if (menuEnabled) {
+      // Only open if menu is enabled
       setHoveredMenuIndex(index);
       setSubmenuAnchorEl(event.currentTarget);
     }
@@ -40,7 +40,7 @@ const Navbar = ({ setMenuEnabled, menuEnabled }) => {
   const handleSwitchToggle = (event) => {
     setMenuEnabled(event.target.checked); // Update state based on switch toggle
   };
-  
+
   return (
     <>
       <AppBar className="headerNav project-thim " position="sticky">
@@ -98,52 +98,61 @@ const Navbar = ({ setMenuEnabled, menuEnabled }) => {
               </div>
             </div>
 
-            {menuEnabled ?<div className="flex w-[90%] justify-around ml-auto">
-              {menuItems.map((items, index) => (
-                <div
-                  key={index}
-                  className="relative flex flex-col top-[-6px] items-center"
-                  onMouseEnter={(e) => handleSubmenuOpen(e, index)}
-                  onMouseLeave={handleSubmenuClose}
-                >
-                  <button
-                    className="text-white pl-2 font-bold flex items-center"
-                    
+            {menuEnabled ? (
+              <div className="flex w-[90%] justify-around ml-auto">
+                {menuItems.map((items, index) => (
+                  <div
+                    key={index}
+                    className=" flex flex-col items-center"
+                    onMouseEnter={(e) => handleSubmenuOpen(e, index)}
+                    onMouseLeave={handleSubmenuClose}
                   >
-                    {items.text}
-                    {items.subItems.length > 0 &&
-                      (hoveredMenuIndex === index ? (
-                        <ExpandLess />
-                      ) : (
-                        <ExpandMore />
-                      ))}
-                  </button>
-
-                  {items.subItems.length > 0 && (
-                    <Popover
-                      open={hoveredMenuIndex === index && menuEnabled} 
-                      anchorEl={submenuAnchorEl}
-                      onClose={handleSubmenuClose}
-                      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                      transformOrigin={{ vertical: "top", horizontal: "left" }}
-                    >
-                      <div className="submenu p-2 rounded-lg shadow-lg grid grid-cols-3 gap-2">
-                        {items.subItems.map((submenu, subIndex) => (
-                          <Link
-                            to={submenu.link}
-                            key={subIndex}
-                            className="block text-white hover:text-green-600"
-                          >
-                            <p className="text-[11px]">{submenu.text}</p>
-                            <Divider className="bg-gray-300" />
-                          </Link>
+                    <span className="text-white  font-bold flex items-center">
+                      {items.text}
+                      {items.subItems.length > 0 &&
+                        (hoveredMenuIndex === index ? (
+                          <ExpandLess />
+                        ) : (
+                          <ExpandMore />
                         ))}
-                      </div>
-                    </Popover>
-                  )}
-                </div>
-              ))}
-            </div>:<div className="relative flex flex-col top-[-6px] p-2 items-center"></div>}
+                    </span>
+
+                    {items.subItems.length > 0 && (
+                      <Popover
+                        open={hoveredMenuIndex === index && menuEnabled}
+                        anchorEl={submenuAnchorEl}
+                        onClose={handleSubmenuClose}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "left",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "left",
+                        }}
+                      >
+                        <div className="submenu  rounded-lg p-2 shadow-lg grid grid-cols-3 gap-2">
+                          {items.subItems.map((submenu, subIndex) => (
+                            <Link
+                              to={submenu.link}
+                              key={subIndex}
+                              className=" text-white border-none hover:text-green-600"
+                            >
+                              <span className="text-[11px]">
+                                {submenu.text}
+                              </span>
+                              <Divider className="bg-gray-300" />
+                            </Link>
+                          ))}
+                        </div>
+                      </Popover>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="relative flex flex-col top-[-6px] p-2 items-center"></div>
+            )}
           </div>
         </Toolbar>
       </AppBar>
