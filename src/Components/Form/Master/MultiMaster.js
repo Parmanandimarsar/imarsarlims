@@ -21,9 +21,10 @@ import { ExportToExcel } from "../../ConstantItems/ExcelExport";
 
 const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
 
-const RateTypeMaster = () => {
+const MultiMaster = () => {
   const [editRow, setEditRow] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
+  const [value, setValue] = React.useState("1");
   const [rows, setRows] = useState([
     {
       id: 1,
@@ -93,6 +94,9 @@ const RateTypeMaster = () => {
 
     ExportToExcel(data, headers, "rate_type_master.xlsx");
   };
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <div className="mb-[50px] pl-2">
       <Box className="bg-[#fff] rounded-lg shadow-lg" autoComplete="off">
@@ -100,6 +104,11 @@ const RateTypeMaster = () => {
           <Typography>Rate Type Master</Typography>
         </Box>
         <Divider className="divider" />
+
+
+
+
+        
         <Formik
           initialValues={editRow || initialValues}
           validationSchema={validationSchema}
@@ -238,7 +247,6 @@ const RateTypeMaster = () => {
                   columnHeaderHeight={20}
                   rowHeight={25}
                   headerHeight={20}
-                 
                 />
               </div>
             </Form>
@@ -249,4 +257,4 @@ const RateTypeMaster = () => {
   );
 };
 
-export default RateTypeMaster;
+export default MultiMaster;

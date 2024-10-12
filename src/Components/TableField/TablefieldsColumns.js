@@ -26,7 +26,7 @@ export const MasterRateTypeColumns= (handleToggleActive,handleEdit,Switch) =>[
   {
     field: "active",
     headerName: "Active",
-    width: 150,
+    width: 220,
     disableColumnMenu: true,
     renderCell: (params) => (
       <div className="flex justify-center items-center">
@@ -41,7 +41,7 @@ export const MasterRateTypeColumns= (handleToggleActive,handleEdit,Switch) =>[
   {
     field: "actions",
     headerName: "Edit",
-    width: 100,
+    width: 175,
     disableColumnMenu: true,
     renderCell: (params) => (
       <div className="flex justify-center items-center">

@@ -42,7 +42,7 @@ const SideNave = () => {
     <Box sx={{ display: "flex", marginBottom: "50px" }}>
       {/* Drawer */}
       <Drawer
-        className="side-nav "
+        className="side-nav  "
         variant="permanent"
         open={open}
         sx={{
@@ -68,18 +68,19 @@ const SideNave = () => {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{ marginLeft: "5px" }}
+            sx={{ marginLeft: "5px",  }}
+          
           >
-            <MenuIcon />
+            <MenuIcon  />
           </IconButton>
         </Box>
         <Divider className="divider" />
 
         {/* Drawer List */}
-        <List sx={{ color: "white" }}>
+        <List sx={{ color: "white" }} >
           {menuItems.map((item, index) => (
             <React.Fragment key={index}>
-              <ListItem disablePadding>
+              <ListItem disablePadding >
                 <ListItemButton
                   onClick={() => handleDropdownClick(index)}
                   sx={{ justifyContent: open ? "initial" : "center" }}

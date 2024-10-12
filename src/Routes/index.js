@@ -26,6 +26,7 @@ import Layout from "../Pages/MainLayout";
 import ClientMaster from "../Components/Form/Master/ClientMaster";
 import EmployeeMaster from "../Components/Form/Master/EmployeeMaster";
 import RateTypeMaster from "../Components/Form/Master/RateTypeMaster";
+import MultiMaster from "../Components/Form/Master/MultiMaster";
 
 const router = createBrowserRouter([
   {
@@ -48,10 +49,10 @@ const router = createBrowserRouter([
         path: "/rate-type-master",
         element: <RateTypeMaster/>,
       },
-      // {
-      //   path: "/ledger-master",
-      //   element: <LedgerMaster />,
-      // },
+      {
+        path: "/multimaster",
+        element: <MultiMaster />,
+      },
       // {
       //   path: "/labour-master",
       //   element: <LabourMaster />,
