@@ -6,27 +6,12 @@ import Login from "../Pages/Login";
 
 import Home from "../Pages/Header";
 
-
-
-
-
-import SalesChallan from "../Components/Form/Subdealer/SalesChallan";
-import SalesInvoice from "../Components/Form/Subdealer/SalesInvoice";
-import DeliveryChallan from "../Components/Form/Subdealer/DeliveryChallan";
-import DeliveryInvoice from "../Components/Form/Subdealer/DeliveryInvoice";
-import AccountsPaymentVoucher from "../Components/Form/Accounts/AccountsPaymentVoucher";
-import ContraVoucher from "../Components/Form/Accounts/ContraVoucher";
-import CashBooks from "../Components/Form/Accounts/CashBooks";
-import ExpenseBook from "../Components/Form/Accounts/ExpenseBook";
-import LedgerView from "../Components/Form/Accounts/LedgerView";
-import Income from "../Components/Form/Accounts/Income";
-import Receipt from "../Components/Form/Accounts/Receipt";
-import BankBook from "../Components/Form/Accounts/BankBook";
 import Layout from "../Pages/MainLayout";
 import ClientMaster from "../Components/Form/Master/ClientMaster";
 import EmployeeMaster from "../Components/Form/Master/EmployeeMaster";
 import RateTypeMaster from "../Components/Form/Master/RateTypeMaster";
-import MultiMaster from "../Components/Form/Master/MultiMaster";
+import MultiMaster from "../Components/Form/Master/MultiMaster/";
+import LabMaster from "../Components/Form/Master/LabMaster";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/multimaster",
         element: <MultiMaster />,
+      },
+      {
+        path: "/lab-master",
+        element: <LabMaster />,
       },
       // {
       //   path: "/labour-master",

@@ -10,7 +10,7 @@ export const menuItems = [
         { text: "Employee-Master", link: "employee-master", icon: <MailIcon /> },
         { text: "Rate-Type-Master", link: "/rate-type-master", icon: <MailIcon /> },
         { text: "Multi-Master", link: "/multimaster", icon: <MailIcon /> },
-        { text: "Temp-Addresh", link: "/ledger-temp-addresh", icon: <MailIcon /> },
+        { text: "lab-master", link: "/lab-master", icon: <MailIcon /> },
         { text: "Labour-Master", link: "/labour-master", icon: <MailIcon /> },
         { text: "Misc-Master", link: "/miscmaster", icon: <MailIcon /> },
         { text: "HSNCode Master", link: "/hsncode-master", icon: <MailIcon /> },
