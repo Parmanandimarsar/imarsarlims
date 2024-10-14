@@ -56,6 +56,402 @@ export const MasterRateTypeColumns= (handleToggleActive,handleEdit,Switch) =>[
     ),
   },
 ];
+
+
+export const MasterDiscountReasonColumns= (handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 150, disableColumnMenu: true },
+  {
+    field: "discountreason",
+    headerName: "Discount Reason Master",
+    width: 600,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterDoctorDegree = (handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "doctordegree",
+    headerName: "Doctor Degree Master",
+    width: 300,
+    disableColumnMenu: true,
+  },
+  {
+    field: "degreetype",
+    headerName: "Degree Type",
+    width: 500,
+    headerAlign: "center",
+    disableColumnMenu: true,
+   
+  },
+  {
+    field: "active",
+    headerName: "Active",
+    width: 220,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterdesignationmasterColumns=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 150, disableColumnMenu: true },
+  {
+    field: "designationmaster",
+    headerName: "Designation Master",
+    width: 600,
+    disableColumnMenu: true,
+  },
+ 
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 200,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterPatientDocumentColumns=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "patientdocumentmaster",
+    headerName: "Patient Document Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+  
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterTitleColumns=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "titlemaster",
+    headerName: "Title Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+  
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterBankColumns=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "bankmaster",
+    headerName: "Bank Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+  
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+
+export const MasterDiscountApproval=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "discountapproval",
+    headerName: "Discount Approval",
+    width: 700,
+    disableColumnMenu: true,
+  },
+  
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterDiscountTypeColumns=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "discounttype",
+    headerName: "Discount Type Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+  
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterSampleRemarksColumns=(handleToggleActive,handleEdit,Switch) =>[
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "sampleremarks",
+    headerName: "Sample Remarks Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+  
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+
 export const MasterHSNCodeTable=[
   { field: "id", headerName: "Sr. No", width: 130 ,
     sortable: true, 

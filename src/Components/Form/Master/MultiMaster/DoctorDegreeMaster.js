@@ -1,8 +1,9 @@
+
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { DataGrid } from "@mui/x-data-grid";
-import { Switch, Checkbox } from "@mui/material";
-import { MasterRateTypeColumns } from "../../TableField/TablefieldsColumns";
+import { Switch } from "@mui/material";
+import { MasterDoctorDegree } from "../../../TableField/TablefieldsColumns";
 import * as Yup from "yup";
 
 import {
@@ -13,30 +14,27 @@ import {
   Select,
   MenuItem,
   Box,
-  Typography,
   Divider,
   ListItemText,
 } from "@mui/material";
-import { ExportToExcel } from "../../ConstantItems/ExcelExport";
+import { ExportToExcel } from "../../../ConstantItems/ExcelExport";
 
-const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
-
-const MultiMaster = () => {
+const names = ["Degree", "Specialization"];
+const DoctorDegreeMaster = () => {
   const [editRow, setEditRow] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
-  const [value, setValue] = React.useState("1");
   const [rows, setRows] = useState([
     {
       id: 1,
-      rateType: "Emidas",
-      center: ["Emidas info system", "UAT DEMO"],
+      doctordegree: "Emidas",
+      degreetype: "Emidas info system",
       active: true,
     },
   ]);
 
   const initialValues = {
-    rateType: "",
-    center: [],
+    doctordegree: "",
+    degreetype: "",
     active: false,
   };
 
@@ -50,8 +48,8 @@ const MultiMaster = () => {
   };
 
   const validationSchema = Yup.object().shape({
-    rateType: Yup.string().required("Rate type is required"),
-    center: Yup.array().min(1, "At least one center must be selected"),
+    doctordegree: Yup.string().required("Rate type is required"),
+    degreetype: Yup.string().min(1, "At least one degree must be selected"),
   });
 
   const handleToggleActive = (row) => {
@@ -76,7 +74,11 @@ const MultiMaster = () => {
       // Add new row
       setRows([
         ...rows,
-        { id: rows.length + 1, rateType: values.rateType, ...values },
+        {
+          id: rows.length + 1,
+          doctordegree: values.doctordegree,
+          ...values,
+        },
       ]);
     }
     setEditRow(null);
@@ -84,31 +86,22 @@ const MultiMaster = () => {
     setSubmitting(false);
   };
   const exportToExcel = () => {
-    const headers = ["S.No", "Rate Type", "Center", "Active"];
+    const headers = ["S.No", "Doctor Degree", "Degree Type", "Active"];
     const data = rows.map((row) => [
       row.id,
-      row.rateType,
-      row.center.join(", "),
+      row.doctordegree,
+      row.degreetype,
       row.active ? "Active" : "Inactive",
     ]);
 
     ExportToExcel(data, headers, "rate_type_master.xlsx");
   };
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+
   return (
     <div className="mb-[50px] pl-2">
       <Box className="bg-[#fff] rounded-lg shadow-lg" autoComplete="off">
-        <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-          <Typography>Rate Type Master</Typography>
-        </Box>
         <Divider className="divider" />
 
-
-
-
-        
         <Formik
           initialValues={editRow || initialValues}
           validationSchema={validationSchema}
@@ -124,25 +117,27 @@ const MultiMaster = () => {
                     <Grid container alignItems="center">
                       <Grid
                         item
-                        xs={3}
+                        xs={5}
                         className="formlableborder mr-1"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Rate Type</FormLabel>
+                        <FormLabel>Doctor Degree Master</FormLabel>
                       </Grid>
-                      <Grid item xs={8}>
+                      <Grid item xs={6}>
                         <FormControl fullWidth>
                           <Field
                             as={TextField}
                             className="mandatoryfield"
-                            name="rateType"
+                            name="doctordegree"
                             fullWidth
-                            placeholder="Enter Rate Type"
+                            placeholder="Enter Doctor Degree Master"
                             size="small"
-                            error={touched.rateType && !!errors.rateType}
+                            error={
+                              touched.doctordegree && !!errors.doctordegree
+                            }
                           ></Field>
                           <ErrorMessage
-                            name="rateType"
+                            name="doctordegree"
                             component="div"
                             className="text-red-600 text-[10px]"
                           />
@@ -162,39 +157,29 @@ const MultiMaster = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Center</FormLabel>
+                        <FormLabel>Degree Type</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <FormControl fullWidth>
                           <Select
-                            multiple
                             className="mandatoryfield"
-                            value={values.center}
+                            value={values.degreetype}
+                            displayEmpty
                             onChange={(event) => {
-                              const {
-                                target: { value },
-                              } = event;
-                              setFieldValue(
-                                "center",
-                                typeof value === "string"
-                                  ? value.split(",")
-                                  : value
-                              );
+                              setFieldValue("degreetype", event.target.value);
                             }}
-                            renderValue={(selected) => selected.join(", ")}
                           >
+                            <MenuItem value="" disabled>
+                              <p>Select Degree Type</p>
+                            </MenuItem>
                             {names.map((name) => (
                               <MenuItem key={name} value={name}>
-                                <Checkbox
-                                  checked={values.center.includes(name)}
-                                  size="small"
-                                />
                                 <ListItemText primary={name} />
                               </MenuItem>
                             ))}
                           </Select>
                           <ErrorMessage
-                            name="center"
+                            name="degreetype"
                             component="div"
                             className="text-red-600 text-[10px]"
                           />
@@ -203,6 +188,7 @@ const MultiMaster = () => {
                     </Grid>
                   </FormControl>
                 </Grid>
+
                 <button
                   type="submit"
                   className="border-none px-5 mt-3  rounded-lg project-thim text-white"
@@ -237,7 +223,7 @@ const MultiMaster = () => {
                 <DataGrid
                   className="datagridtable"
                   rows={handleFilter()}
-                  columns={MasterRateTypeColumns(
+                  columns={MasterDoctorDegree(
                     handleToggleActive,
                     handleEdit,
                     Switch
@@ -247,6 +233,7 @@ const MultiMaster = () => {
                   columnHeaderHeight={20}
                   rowHeight={25}
                   headerHeight={20}
+                  hideFooterSelectedRowCount
                 />
               </div>
             </Form>
@@ -257,4 +244,4 @@ const MultiMaster = () => {
   );
 };
 
-export default MultiMaster;
+export default DoctorDegreeMaster;
