@@ -11,7 +11,8 @@ import ClientMaster from "../Components/Form/Master/ClientMaster";
 import EmployeeMaster from "../Components/Form/Master/EmployeeMaster";
 import RateTypeMaster from "../Components/Form/Master/RateTypeMaster";
 import MultiMaster from "../Components/Form/Master/MultiMaster/";
-import LabMaster from "../Components/Form/Master/LabMaster";
+import LabMaster from "../Components/Form/Master/LabShortMaster";
+import AddLetterHead from "../Components/Form/Master/MultiMaster/AddLetterHead";
 
 const router = createBrowserRouter([
   {
@@ -39,13 +40,13 @@ const router = createBrowserRouter([
         element: <MultiMaster />,
       },
       {
-        path: "/lab-master",
+        path: "/lab-short-master",
         element: <LabMaster />,
       },
-      // {
-      //   path: "/labour-master",
-      //   element: <LabourMaster />,
-      // },
+      {
+        path: "/add-letter-head",
+        element: <AddLetterHead />,
+      },
       // {
       //   path: "/ledger-temp-addresh",
       //   element: <LedgerTempAddresh />,

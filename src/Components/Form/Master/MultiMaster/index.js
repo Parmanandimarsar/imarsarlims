@@ -12,6 +12,7 @@ import TitleMaster from "./TitleMaster";
 import BankMaster from "./BankMaster";
 import DiscountApprovalMaster from "./DiscountApprovalMaster";
 import DiscountTypeMaster from "./DiscountTypeMaster";
+import RoleMaster from "./RoleMaster";
 
 const MultiMaster = () => {
   const [value, setValue] = useState("1");
@@ -39,6 +40,7 @@ const MultiMaster = () => {
               <Tab label="Bank Master" value="6" />
               <Tab label="Discount Approval Master" value="7" />
               <Tab label="Discount Type Master" value="8" />
+              <Tab label="Role Master" value="9" />
             </TabList>
           </Box>
           <TabPanel value="1">
@@ -64,6 +66,9 @@ const MultiMaster = () => {
           </TabPanel>
           <TabPanel value="8">
             <DiscountTypeMaster />
+          </TabPanel>
+          <TabPanel value="9">
+            <RoleMaster/>
           </TabPanel>
         </TabContext>
       </Box>

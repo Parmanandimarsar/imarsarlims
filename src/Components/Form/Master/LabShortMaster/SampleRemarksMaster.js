@@ -109,7 +109,7 @@ const SampleRemarksMaster = () => {
               <Form className="p-1">
                 <Grid container spacing={2}>
                   {/* Rate Type Input */}
-                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Grid item xs={12} sm={6} md={5} lg={5}>
                     <FormControl fullWidth>
                       <Grid container alignItems="center">
                         <Grid
