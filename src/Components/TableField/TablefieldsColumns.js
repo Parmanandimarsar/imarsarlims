@@ -1,10 +1,13 @@
 import { IconButton } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit"; 
+import DeleteIcon from "@mui/icons-material/Delete";
 
+import EditIcon from "@mui/icons-material/Edit";
 
-
-
-export const MasterRateTypeColumns= (handleToggleActive,handleEdit,Switch) =>[
+export const MasterRateTypeColumns = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "rateType",
@@ -57,8 +60,11 @@ export const MasterRateTypeColumns= (handleToggleActive,handleEdit,Switch) =>[
   },
 ];
 
-
-export const MasterDiscountReasonColumns= (handleToggleActive,handleEdit,Switch) =>[
+export const MasterDiscountReasonColumns = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 150, disableColumnMenu: true },
   {
     field: "discountreason",
@@ -100,7 +106,7 @@ export const MasterDiscountReasonColumns= (handleToggleActive,handleEdit,Switch)
     ),
   },
 ];
-export const MasterDoctorDegree = (handleToggleActive,handleEdit,Switch) =>[
+export const MasterDoctorDegree = (handleToggleActive, handleEdit, Switch) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "doctordegree",
@@ -114,7 +120,6 @@ export const MasterDoctorDegree = (handleToggleActive,handleEdit,Switch) =>[
     width: 500,
     headerAlign: "center",
     disableColumnMenu: true,
-   
   },
   {
     field: "active",
@@ -150,7 +155,11 @@ export const MasterDoctorDegree = (handleToggleActive,handleEdit,Switch) =>[
   },
 ];
 
-export const MasterdesignationmasterColumns=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterdesignationmasterColumns = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 150, disableColumnMenu: true },
   {
     field: "designationmaster",
@@ -158,7 +167,7 @@ export const MasterdesignationmasterColumns=(handleToggleActive,handleEdit,Switc
     width: 600,
     disableColumnMenu: true,
   },
- 
+
   {
     field: "active",
     headerName: "Active",
@@ -193,7 +202,11 @@ export const MasterdesignationmasterColumns=(handleToggleActive,handleEdit,Switc
   },
 ];
 
-export const MasterPatientDocumentColumns=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterPatientDocumentColumns = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "patientdocumentmaster",
@@ -201,7 +214,7 @@ export const MasterPatientDocumentColumns=(handleToggleActive,handleEdit,Switch)
     width: 700,
     disableColumnMenu: true,
   },
-  
+
   {
     field: "active",
     headerName: "Active",
@@ -235,7 +248,7 @@ export const MasterPatientDocumentColumns=(handleToggleActive,handleEdit,Switch)
     ),
   },
 ];
-export const MasterTitleColumns=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterTitleColumns = (handleToggleActive, handleEdit, Switch) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "titlemaster",
@@ -243,7 +256,7 @@ export const MasterTitleColumns=(handleToggleActive,handleEdit,Switch) =>[
     width: 700,
     disableColumnMenu: true,
   },
-  
+
   {
     field: "active",
     headerName: "Active",
@@ -278,7 +291,7 @@ export const MasterTitleColumns=(handleToggleActive,handleEdit,Switch) =>[
   },
 ];
 
-export const MasterBankColumns=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterBankColumns = (handleToggleActive, handleEdit, Switch) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "bankmaster",
@@ -286,7 +299,7 @@ export const MasterBankColumns=(handleToggleActive,handleEdit,Switch) =>[
     width: 700,
     disableColumnMenu: true,
   },
-  
+
   {
     field: "active",
     headerName: "Active",
@@ -321,8 +334,11 @@ export const MasterBankColumns=(handleToggleActive,handleEdit,Switch) =>[
   },
 ];
 
-
-export const MasterDiscountApproval=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterDiscountApproval = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "discountapproval",
@@ -330,7 +346,7 @@ export const MasterDiscountApproval=(handleToggleActive,handleEdit,Switch) =>[
     width: 700,
     disableColumnMenu: true,
   },
-  
+
   {
     field: "active",
     headerName: "Active",
@@ -365,7 +381,11 @@ export const MasterDiscountApproval=(handleToggleActive,handleEdit,Switch) =>[
   },
 ];
 
-export const MasterDiscountTypeColumns=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterDiscountTypeColumns = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "discounttype",
@@ -373,7 +393,7 @@ export const MasterDiscountTypeColumns=(handleToggleActive,handleEdit,Switch) =>
     width: 700,
     disableColumnMenu: true,
   },
-  
+
   {
     field: "active",
     headerName: "Active",
@@ -408,7 +428,11 @@ export const MasterDiscountTypeColumns=(handleToggleActive,handleEdit,Switch) =>
   },
 ];
 
-export const MasterSampleRemarksColumns=(handleToggleActive,handleEdit,Switch) =>[
+export const MasterSampleRemarksColumns = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
     field: "sampleremarks",
@@ -416,7 +440,7 @@ export const MasterSampleRemarksColumns=(handleToggleActive,handleEdit,Switch) =
     width: 700,
     disableColumnMenu: true,
   },
-  
+
   {
     field: "active",
     headerName: "Active",
@@ -451,20 +475,481 @@ export const MasterSampleRemarksColumns=(handleToggleActive,handleEdit,Switch) =
   },
 ];
 
-
-export const MasterHSNCodeTable=[
-  { field: "id", headerName: "Sr. No", width: 130 ,
-    sortable: true, 
+export const MasterSampleRejectionMaster = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "samplerejection",
+    headerName: "Sample Rejection Master",
+    width: 700,
     disableColumnMenu: true,
   },
-  { field: "igst", headerName: "HSN CODE", width: 130 ,
-    sortable: true, 
-    disableColumnMenu: true,
-   
 
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
   },
-  { field: "cgst", headerName: "IGST", width: 130 ,
-   sortable: true, 
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterSampleReRerunRemarks = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "samplerererunremarks",
+    headerName: "Sample Re Rerun Remarks",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterSampleTypeMaster = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "SampleTypeMaster",
+    headerName: "Sample Re Rerun Remarks",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterReportFooterRemarks = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "ReportFooterRemarks",
+    headerName: "Report Footer Remarks",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterLabDepartmentMaster = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "LabDepartmentMaster",
+    headerName: "Lab Department Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterOutSourceLabMaster = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "OutSourceLabMaster",
+    headerName: "Out SourceLab Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterTestMethodMaster = (
+  handleToggleActive,
+  handleEdit,
+  Switch
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "TestMethodMaster",
+    headerName: "Test Method Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+export const MasterRoleMaster = (handleToggleActive, handleEdit, Switch) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "RoleMaster",
+    headerName: "Role Master",
+    width: 700,
+    disableColumnMenu: true,
+  },
+
+  {
+    field: "active",
+    headerName: "Active",
+    width: 300,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Edit",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const MasterAddLetterHead = (
+  handleToggleActive,
+  handleEdit,
+  Switch,
+  handleDelete
+) => [
+  { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
+  {
+    field: "panelName", // Changed the 'field' to be unique
+    headerName: "Panel Name",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "reportHeaderHeightY", // Changed to a unique field
+    headerName: "Report Header Height Y",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "patientYHeader", // Unique field
+    headerName: "Patient Y Header",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "barcodeXPosition", // Unique field
+    headerName: "Barcode X Position",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "qrCodeYPosition", // Unique field
+    headerName: "QR Code Y Position",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "qrHeader", // Unique field
+    headerName: "QR Header",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "barcodeHeader", // Unique field
+    headerName: "Barcode Header",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "footerHeight", // Unique field
+    headerName: "Footer Height",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "letterHead", // Unique field
+    headerName: "Letter Head",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "actions",
+    headerName: "Action",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center gap-2 items-center sticky-action">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+
+        <IconButton
+          aria-label="delete"
+          color="secondary"
+          onClick={() => handleDelete(params.row)}
+        >
+          <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+  ,
+];
+
+export const MasterHSNCodeTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "HSN CODE",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "IGST",
+    width: 130,
+    sortable: true,
     disableColumnMenu: true,
   },
   {
@@ -472,37 +957,40 @@ export const MasterHSNCodeTable=[
     headerName: "CGST",
     type: "number",
     width: 130,
-    sortable: true, 
+    sortable: true,
     disableColumnMenu: true,
-   
   },
   {
     field: "cess",
     headerName: "SGST",
-   
+
     width: 130,
-    sortable: true, 
+    sortable: true,
     disableColumnMenu: true,
-   
   },
- 
-  
 ];
-export const MasterLedgerGroupTable=[
-  { field: "id", headerName: "Sr. No", width: 130 ,
-    sortable: true, 
+export const MasterLedgerGroupTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
     disableColumnMenu: true,
   },
-  { field: "igst", headerName: "Ledger_Group_Name", width: 130 ,
-    sortable: true, 
+  {
+    field: "igst",
+    headerName: "Ledger_Group_Name",
+    width: 130,
+    sortable: true,
     disableColumnMenu: true,
   },
-  { field: "cgst", headerName: "Main_Ledger_name", width: 130 ,
-    sortable: true, 
-     disableColumnMenu: true,
-   },
- 
-  
+  {
+    field: "cgst",
+    headerName: "Main_Ledger_name",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
 ];
 
 export const MasterDistrictStateTable = (handleEdit) => [
@@ -523,905 +1011,945 @@ export const MasterDistrictStateTable = (handleEdit) => [
   },
 ];
 export const OpeningStockscolumns = [
-    { field: "id", headerName: "HSNCODE", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "IGST", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+  {
+    field: "id",
+    headerName: "HSNCODE",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "IGST",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "CGST",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "SGST",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "CESS%",
 
-    },
-    { field: "cgst", headerName: "CGST", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "SGST",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "CESS%",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "REGD.",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "INSUR",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "HPA",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "agree",
-      headerName: "AGREE",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "other",
-      headerName: "OTHER",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "discount",
-      headerName: "DISCOUNT %",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-  ];
-  
-  export const OpeningStocks_OS_columns = [
-    { field: "id", headerName: "Chassis No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "Engine. No ", width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     },
-    { field: "cgst", headerName: "Key No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "Po. No",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "cess",
-      headerName: "Colour",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "regd",
-      headerName: "Battery. No",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "insur",
-      headerName: "WRC.No ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-   
-    
-  ];
-  export const PaymentVouchercolumns = [
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "Payment Date", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "REGD.",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "INSUR",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "HPA",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "agree",
+    headerName: "AGREE",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "other",
+    headerName: "OTHER",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "discount",
+    headerName: "DISCOUNT %",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
 
-    },
-    { field: "cgst", headerName: "Prefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "Voucher No",
-      headerName: "SGST",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "Ledger Name",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "PaidAmount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "BalAmount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Mode",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "agree",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "other",
-      headerName: "TotalAmount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
-  export const ReceiptBookingTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "ReciptDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+export const OpeningStocks_OS_columns = [
+  {
+    field: "id",
+    headerName: "Chassis No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "Engine. No ",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "Key No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "Po. No",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "Colour",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "Battery. No",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "WRC.No ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const PaymentVouchercolumns = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "Payment Date",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "Prefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "Voucher No",
+    headerName: "SGST",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "Ledger Name",
 
-    },
-    { field: "cgst", headerName: "PreFix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "Voucher No",
-      headerName: "VoucherNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "LedgerName",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "TotAmt ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "PaidAmt",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Bal.",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "agree",
-      headerName: "Mode",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "other",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "other",
-      headerName: "TranDate",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "other",
-      headerName: "TotAmt",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "PaidAmount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "BalAmount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Mode",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "agree",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "other",
+    headerName: "TotalAmount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const ReceiptBookingTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "ReciptDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "PreFix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "Voucher No",
+    headerName: "VoucherNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "LedgerName",
 
-  export const  AccountPaymentVoucherTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "PaymentDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "TotAmt ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "PaidAmt",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Bal.",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "agree",
+    headerName: "Mode",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "other",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "other",
+    headerName: "TranDate",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "other",
+    headerName: "TotAmt",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
 
-    },
-    { field: "cgst", headerName: "Prefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VoucherNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "Ledgername",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "TotAmt ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "Mode",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalBal.",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
+export const AccountPaymentVoucherTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "PaymentDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "Prefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VoucherNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "Ledgername",
 
-  export const AccountContraVoucherTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "TraDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "TotAmt ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "Mode",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalBal.",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
 
-    },
-    { field: "cgst", headerName: "Prefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VoucherNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "TransferFrom",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "TransferTo ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "Particulars",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalBal.",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Amount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
-  export const AccountCashBooksTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "TraDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+export const AccountContraVoucherTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "TraDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "Prefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VoucherNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "TransferFrom",
 
-    },
-    { field: "cgst", headerName: "VoucherNo", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VoucherType",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "LedgerName",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "Debit ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "Credbit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalBal.",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Amount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "TransferTo ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "Particulars",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalBal.",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Amount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const AccountCashBooksTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "TraDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "VoucherNo",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VoucherType",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "LedgerName",
 
-  export const AccountExpenseBookTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "TraDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "Debit ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "Credbit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalBal.",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Amount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
 
-    },
-    { field: "cgst", headerName: "Prefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VoucherNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "ExpenseTypes",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "Vouchertype ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "Details",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Prepose",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotAmount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
-  export const AccountLedgerViewTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "TraDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+export const AccountExpenseBookTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "TraDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "Prefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VoucherNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "ExpenseTypes",
 
-    },
-    { field: "cgst", headerName: "VoucherPrefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VoucherNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "Particulars",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "Debit ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "Credbit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalDebit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotCrebit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalBal",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
-  export const AccountIncomeTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "IncomeDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "Vouchertype ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "Details",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Prepose",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotAmount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const AccountLedgerViewTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "TraDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "VoucherPrefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VoucherNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "Particulars",
 
-    },
-    { field: "cgst", headerName: "IDate", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "InComeType",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "Particular",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "Amount ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "LedgerName",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalIncome",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Amount",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
-  export const AccountReceiptTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "ReceiptDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "Debit ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "Credbit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalDebit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotCrebit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalBal",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const AccountIncomeTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "IncomeDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "IDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "InComeType",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "Particular",
 
-    },
-    { field: "cgst", headerName: "Prefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VouchNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "LedgerName",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "TotAmount ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "PaidAmt",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Bal",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TranDate",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotAmt",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "Remarks",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    
-  ];
-  export const AccountBankBookTable=[
-    { field: "id", headerName: "Sr. No", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    { field: "igst", headerName: "TraDate", width: 130 ,
-      sortable: true, 
-      disableColumnMenu: true,
-     
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "Amount ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "LedgerName",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalIncome",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Amount",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const AccountReceiptTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "ReceiptDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "Prefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VouchNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "LedgerName",
 
-    },
-    { field: "cgst", headerName: "VoucherPrefix", width: 130 ,
-     sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "sgst",
-      headerName: "VoucherNo",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "cess",
-      headerName: "Particulars",
-     
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-     
-    },
-    {
-      field: "regd",
-      headerName: "Debit ",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-      
-    },
-    {
-      field: "insur",
-      headerName: "Credbit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalDebit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotCrebit",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-    {
-      field: "hpa",
-      headerName: "TotalBal",
-      type: "number",
-      width: 130,
-      sortable: true, 
-      disableColumnMenu: true,
-    },
-   
-    
-  ];
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "TotAmount ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "PaidAmt",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Bal",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TranDate",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotAmt",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "Remarks",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
+export const AccountBankBookTable = [
+  {
+    field: "id",
+    headerName: "Sr. No",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "igst",
+    headerName: "TraDate",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cgst",
+    headerName: "VoucherPrefix",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sgst",
+    headerName: "VoucherNo",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "cess",
+    headerName: "Particulars",
+
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regd",
+    headerName: "Debit ",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "insur",
+    headerName: "Credbit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalDebit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotCrebit",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+  {
+    field: "hpa",
+    headerName: "TotalBal",
+    type: "number",
+    width: 130,
+    sortable: true,
+    disableColumnMenu: true,
+  },
+];
