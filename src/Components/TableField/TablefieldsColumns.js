@@ -843,15 +843,13 @@ export const MasterRoleMaster = (handleToggleActive, handleEdit, Switch) => [
   },
 ];
 export const MasterAddLetterHead = (
-  handleToggleActive,
   handleEdit,
-  Switch,
-  handleDelete
+  handleDelete,
 ) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
-    field: "panelName", // Changed the 'field' to be unique
-    headerName: "Panel Name",
+    field: "center", // Changed the 'field' to be unique
+    headerName: "Center",
     width: 150,
     disableColumnMenu: true,
   },
@@ -894,6 +892,24 @@ export const MasterAddLetterHead = (
   {
     field: "footerHeight", // Unique field
     headerName: "Footer Height",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "receiptHeader", // Unique field
+    headerName: "Receipt Header",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "receiptFooter", // Unique field
+    headerName: "Receipt Footer",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "rWaterMark", // Unique field
+    headerName: "R.WaterMark",
     width: 150,
     disableColumnMenu: true,
   },

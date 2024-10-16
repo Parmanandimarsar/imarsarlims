@@ -12,7 +12,8 @@ const LetterHeadCell = ({ imageUrl }) => {
       {/* Show image initially */}
       {showImage && imageUrl ? (
         <img
-          src={imageUrl} 
+        //   src={imageUrl} 
+        src={URL.createObjectURL(imageUrl)}
           alt="Letter Head"
           style={{
             width: "100px",

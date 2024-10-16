@@ -10,54 +10,64 @@ import {
   Box,
   Divider,
   Typography,
+  TextField,
 } from "@mui/material";
 import { MasterAddLetterHead } from "../../../TableField/TablefieldsColumns";
 import * as Yup from "yup";
-import { Grid, TextField } from "@mui/material";
-import { Update } from "@mui/icons-material";
+import { Grid } from "@mui/material";
 
 const AddLetterHead = () => {
   const [editRow, setEditRow] = useState(null);
   const [activeFilter, setActiveFilter] = useState("all");
   const [rows, setRows] = useState([
     {
-      id: 1,
-      panelName: "Panel 1",
-      reportHeaderHeightY: 100,
-      patientYHeader: "John Doe",
-      barcodeXPosition: 50,
-      qrCodeYPosition: 60,
-      qrHeader: "QR Info",
-      barcodeHeader: "Barcode Info",
-      footerHeight: 30,
-      letterHead:
-        "https://unsplash.com/photos/young-asian-travel-woman-is-enjoying-with-beautiful-place-in-bangkok-thailand-_Fqoswmdmoo",
+      id: "1",
+      center: "1",
+      reportHeaderHeightY: "280",
+      patientYHeader: "110",
+      barcodeXPosition: "110",
+      barcodeYPosition: "-590",
+      qrCodeXPosition: "350",
+      qrCodeYPosition: "10",
+      qrHeader: "0",
+      barcodeHeader: "1",
+      footerHeight: "120",
+      letterHead: null,
+      receiptHeader: null,
+      receiptFooter: null,
+      rWaterMark: null,
     },
-    // ... other rows
   ]);
+
   const initialValues = {
-    panelName: "",
-    reportHeaderHeightY: "",
-    patientYHeader: "",
-    barcodeXPosition: "",
-    qrCodeYPosition: "",
-    qrHeader: "",
-    barcodeHeader: "",
-    footerHeight: "",
+    center: "1",
+    reportHeaderHeightY: "280",
+    patientYHeader: "110",
+    barcodeXPosition: "110",
+    barcodeYPosition: "-590",
+    qrCodeXPosition: "350",
+    qrCodeYPosition: "10",
+    qrHeader: "0",
+    barcodeHeader: "1",
+    footerHeight: "120",
     letterHead: null,
+    receiptHeader: null,
+    receiptFooter: null,
+    rWaterMark: null,
   };
 
   const handleFilter = () => {
-    if (activeFilter === "active") {
-      return rows.filter((row) => row.active === true);
-    } else if (activeFilter === "inactive") {
-      return rows.filter((row) => row.active === false);
+    if (activeFilter === "1") {
+      return rows.filter((row) => row.center === "1");
+    } else if (activeFilter === "2") {
+      return rows.filter((row) => row.center === "2");
     }
-    return rows;
+    return rows; 
   };
+  
 
   const validationSchema = Yup.object().shape({
-    panelName: Yup.string().required("Panel Name is required"),
+    center: Yup.string().required("Center Name is required"),
     reportHeaderHeightY: Yup.number()
       .required("Report Header Height Y is required")
       .positive("Must be a positive number"),
@@ -76,47 +86,46 @@ const AddLetterHead = () => {
     letterHead: Yup.mixed().required("Letter Head is required"),
   });
 
-  const handleToggleActive = (row) => {
-    const updatedRows = rows.map((r) =>
-      r.id === row.id ? { ...r, active: !r.active } : r
-    );
-    setRows(updatedRows);
-  };
-
   const handleEdit = (row) => {
+    console.log("row", row);
+
     setEditRow(row);
   };
 
-  const handleDelete = (id) => {
-    const updatedRows = rows.filter((row) => row.id !== id);
+  const handleDelete = (Id) => {
+    console.log(Id, "id");
+
+    const updatedRows = rows.filter((row) => row.id !== Id.id);
+    console.log("updatedRows", updatedRows);
+
     setRows(updatedRows);
   };
 
-  const onSubmit = (values, { setSubmitting, resetForm }) => {
-    console.log("valuse",values);
-    
+  const onSubmit = (values, { setSubmitting, resetForm, setFieldValue }) => {
     const formData = {
       ...values,
-      letterHead: URL.createObjectURL(values.letterHead), // Create a URL for the image
     };
 
     if (editRow) {
+      // Update the existing row
       setRows((prevRows) =>
         prevRows.map((row) =>
           row.id === editRow.id ? { ...row, ...formData } : row
         )
       );
+      setEditRow(null); // Clear editRow after update
     } else {
       // Add new row
-      setRows([
-        ...rows,
+      setRows((prevRows) => [
+        ...prevRows,
         {
-          id: rows.length + 1,
+          id: prevRows.length + 1,
           ...formData,
         },
       ]);
     }
-    setEditRow(null);
+
+    setFieldValue("letterHead", null);
     resetForm();
     setSubmitting(false);
   };
@@ -135,17 +144,11 @@ const AddLetterHead = () => {
               value={activeFilter}
               onChange={(e) => setActiveFilter(e.target.value)}
             >
-              <MenuItem value="all">Client</MenuItem>
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="inactive">Inactive</MenuItem>
+              <MenuItem value="all">Center</MenuItem>
+              <MenuItem value="1">1</MenuItem>
+              <MenuItem value="2">2</MenuItem>
             </Select>
           </FormControl>
-          <div className="flex items-end ml-auto gap-2 justify-end">
-          <p className="divider text-red-500 font-bold">
-            0:No(In footer), 1: Yes(in Header) , PatientYHeader (Y axis)
-            :(Patient info),ReporrtHeaderHeightY: (Report)
-          </p>
-        </div>
         </div>
 
         <Formik
@@ -155,12 +158,10 @@ const AddLetterHead = () => {
           enableReinitialize
         >
           {({ isSubmitting, touched, errors, setFieldValue, values }) => (
-            console.log(errors),
-            
             <Form className="p-1">
               <Divider className="divider" />
-              <Grid container spacing={2}>
-                {/* Panel Name */}
+              <Grid container spacing={1}>
+                {/* Center Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -170,21 +171,27 @@ const AddLetterHead = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Panel Name</FormLabel>
+                        <FormLabel>Center</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <Field
-                          as={TextField}
-                          name="panelName"
-                          placeholder="Enter Panel Name"
+                          as={Select}
+                          className="mandatoryfield"
+                          name="center"
                           fullWidth
                           variant="outlined"
+                          displayEmpty
                           size="small"
-                          className="mandatoryfield"
-                          error={touched.panelName && !!errors.panelName}
-                        />
+                          error={touched.center && !!errors.center}
+                        >
+                          <MenuItem value="" disabled>
+                            -Select-
+                          </MenuItem>
+                          <MenuItem value="1">1</MenuItem>
+                          <MenuItem value="2">2</MenuItem>
+                        </Field>
                         <ErrorMessage
-                          name="panelName"
+                          name="center"
                           component="div"
                           className="text-red-600 text-xs"
                         />
@@ -193,7 +200,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Report Header Height Y */}
+                {/* Report Header Height Y Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -203,17 +210,16 @@ const AddLetterHead = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Report Hdr H.Y</FormLabel>
+                        <FormLabel>Report HdrH.Y</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
+                          className="mandatoryfield"
                           name="reportHeaderHeightY"
-                          placeholder="Enter Report Header Height Y"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={
                             touched.reportHeaderHeightY &&
                             !!errors.reportHeaderHeightY
@@ -229,7 +235,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Patient Y Header */}
+                {/* Patient Y Header Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -239,17 +245,16 @@ const AddLetterHead = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Patient Y Hdr.</FormLabel>
+                        <FormLabel>Patient Y H</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
+                          className="mandatoryfield"
                           name="patientYHeader"
-                          placeholder="Enter Patient Y Header"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={
                             touched.patientYHeader && !!errors.patientYHeader
                           }
@@ -264,7 +269,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Barcode X Position */}
+                {/* Barcode X Position Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -279,12 +284,11 @@ const AddLetterHead = () => {
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
+                          className="mandatoryfield"
                           name="barcodeXPosition"
-                          placeholder="Enter Barcode X Position"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={
                             touched.barcodeXPosition &&
                             !!errors.barcodeXPosition
@@ -299,8 +303,75 @@ const AddLetterHead = () => {
                     </Grid>
                   </FormControl>
                 </Grid>
+                {/* Barcode y Position Field */}
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl fullWidth>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
+                        <FormLabel>Barcode Y Po.</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Field
+                          as={TextField}
+                          className="mandatoryfield"
+                          name="barcodeYPosition"
+                          fullWidth
+                          variant="outlined"
+                          size="small"
+                          error={
+                            touched.barcodeYPosition &&
+                            !!errors.barcodeYPosition
+                          }
+                        />
+                        <ErrorMessage
+                          name="barcodeYPosition"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
+                {/* QR Code X Position Field */}
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl fullWidth>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
+                        <FormLabel>QR Code X Po.</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <Field
+                          className="mandatoryfield"
+                          as={TextField}
+                          name="qrCodeXPosition"
+                          fullWidth
+                          variant="outlined"
+                          size="small"
+                          error={
+                            touched.qrCodeXPosition && !!errors.qrCodeXPosition
+                          }
+                        />
+                        <ErrorMessage
+                          name="qrCodeXPosition"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
 
-                {/* QR Code Y Position */}
+                {/* QR Code Y Position Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -314,13 +385,12 @@ const AddLetterHead = () => {
                       </Grid>
                       <Grid item xs={8}>
                         <Field
+                          className="mandatoryfield"
                           as={TextField}
                           name="qrCodeYPosition"
-                          placeholder="Enter QR Code Y Position"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={
                             touched.qrCodeYPosition && !!errors.qrCodeYPosition
                           }
@@ -335,7 +405,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* QR Header */}
+                {/* QR Header Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -350,12 +420,11 @@ const AddLetterHead = () => {
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
+                          className="mandatoryfield"
                           name="qrHeader"
-                          placeholder="Enter QR Header"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={touched.qrHeader && !!errors.qrHeader}
                         />
                         <ErrorMessage
@@ -368,7 +437,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Barcode Header */}
+                {/* Barcode Header Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -378,17 +447,16 @@ const AddLetterHead = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Barcode Header</FormLabel>
+                        <FormLabel>Barcode Hy</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <Field
+                          className="mandatoryfield"
                           as={TextField}
                           name="barcodeHeader"
-                          placeholder="Enter Barcode Header"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={
                             touched.barcodeHeader && !!errors.barcodeHeader
                           }
@@ -403,7 +471,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Footer Height */}
+                {/* Footer Height Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -418,12 +486,11 @@ const AddLetterHead = () => {
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
+                          className="mandatoryfield"
                           name="footerHeight"
-                          placeholder="Enter Footer Height"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          className="mandatoryfield"
                           error={touched.footerHeight && !!errors.footerHeight}
                         />
                         <ErrorMessage
@@ -436,7 +503,7 @@ const AddLetterHead = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Letter Head Image Upload */}
+                {/* Letter Head Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -449,64 +516,147 @@ const AddLetterHead = () => {
                         <FormLabel>Letter Head</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
-                        <FormControl fullWidth>
-                          <input
-                            id="file"
-                            name="letterHead"
-                            type="file"
-                            onChange={(event) => {
-                              setFieldValue(
-                                "letterHead",
-                                event.currentTarget.files[0]
-                              );
-                            }}
-                            className="mandatoryfield"
-                          />
-                          <ErrorMessage
-                            name="file"
-                            component="div"
-                            className="text-red-600 text-xs"
-                          />
-                        </FormControl>
+                        <input
+                          className="mandatoryfield"
+                          type="file"
+                          onChange={(event) => {
+                            const file = event.currentTarget.files[0];
+                            setFieldValue("letterHead", file);
+                          }}
+                          accept="image/*"
+                        />
+                        <ErrorMessage
+                          name="letterHead"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
                       </Grid>
                     </Grid>
                   </FormControl>
                 </Grid>
 
-                {/* Submit Button */}
-                <div className="flex items-end gap-2 justify-end ml-4">
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    // disabled={isSubmitting}
-                  >
-                   {editRow?"Update":"Save"} 
-                  </Button>
-                </div>
-              </Grid>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl fullWidth>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
+                        <FormLabel>Receipt Header</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <input
+                          className="mandatoryfield"
+                          type="file"
+                          onChange={(event) => {
+                            const file = event.currentTarget.files[0];
+                            setFieldValue("receiptHeader", file);
+                          }}
+                          accept="image/*"
+                        />
+                        <ErrorMessage
+                          name="receiptHeader"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl fullWidth>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
+                        <FormLabel>Receipt Footer</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <input
+                          className="mandatoryfield"
+                          type="file"
+                          onChange={(event) => {
+                            const file = event.currentTarget.files[0];
+                            setFieldValue("receiptFooter", file);
+                          }}
+                          accept="image/*"
+                        />
+                        <ErrorMessage
+                          name="receiptFooter"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
 
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl fullWidth>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
+                        <FormLabel> R.WaterMark</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <input
+                          className="mandatoryfield"
+                          type="file"
+                          onChange={(event) => {
+                            const file = event.currentTarget.files[0];
+                            setFieldValue("rWaterMark", file);
+                          }}
+                          accept="image/*"
+                        />
+                        <ErrorMessage
+                          name="rWaterMark"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
+              </Grid>
               <Divider className="divider" />
-              <div className="h-[150px] w-full">
-                <DataGrid
-                  className="datagridtable"
-                  rows={handleFilter()}
-                  columns={MasterAddLetterHead(
-                    handleToggleActive,
-                    handleEdit,
-                    handleDelete 
-                  )}
-                  pageSize={5}
-                  rowsPerPageOptions={[5]}
-                  columnHeaderHeight={20}
-                  rowHeight={25}
-                  headerHeight={20}
-                  hideFooterSelectedRowCount
-                />
+              <div className="flex justify-end mt-2">
+                <button
+                  type="submit"
+                  className="project-thim border text-white rounded-md"
+                  size="small"
+                  disabled={isSubmitting}
+                  // sx={{ bgcolor: "#1e88e5", "&:hover": { bgcolor: "#1565c0" } }}
+                >
+                  {editRow ? "Update" : "Save"}
+                </button>
               </div>
             </Form>
           )}
         </Formik>
+
+        <Divider className="divider" />
+        <Box sx={{ height: 150, width: "100%" }}>
+          <DataGrid
+            rows={handleFilter()}
+            columns={MasterAddLetterHead(handleEdit, handleDelete)}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            disableSelectionOnClick
+            columnHeaderHeight={20}
+            rowHeight={25}
+            headerHeight={20}
+            hideFooterSelectedRowCount
+          />
+        </Box>
       </Box>
     </div>
   );
