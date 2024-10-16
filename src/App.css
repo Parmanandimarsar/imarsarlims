@@ -146,7 +146,11 @@ padding: 0px !important;
 .MuiIconButton-root {
   padding: 0px !important; /* Replace 5px with your desired padding */
 }
-
+.sticky-action{
+  position: sticky !important;
+  z-index: 1000 !important;
+   margin-top: 0 !important
+}
 .headerNav {
   transition: 300ms ease all;
 }

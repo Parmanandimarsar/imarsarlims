@@ -1,7 +1,8 @@
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import { useState } from "react";
+import EditIcon from "@mui/icons-material/Edit"; 
 import DeleteIcon from "@mui/icons-material/Delete";
-
-import EditIcon from "@mui/icons-material/Edit";
+import LetterHeadCell from "./LetterHeadCell";
 
 export const MasterRateTypeColumns = (
   handleToggleActive,
@@ -879,7 +880,7 @@ export const MasterAddLetterHead = (
     disableColumnMenu: true,
   },
   {
-    field: "qrHeader", // Unique field
+    field: "qrHeader", 
     headerName: "QR Header",
     width: 150,
     disableColumnMenu: true,
@@ -901,6 +902,11 @@ export const MasterAddLetterHead = (
     headerName: "Letter Head",
     width: 150,
     disableColumnMenu: true,
+    renderCell: (params) => {
+      // console.log("param",params);
+      
+      return <LetterHeadCell imageUrl={params.row.letterHead} />; 
+    }
   },
   {
     field: "actions",
