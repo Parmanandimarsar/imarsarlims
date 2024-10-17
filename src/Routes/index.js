@@ -13,6 +13,7 @@ import RateTypeMaster from "../Components/Form/Master/RateTypeMaster";
 import MultiMaster from "../Components/Form/Master/MultiMaster/";
 import LabMaster from "../Components/Form/Master/LabShortMaster";
 import AddLetterHead from "../Components/Form/Master/MultiMaster/AddLetterHead";
+import LabTestMaster from "../Components/Form/Master/LabTestMaster";
 
 const router = createBrowserRouter([
   {
@@ -47,10 +48,10 @@ const router = createBrowserRouter([
         path: "/add-letter-head",
         element: <AddLetterHead />,
       },
-      // {
-      //   path: "/ledger-temp-addresh",
-      //   element: <LedgerTempAddresh />,
-      // },
+      {
+        path: "/lab-test-master",
+        element: <LabTestMaster />,
+      },
       // {
       //   path: "/miscmaster",
       //   element: <MiscMaster />,

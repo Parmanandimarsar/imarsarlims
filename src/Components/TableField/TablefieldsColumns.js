@@ -1,8 +1,7 @@
-import { Button, IconButton } from "@mui/material";
-import { useState } from "react";
+import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit"; 
 import DeleteIcon from "@mui/icons-material/Delete";
-import LetterHeadCell from "./LetterHeadCell";
+import ImageView from "./ImageView";
 
 export const MasterRateTypeColumns = (
   handleToggleActive,
@@ -848,13 +847,13 @@ export const MasterAddLetterHead = (
 ) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
-    field: "center", // Changed the 'field' to be unique
+    field: "center", 
     headerName: "Center",
     width: 150,
     disableColumnMenu: true,
   },
   {
-    field: "reportHeaderHeightY", // Changed to a unique field
+    field: "reportHeaderHeightY", 
     headerName: "Report Header Height Y",
     width: 150,
     disableColumnMenu: true,
@@ -921,7 +920,7 @@ export const MasterAddLetterHead = (
     renderCell: (params) => {
       // console.log("param",params);
       
-      return <LetterHeadCell imageUrl={params.row.letterHead} />; 
+      return <ImageView imageUrl={params.row.letterHead} />; 
     }
   },
   {

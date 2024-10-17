@@ -61,7 +61,7 @@ const EmployeeMaster = () => {
             setFieldValue,
             values,
           }) => (
-            console.log(errors, "eroro"),
+            
             (
               <Form>
                 <Grid container spacing={1} className="pl-1">

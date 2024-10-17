@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const LetterHeadCell = ({ imageUrl }) => {
+const ImageView = ({ imageUrl }) => {
   const [showImage, setShowImage] = useState(false); 
 
   const handleToggleImage = () => {
@@ -35,7 +35,7 @@ const LetterHeadCell = ({ imageUrl }) => {
   );
 };
 
-export default LetterHeadCell;
+export default ImageView;
 // {values.letterHead && (
                         //   <img
                         //     src={URL.createObjectURL(values.letterHead)}

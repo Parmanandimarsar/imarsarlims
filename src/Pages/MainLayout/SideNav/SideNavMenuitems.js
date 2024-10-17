@@ -12,7 +12,7 @@ export const menuItems = [
         { text: "Multi-Master", link: "/multimaster", icon: <MailIcon /> },
         { text: "lab-Short-master", link: "/lab-short-master", icon: <MailIcon />},
         { text: "Add-Letter-Head", link: "/add-letter-head", icon: <MailIcon /> },
-        // { text: "Misc-Master", link: "/miscmaster", icon: <MailIcon /> },
+        { text: "LabTestMaster", link: "/lab-test-master", icon: <MailIcon /> },
         // { text: "HSNCode Master", link: "/hsncode-master", icon: <MailIcon /> },
         // { text: "Parts Master", link: "/parts-master", icon: <MailIcon /> },
         // { text: "Ledger Group", link: "/ledger-group", icon: <MailIcon /> },
