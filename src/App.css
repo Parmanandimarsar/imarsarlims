@@ -22,6 +22,10 @@
     #fc3752 100%
   ) !important;
 }
+input{
+  font-size: 10px !important;
+  color: #888 !important;
+}
 p{
   margin-top: 0px !important;
   margin-bottom: 0px !important;
@@ -31,6 +35,9 @@ a{
   outline: none !important;
   text-decoration: none;
   box-shadow: none !important;
+}
+.MuiCheckbox-root{
+  padding: 0px  9px  !important;
 }
 .text {
   font-size: 12px !important;
@@ -83,11 +90,12 @@ a{
 .MuiSelect-select{
 height: 0px !important;
 }
-/* .MuiButtonBase-root{
+
+ .MuiMenuItem-root{
   font-size: 11px !important;
   padding-top: 3px !important;
   padding-bottom: 3px !important;
-} */
+ }
 .MuiMenuItem-root:hover {
   background-color: navy !important; 
   color: white; /* Optional text color on hover */
@@ -146,7 +154,9 @@ padding: 0px !important;
 .MuiIconButton-root {
   padding: 0px !important; /* Replace 5px with your desired padding */
 }
-
+.MuiToolbar-root{
+  min-height: 25px !important;
+}
 .headerNav {
   transition: 300ms ease all;
 }

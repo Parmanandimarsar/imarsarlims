@@ -1,7 +1,7 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit"; 
 import DeleteIcon from "@mui/icons-material/Delete";
-
-import EditIcon from "@mui/icons-material/Edit";
+import ImageView from "./ImageView";
 
 export const MasterRateTypeColumns = (
   handleToggleActive,
@@ -842,20 +842,18 @@ export const MasterRoleMaster = (handleToggleActive, handleEdit, Switch) => [
   },
 ];
 export const MasterAddLetterHead = (
-  handleToggleActive,
   handleEdit,
-  Switch,
-  handleDelete
+  handleDelete,
 ) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
-    field: "panelName", // Changed the 'field' to be unique
-    headerName: "Panel Name",
+    field: "center", 
+    headerName: "Center",
     width: 150,
     disableColumnMenu: true,
   },
   {
-    field: "reportHeaderHeightY", // Changed to a unique field
+    field: "reportHeaderHeightY", 
     headerName: "Report Header Height Y",
     width: 150,
     disableColumnMenu: true,
@@ -879,7 +877,7 @@ export const MasterAddLetterHead = (
     disableColumnMenu: true,
   },
   {
-    field: "qrHeader", // Unique field
+    field: "qrHeader", 
     headerName: "QR Header",
     width: 150,
     disableColumnMenu: true,
@@ -897,10 +895,33 @@ export const MasterAddLetterHead = (
     disableColumnMenu: true,
   },
   {
+    field: "receiptHeader", // Unique field
+    headerName: "Receipt Header",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "receiptFooter", // Unique field
+    headerName: "Receipt Footer",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
+    field: "rWaterMark", // Unique field
+    headerName: "R.WaterMark",
+    width: 150,
+    disableColumnMenu: true,
+  },
+  {
     field: "letterHead", // Unique field
     headerName: "Letter Head",
     width: 150,
     disableColumnMenu: true,
+    renderCell: (params) => {
+      // console.log("param",params);
+      
+      return <ImageView imageUrl={params.row.letterHead} />; 
+    }
   },
   {
     field: "actions",
@@ -929,6 +950,115 @@ export const MasterAddLetterHead = (
   },
   ,
 ];
+
+export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> [
+  { field: "id", headerName: "S.No", width: 50, disableColumnMenu: true },
+  
+  {
+    field: "testType", // Unique field
+    headerName: "Test Type",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "testName", // Unique field
+    headerName: "Test Name",
+    width: 100,
+    disableColumnMenu: true,
+  },
+ 
+  {
+    field: "testCode", 
+    headerName: "Test Code",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "testMethod", // Unique field
+    headerName: "Test Method",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sampleVolume", // Unique field
+    headerName: "Sample Volume",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "containerColor", // Unique field
+    headerName: "Container Color",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "department", // Unique field
+    headerName: "Department",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "gender", // Unique field
+    headerName: "Gender",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "reportType", // Unique field
+    headerName: "Report Type",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sampleType", // Unique field
+    headerName: "Sample Type",
+    width: 100,
+    disableColumnMenu: true,
+   
+  },
+  {
+    field: "active",
+    headerName: "Active",
+    width: 100,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Action",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center gap-2 items-center sticky-action">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+
+        <IconButton
+          aria-label="delete"
+          color="secondary"
+          onClick={() => handleDelete(params.row)}
+        >
+          <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+  
+];
+
 
 export const MasterHSNCodeTable = [
   {
