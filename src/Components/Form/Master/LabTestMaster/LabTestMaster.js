@@ -16,6 +16,7 @@ import {
   Divider,
   ListItemText,
 } from "@mui/material";
+import LabTestMasterTable from "./LabTestMasterTable";
 
 const names = ["Sample Type 1", "Sample Type 2", "Sample Type 3"];
 const documents = ["Document 1", "Document 2", "Document 3"];
@@ -23,6 +24,7 @@ const documents = ["Document 1", "Document 2", "Document 3"];
 const LabTestMaster = () => {
   const [selectedItemType, setSelectedItemType] = useState("Test");
   const initialValues = {
+    active: "true",
     itemType: "",
     itemName: "",
     profileName: "",
@@ -327,39 +329,6 @@ const LabTestMaster = () => {
                     </Grid>
                     <ErrorMessage
                       name="testMethod"
-                      component="div"
-                      className="text-red-600 text-xs"
-                    />
-                  </FormControl>
-                </Grid>
-
-                {/* Package Name (shown for Packages) */}
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <FormControl fullWidth>
-                    <Grid container alignItems="center">
-                      <Grid
-                        item
-                        xs={3}
-                        className="formlableborder"
-                        sx={{ mr: "3px" }}
-                      >
-                        <FormLabel>Package Name</FormLabel>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <Field
-                          as={TextField}
-                          className="mandatoryfield"
-                          name="packageName"
-                          fullWidth
-                          placeholder="Enter Package Name"
-                          variant="outlined"
-                          size="small"
-                          error={touched.packageName && !!errors.packageName}
-                        />
-                      </Grid>
-                    </Grid>
-                    <ErrorMessage
-                      name="packageName"
                       component="div"
                       className="text-red-600 text-xs"
                     />
@@ -848,36 +817,6 @@ const LabTestMaster = () => {
                   </FormControl>
                 </Grid>
 
-                {/* Allergy Test */}
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <FormControl fullWidth>
-                    <Grid container alignItems="center">
-                      <Grid
-                        item
-                        xs={3}
-                        className="formlableborder"
-                        sx={{ mr: "3px" }}
-                      >
-                        <FormLabel>Allergy Test</FormLabel>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <FormControlLabel
-                          control={
-                            <Field
-                              as={Checkbox}
-                              name="allergyTest"
-                              color="primary"
-                              size="small"
-                              checked={values.allergyTest}
-                            />
-                          }
-                          label="Allergy Test"
-                        />
-                      </Grid>
-                    </Grid>
-                  </FormControl>
-                </Grid>
-
                 {/* Consent Form */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
@@ -913,86 +852,96 @@ const LabTestMaster = () => {
                 </Grid>
               </Grid>
               <Divider className="divider" />
-              <div className="bg-gray-200 ">
-                <Typography className="titleheadingtext ">
-                  Access Type
-                </Typography>
+              <div className="flex ">
+                <Grid container spacing={1} className="pl-1">
+                  <Grid item xs={12} sx={{ ml: "7px" }}>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid item xs={12}>
+                          <FormControlLabel
+                            control={
+                              <Field
+                                type="checkbox"
+                                name="active"
+                                className="m-1"
+                              />
+                            }
+                            label="Active"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Field
+                                type="checkbox"
+                                name="showPatientReport"
+                                className="m-2"
+                              />
+                            }
+                            label="Show In Patient Report"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Field
+                                type="checkbox"
+                                name="printSeparate"
+                                className="m-2"
+                              />
+                            }
+                            label="Print Separate"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Field
+                                type="checkbox"
+                                name="colletionRequired"
+                                className="m-2 "
+                              />
+                            }
+                            label="Colletion Required"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Field
+                                type="checkbox"
+                                name="departmentPatientReport"
+                                className="m-2 "
+                              />
+                            }
+                            label="Show Department on Patient Report"
+                          />
+                          <FormControlLabel
+                            control={
+                              <Field
+                                type="checkbox"
+                                name="allergyTest"
+                                className="m-2 "
+                              />
+                            }
+                            label="Allergy Test"
+                          />
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+
+                <Box className="mt-4 pl-2 flex justify-end mr-5">
+                  <Button
+                    type="submit"
+                    className="project-thim"
+                    sx={{ color: "white" }}
+                    disabled={isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                </Box>
               </div>
               <Divider className="divider" />
               {/* Access Type Checkbox Group */}
-              <Grid container spacing={1} className="pl-1">
-                <Grid item xs={12} sx={{ ml: "7px" }}>
-                  <FormControl fullWidth>
-                    <Grid container alignItems="center">
-                      <Grid item xs={12}>
-                        <FormControlLabel
-                          control={
-                            <Field
-                              type="checkbox"
-                              name="active"
-                              className="m-1"
-                            />
-                          }
-                          label="Active"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Field
-                              type="checkbox"
-                              name="showPatientReport"
-                              className="m-2"
-                            />
-                          }
-                          label="Show In Patient Report"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Field
-                              type="checkbox"
-                              name="printSeparate"
-                              className="m-2"
-                            />
-                          }
-                          label="Print Separate"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Field
-                              type="checkbox"
-                              name="colletionRequired"
-                              className="m-2 "
-                            />
-                          }
-                          label="Colletion Required"
-                        />
-                        <FormControlLabel
-                          control={
-                            <Field
-                              type="checkbox"
-                              name="departmentPatientReport"
-                              className="m-2 "
-                            />
-                          }
-                          label="Show Department on Patient Report"
-                        />
-                      </Grid>
-                    </Grid>
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Box className="mt-4 pl-2">
-                <Button
-                  type="submit"
-                  variant="contained"
-                  color="primary"
-                  disabled={isSubmitting}
-                >
-                  Submit
-                </Button>
-              </Box>
             </Form>
           )}
         </Formik>
+
+        <LabTestMasterTable/>
       </Box>
     </div>
   );

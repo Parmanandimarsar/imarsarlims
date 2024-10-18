@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Switch } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit"; 
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
@@ -950,6 +950,115 @@ export const MasterAddLetterHead = (
   },
   ,
 ];
+
+export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> [
+  { field: "id", headerName: "S.No", width: 50, disableColumnMenu: true },
+  
+  {
+    field: "testType", // Unique field
+    headerName: "Test Type",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "testName", // Unique field
+    headerName: "Test Name",
+    width: 100,
+    disableColumnMenu: true,
+  },
+ 
+  {
+    field: "testCode", 
+    headerName: "Test Code",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "testMethod", // Unique field
+    headerName: "Test Method",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sampleVolume", // Unique field
+    headerName: "Sample Volume",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "containerColor", // Unique field
+    headerName: "Container Color",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "department", // Unique field
+    headerName: "Department",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "gender", // Unique field
+    headerName: "Gender",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "reportType", // Unique field
+    headerName: "Report Type",
+    width: 100,
+    disableColumnMenu: true,
+  },
+  {
+    field: "sampleType", // Unique field
+    headerName: "Sample Type",
+    width: 100,
+    disableColumnMenu: true,
+   
+  },
+  {
+    field: "active",
+    headerName: "Active",
+    width: 100,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "actions",
+    headerName: "Action",
+    width: 175,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center gap-2 items-center sticky-action">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+
+        <IconButton
+          aria-label="delete"
+          color="secondary"
+          onClick={() => handleDelete(params.row)}
+        >
+          <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+  
+];
+
 
 export const MasterHSNCodeTable = [
   {

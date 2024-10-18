@@ -12,7 +12,7 @@ import {
   Typography,
   TextField,
 } from "@mui/material";
-import { MasterAddLetterHead } from "../../../TableField/TablefieldsColumns";
+import { MasterAddLetterHead } from "../../TableField/TablefieldsColumns";
 import * as Yup from "yup";
 import { Grid } from "@mui/material";
 

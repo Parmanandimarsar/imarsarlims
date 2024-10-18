@@ -24,10 +24,7 @@ export const menuItems = [
       icon:<InboxIcon /> ,
       subItems: [
         { text: "Vehicle Order", link: "/vehicle-order", icon: <MailIcon /> },
-        { text: "Purchase Challan Vehicle", link: "/Purchase-Challan-Vehicle", icon: <MailIcon /> },
-        { text: "Payment Voucher", link: "/payment-voucher", icon: <MailIcon /> },
-        { text: "Sales Model", link: "/sales-model", icon: <MailIcon /> },
-        { text: "Receipt Booking", link: "/receipt-booking", icon: <MailIcon /> },
+       
        
       ],
     },
@@ -37,9 +34,7 @@ export const menuItems = [
       subItems: [
         
         { text: "Sales-Challan", link: "/sales-challan", icon: <MailIcon /> },
-        { text: "Sales-Invoice", link: "/sales-invoice", icon: <MailIcon /> },
-        { text: "Delivery-Challan", link: "/delivery-challan", icon: <MailIcon /> },
-        { text: "Delivery-Invoice", link: "/delivery-invoice", icon: <MailIcon /> },
+       
       ],
     },
     {
@@ -47,13 +42,13 @@ export const menuItems = [
       icon:<InboxIcon /> ,
       subItems: [
         { text: "A/C Payment Voucher", link: "/account-payment-voucher", icon: <MailIcon /> },
-        { text: "Contra Voucher", link: "/contra-voucher", icon: <MailIcon /> },
-        { text: "Cash Books", link: "/cash-books", icon: <MailIcon /> },
-        { text: "Expense Books", link: "/expense-book", icon: <MailIcon /> },
-        { text: "Ledger view", link: "/ledger-view", icon: <MailIcon /> },
-        { text: "Income", link: "/income", icon: <MailIcon /> },
-        { text: "Receipt", link: "/receipt", icon: <MailIcon /> },
-        { text: "Bank Book", link: "/bank-book", icon: <MailIcon /> },
+        // { text: "Contra Voucher", link: "/contra-voucher", icon: <MailIcon /> },
+        // { text: "Cash Books", link: "/cash-books", icon: <MailIcon /> },
+        // { text: "Expense Books", link: "/expense-book", icon: <MailIcon /> },
+        // { text: "Ledger view", link: "/ledger-view", icon: <MailIcon /> },
+        // { text: "Income", link: "/income", icon: <MailIcon /> },
+        // { text: "Receipt", link: "/receipt", icon: <MailIcon /> },
+        // { text: "Bank Book", link: "/bank-book", icon: <MailIcon /> },
       ],
     },
   ];

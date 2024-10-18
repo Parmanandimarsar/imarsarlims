@@ -1,19 +1,15 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "../Pages/Login";
-
-
-
 import Home from "../Pages/Header";
-
 import Layout from "../Pages/MainLayout";
 import ClientMaster from "../Components/Form/Master/ClientMaster";
 import EmployeeMaster from "../Components/Form/Master/EmployeeMaster";
 import RateTypeMaster from "../Components/Form/Master/RateTypeMaster";
 import MultiMaster from "../Components/Form/Master/MultiMaster/";
 import LabMaster from "../Components/Form/Master/LabShortMaster";
-import AddLetterHead from "../Components/Form/Master/MultiMaster/AddLetterHead";
-import LabTestMaster from "../Components/Form/Master/LabTestMaster";
+import AddLetterHead from "../Components/Form/Master/AddLetterHead";
+import LabTestMaster from "../Components/Form/Master/LabTestMaster/LabTestMaster";
 
 const router = createBrowserRouter([
   {
