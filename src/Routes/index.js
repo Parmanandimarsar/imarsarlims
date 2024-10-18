@@ -84,62 +84,7 @@ const router = createBrowserRouter([
       //   path: "/sales-invoice",
       //   element: <SalesInvoice />,
       // },
-      // {
-      //   path: "/delivery-challan",
-      //   element: <DeliveryChallan />,
-      // },
-      // {
-      //   path: "/delivery-invoice",
-      //   element: <DeliveryInvoice />,
-      // },
-      // {
-      //   path: "/account-payment-voucher",
-      //   element: <AccountsPaymentVoucher />,
-      // },
-      // {
-      //   path: "/contra-voucher",
-      //   element: <ContraVoucher />,
-      // },
-      // {
-      //   path: "/cash-books",
-      //   element: <CashBooks />,
-      // },
-      // {
-      //   path: "/expense-book",
-      //   element: <ExpenseBook />,
-      // },
-      // {
-      //   path: "/ledger-view",
-      //   element: <LedgerView />,
-      // },
-      // {
-      //   path: "/income",
-      //   element: <Income />,
-      // },
-      // {
-      //   path: "/receipt",
-      //   element: <Receipt />,
-      // },
-      // {
-      //   path: "/bank-book",
-      //   element: <BankBook />,
-      // },
-      // {
-      //   path: "/hsncode-master",
-      //   element: <HSNCODEMaster />,
-      // },
-      // {
-      //   path: "/parts-master",
-      //   element: <PartsMaster />,
-      // },
-      // {
-      //   path: "/location-master",
-      //   element: <LocationMaster />,
-      // },
-      // {
-      //   path: "/ledger-group",
-      //   element: <LedgerGroup />,
-      // },
+     
       // {
       //   path: "/location-master",
       //   element: <LocationMaster />,
