@@ -948,7 +948,7 @@ export const MasterAddLetterHead = (handleEdit, handleDelete) => [
   ,
 ];
 
-export const MasterLabTestMaster = (handleToggleActive, handleEdit) =>[
+export const MasterLabTestMaster = (handleToggleActive, handleEdit) => [
   { field: "id", headerName: "S.No", width: 50, disableColumnMenu: true },
 
   {
@@ -1023,7 +1023,6 @@ export const MasterLabTestMaster = (handleToggleActive, handleEdit) =>[
           size="small"
           checked={params.value === "true" || params.value === true} // Ensure proper boolean value
           onChange={() => handleToggleActive(params.row)} // Pass params.row to toggle active
-          
         />
       </div>
     ),
@@ -1046,7 +1045,28 @@ export const MasterLabTestMaster = (handleToggleActive, handleEdit) =>[
     ),
   },
 ];
-
+export const MasterMenu = (handleEdit) => [
+  { field: "menu", headerName: "Menu", flex: 1 },
+  { field: "submenu", headerName: "Submenu", flex: 1 },
+  { field: "menuurl", headerName: "Menu URL", flex: 1 },
+  { field: "icon", headerName: "Icon", flex: 1 },
+  {
+    field: "actions",
+    headerName: "Actions",
+    flex: 1,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
 export const MasterHSNCodeTable = [
   {
     field: "id",

@@ -10,6 +10,7 @@ import MultiMaster from "../Components/Form/Master/MultiMaster/";
 import LabMaster from "../Components/Form/Master/LabShortMaster";
 import AddLetterHead from "../Components/Form/Master/AddLetterHead";
 import LabTestMaster from "../Components/Form/Master/LabTestMaster/LabTestMaster";
+import MenuMaster from "../Components/Form/Master/MenuMaster";
 
 const router = createBrowserRouter([
   {
@@ -48,10 +49,10 @@ const router = createBrowserRouter([
         path: "/lab-test-master",
         element: <LabTestMaster />,
       },
-      // {
-      //   path: "/miscmaster",
-      //   element: <MiscMaster />,
-      // },
+      {
+        path: "/menu-master",
+        element: <MenuMaster />,
+      },
       // {
       //   path: "/vehicle-order",
       //   element: <VehicleOrder />,
