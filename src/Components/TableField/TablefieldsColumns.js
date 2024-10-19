@@ -1046,14 +1046,20 @@ export const MasterLabTestMaster = (handleToggleActive, handleEdit) => [
   },
 ];
 export const MasterMenu = (handleEdit) => [
-  { field: "menu", headerName: "Menu", flex: 1 },
-  { field: "submenu", headerName: "Submenu", flex: 1 },
-  { field: "menuurl", headerName: "Menu URL", flex: 1 },
-  { field: "icon", headerName: "Icon", flex: 1 },
+  { field: "menu", headerName: "Menu", flex: 1, disableColumnMenu: true },
+  { field: "submenu", headerName: "Submenu", flex: 1, disableColumnMenu: true },
+  {
+    field: "menuurl",
+    headerName: "Menu URL",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  { field: "icon", headerName: "Icon", flex: 1, disableColumnMenu: true },
   {
     field: "actions",
     headerName: "Actions",
     flex: 1,
+    disableColumnMenu: true,
     renderCell: (params) => (
       <div className="flex ml-5 gap-2 ">
         <IconButton
@@ -1067,6 +1073,24 @@ export const MasterMenu = (handleEdit) => [
     ),
   },
 ];
+
+export const MasterObservationMapping = [
+  { field: "id", headerName: "S.No", width: 150, disableColumnMenu: true },
+
+  {
+    field: "Observation Name", // Unique field
+    headerName: "Observation Name",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "testName", // Unique field
+    headerName: "Total Count",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+];
+
 export const MasterHSNCodeTable = [
   {
     field: "id",

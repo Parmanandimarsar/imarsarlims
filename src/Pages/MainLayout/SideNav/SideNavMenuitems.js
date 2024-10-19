@@ -14,7 +14,7 @@ export const menuItems = [
         { text: "Add-Letter-Head", link: "/add-letter-head", icon: <MailIcon /> },
         { text: "LabTestMaster", link: "/lab-test-master", icon: <MailIcon /> },
         { text: "Menu Master", link: "/menu-master", icon: <MailIcon /> },
-        // { text: "Parts Master", link: "/parts-master", icon: <MailIcon /> },
+        { text: "Observation Mapping", link: "/observation-mapping", icon: <MailIcon /> },
         // { text: "Ledger Group", link: "/ledger-group", icon: <MailIcon /> },
         // { text: "Location Master", link: "/location-master", icon: <MailIcon /> },
       ],

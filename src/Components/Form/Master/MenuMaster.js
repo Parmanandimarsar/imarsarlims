@@ -15,6 +15,7 @@ import {
 import * as Yup from "yup";
 import { Grid } from "@mui/material";
 import MailIcon from "@mui/icons-material/Mail"; // Example icon
+import { v4 as uuidv4 } from "uuid"; // For generating unique IDs
 import { MasterMenu } from "../../TableField/TablefieldsColumns"; // Import your table column definitions
 
 const MenuMaster = () => {
@@ -26,7 +27,14 @@ const MenuMaster = () => {
       icon: "MailIcon", // Store as a string
       subItems: [
         {
+          id: uuidv4(), // Generate unique ID for submenu
           submenu: "Client-Master",
+          menuurl: "/client-master",
+          icon: "MailIcon", // Store as a string
+        },
+        {
+          id: uuidv4(), // Generate unique ID for submenu
+          submenu: "Master",
           menuurl: "/client-master",
           icon: "MailIcon", // Store as a string
         },
@@ -38,6 +46,7 @@ const MenuMaster = () => {
       icon: "MailIcon", // Store as a string
       subItems: [
         {
+          id: uuidv4(), // Generate unique ID for submenu
           submenu: "Client-Master",
           menuurl: "/client-master",
           icon: "MailIcon", // Store as a string
@@ -45,6 +54,7 @@ const MenuMaster = () => {
       ],
     },
   ]);
+  console.log("rows", rows);
 
   const iconMapper = {
     MailIcon: <MailIcon />,
@@ -66,21 +76,24 @@ const MenuMaster = () => {
   });
 
   const handleEdit = (row) => {
-    setEditRow(row);
+    const { menu, submenu, menuurl, icon, id } = row;
+    setEditRow({ menu, submenu, menuurl, icon, id }); // Set the complete edit state including submenu ID
   };
 
   const onSubmit = (values, { setSubmitting, resetForm }) => {
-    const formData = { ...values }; // Data from the form
+    const formData = { ...values };
 
     if (editRow) {
-      // Update existing row
+      // Update existing submenu
       setRows((prevRows) =>
         prevRows.map((row) =>
-          row.id === editRow.id
+          row.menu === formData.menu
             ? {
                 ...row,
                 subItems: row.subItems.map((subItem) =>
-                  subItem.submenu === editRow.submenu ? formData : subItem
+                  subItem.id === editRow.id // Match by submenu ID
+                    ? { ...subItem, ...formData } // Update submenu with form data
+                    : subItem
                 ),
               }
             : row
@@ -88,7 +101,7 @@ const MenuMaster = () => {
       );
       setEditRow(null); // Reset edit state
     } else {
-      // Add new row or submenu
+      // Add new submenu or menu
       const menuExists = rows.find((row) => row.menu === formData.menu);
 
       if (menuExists) {
@@ -98,7 +111,13 @@ const MenuMaster = () => {
             row.menu === formData.menu
               ? {
                   ...row,
-                  subItems: [...row.subItems, formData],
+                  subItems: [
+                    ...row.subItems,
+                    {
+                      ...formData,
+                      id: uuidv4(), // Assign a new unique ID to the submenu
+                    },
+                  ],
                 }
               : row
           )
@@ -111,7 +130,12 @@ const MenuMaster = () => {
             id: (prevRows.length + 1).toString(),
             menu: formData.menu,
             icon: formData.icon,
-            subItems: [formData],
+            subItems: [
+              {
+                ...formData,
+                id: uuidv4(), // Assign a new unique ID to the submenu
+              },
+            ],
           },
         ]);
       }
@@ -125,7 +149,9 @@ const MenuMaster = () => {
     <div className="mb-[50px] pl-2">
       <Box className="bg-[#fff] rounded-lg shadow-lg" autoComplete="off">
         <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-          <Typography className="titleheadingtext">Add Menu & Submenu</Typography>
+          <Typography className="titleheadingtext">
+            Add Menu & Submenu
+          </Typography>
         </Box>
         <Divider className="divider" />
 
@@ -143,7 +169,12 @@ const MenuMaster = () => {
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
-                      <Grid item xs={3} className="formlableborder" sx={{ mr: "3px" }}>
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
                         <FormLabel>Menu Name</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
@@ -155,7 +186,11 @@ const MenuMaster = () => {
                           size="small"
                           error={touched.menu && !!errors.menu}
                         />
-                        <ErrorMessage name="menu" component="div" className="text-red-600 text-xs" />
+                        <ErrorMessage
+                          name="menu"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
                       </Grid>
                     </Grid>
                   </FormControl>
@@ -165,7 +200,12 @@ const MenuMaster = () => {
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
-                      <Grid item xs={3} className="formlableborder" sx={{ mr: "3px" }}>
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
                         <FormLabel>Submenu Name</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
@@ -177,7 +217,11 @@ const MenuMaster = () => {
                           size="small"
                           error={touched.submenu && !!errors.submenu}
                         />
-                        <ErrorMessage name="submenu" component="div" className="text-red-600 text-xs" />
+                        <ErrorMessage
+                          name="submenu"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
                       </Grid>
                     </Grid>
                   </FormControl>
@@ -187,7 +231,12 @@ const MenuMaster = () => {
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
-                      <Grid item xs={3} className="formlableborder" sx={{ mr: "3px" }}>
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
                         <FormLabel>Submenu URL</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
@@ -199,7 +248,11 @@ const MenuMaster = () => {
                           size="small"
                           error={touched.menuurl && !!errors.menuurl}
                         />
-                        <ErrorMessage name="menuurl" component="div" className="text-red-600 text-xs" />
+                        <ErrorMessage
+                          name="menuurl"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
                       </Grid>
                     </Grid>
                   </FormControl>
@@ -209,32 +262,46 @@ const MenuMaster = () => {
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
-                      <Grid item xs={3} className="formlableborder" sx={{ mr: "3px" }}>
+                      <Grid
+                        item
+                        xs={3}
+                        className="formlableborder"
+                        sx={{ mr: "3px" }}
+                      >
                         <FormLabel>Icon</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
-                        <Field as={Select} name="icon" fullWidth variant="outlined" size="small">
+                        <Field
+                          as={Select}
+                          name="icon"
+                          fullWidth
+                          variant="outlined"
+                          size="small"
+                        >
                           <MenuItem value="" disabled>
                             -Select Icon-
                           </MenuItem>
                           <MenuItem value="MailIcon">Mail Icon</MenuItem>
                           <MenuItem value="OtherIcon">Other Icon</MenuItem>
                         </Field>
-                        <ErrorMessage name="icon" component="div" className="text-red-600 text-xs" />
+                        <ErrorMessage
+                          name="icon"
+                          component="div"
+                          className="text-red-600 text-xs"
+                        />
                       </Grid>
                     </Grid>
                   </FormControl>
                 </Grid>
               </Grid>
               <Divider className="divider" />
-              <Button
+              <button
                 type="submit"
-                variant="contained"
-                color="primary"
+                className="border-none project-thim rounded-md text-white  "
                 disabled={isSubmitting}
               >
                 {editRow ? "Update" : "Save"}
-              </Button>
+              </button>
             </Form>
           )}
         </Formik>
@@ -243,19 +310,22 @@ const MenuMaster = () => {
       {/* Data Grid */}
       <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
         <DataGrid
+         className="datagridtable"
           rows={rows
             .map((row) =>
               row.subItems.map((subItem) => ({
-                id: `${row.id}-${subItem.submenu}`,
+                ...subItem,
                 menu: row.menu,
-                submenu: subItem.submenu,
-                menuurl: subItem.menuurl,
-                icon: subItem.icon, // Keep as string in rows
+                icon: subItem.icon,
               }))
             )
             .flat()}
-          columns={MasterMenu(handleEdit)} // Column definition with icon rendering
+          columns={MasterMenu(handleEdit)}
           pageSize={5}
+          rowsPerPageOptions={[5]}
+          columnHeaderHeight={20}
+          rowHeight={25}
+          headerHeight={20}
         />
       </div>
     </div>

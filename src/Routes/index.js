@@ -11,6 +11,7 @@ import LabMaster from "../Components/Form/Master/LabShortMaster";
 import AddLetterHead from "../Components/Form/Master/AddLetterHead";
 import LabTestMaster from "../Components/Form/Master/LabTestMaster/LabTestMaster";
 import MenuMaster from "../Components/Form/Master/MenuMaster";
+import ObservationMapping from "../Components/Form/Master/ObservationMapping";
 
 const router = createBrowserRouter([
   {
@@ -53,10 +54,10 @@ const router = createBrowserRouter([
         path: "/menu-master",
         element: <MenuMaster />,
       },
-      // {
-      //   path: "/vehicle-order",
-      //   element: <VehicleOrder />,
-      // },
+      {
+        path: "/observation-mapping",
+        element: <ObservationMapping/>,
+      },
       // {
       //   path: "/Purchase-Challan-Vehicle",
       //   element: <PurchaseChallanVehicle />,
