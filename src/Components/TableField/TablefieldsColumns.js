@@ -1,5 +1,5 @@
 import { IconButton, Switch } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit"; 
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
 
@@ -841,19 +841,16 @@ export const MasterRoleMaster = (handleToggleActive, handleEdit, Switch) => [
     ),
   },
 ];
-export const MasterAddLetterHead = (
-  handleEdit,
-  handleDelete,
-) => [
+export const MasterAddLetterHead = (handleEdit, handleDelete) => [
   { field: "id", headerName: "S.No", width: 100, disableColumnMenu: true },
   {
-    field: "center", 
+    field: "center",
     headerName: "Center",
     width: 150,
     disableColumnMenu: true,
   },
   {
-    field: "reportHeaderHeightY", 
+    field: "reportHeaderHeightY",
     headerName: "Report Header Height Y",
     width: 150,
     disableColumnMenu: true,
@@ -877,7 +874,7 @@ export const MasterAddLetterHead = (
     disableColumnMenu: true,
   },
   {
-    field: "qrHeader", 
+    field: "qrHeader",
     headerName: "QR Header",
     width: 150,
     disableColumnMenu: true,
@@ -919,9 +916,9 @@ export const MasterAddLetterHead = (
     disableColumnMenu: true,
     renderCell: (params) => {
       // console.log("param",params);
-      
-      return <ImageView imageUrl={params.row.letterHead} />; 
-    }
+
+      return <ImageView imageUrl={params.row.letterHead} />;
+    },
   },
   {
     field: "actions",
@@ -951,9 +948,9 @@ export const MasterAddLetterHead = (
   ,
 ];
 
-export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> [
+export const MasterLabTestMaster = (handleToggleActive, handleEdit) => [
   { field: "id", headerName: "S.No", width: 50, disableColumnMenu: true },
-  
+
   {
     field: "testType", // Unique field
     headerName: "Test Type",
@@ -966,9 +963,9 @@ export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> 
     width: 100,
     disableColumnMenu: true,
   },
- 
+
   {
-    field: "testCode", 
+    field: "testCode",
     headerName: "Test Code",
     width: 100,
     disableColumnMenu: true,
@@ -1014,7 +1011,6 @@ export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> 
     headerName: "Sample Type",
     width: 100,
     disableColumnMenu: true,
-   
   },
   {
     field: "active",
@@ -1025,8 +1021,8 @@ export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> 
       <div className="flex justify-center items-center">
         <Switch
           size="small"
-          checked={params.value}
-          onChange={() => handleToggleActive(params.row)}
+          checked={params.value === "true" || params.value === true} // Ensure proper boolean value
+          onChange={() => handleToggleActive(params.row)} // Pass params.row to toggle active
         />
       </div>
     ),
@@ -1037,7 +1033,7 @@ export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> 
     width: 175,
     disableColumnMenu: true,
     renderCell: (params) => (
-      <div className="flex justify-center gap-2 items-center sticky-action">
+      <div className="flex ml-5 gap-2 ">
         <IconButton
           aria-label="edit"
           color="primary"
@@ -1045,20 +1041,55 @@ export const MasterLabTestMaster=(handleEdit,handleDelete,handleToggleActive)=> 
         >
           <EditIcon sx={{ fontSize: "15px" }} />
         </IconButton>
-
+      </div>
+    ),
+  },
+];
+export const MasterMenu = (handleEdit) => [
+  { field: "menu", headerName: "Menu", flex: 1, disableColumnMenu: true },
+  { field: "submenu", headerName: "Submenu", flex: 1, disableColumnMenu: true },
+  {
+    field: "menuurl",
+    headerName: "Menu URL",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  { field: "icon", headerName: "Icon", flex: 1, disableColumnMenu: true },
+  {
+    field: "actions",
+    headerName: "Actions",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
         <IconButton
-          aria-label="delete"
-          color="secondary"
-          onClick={() => handleDelete(params.row)}
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+          <EditIcon sx={{ fontSize: "15px" }} />
         </IconButton>
       </div>
     ),
   },
-  
 ];
 
+export const MasterObservationMapping = [
+  { field: "id", headerName: "S.No", width: 150, disableColumnMenu: true },
+
+  {
+    field: "Observation Name", // Unique field
+    headerName: "Observation Name",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "testName", // Unique field
+    headerName: "Total Count",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+];
 
 export const MasterHSNCodeTable = [
   {

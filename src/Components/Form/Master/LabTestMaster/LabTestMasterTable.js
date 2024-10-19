@@ -3,55 +3,83 @@ import { Grid, FormControl, FormLabel, TextField, Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { MasterLabTestMaster } from "../../../TableField/TablefieldsColumns";
 import { ExportToExcel } from "../../../ConstantItems/ExcelExport";
+import DataGridTable from "../../../ConstantItems/DataGridTable";
 
 // Define row as an array of objects
 const initialRows = [
   {
     id: 1,
-    testName: "Snow",
-    packageName: "abcd",
-    testMethod: "Jon",
+    testType: "Test",
+    testName: "cdf",
     testCode: 35,
-    sampleVolume: "434",
-    containerColor: "45",
+    testMethod: "Jon",
+    sampleVolume: "2ml",
+    containerColor: "Black",
     department: "gfg",
-    gender: "564",
+    gender: "male",
     reportType: "yes",
-    sampleType: "other",
-    actions: "5%",
+    sampleType: ["Sample Type 1"],
+    active: true,
   },
+  {
+    id: 2,
+    testType: "Profile",
+    testName: "cdf",
+    testCode: 35,
+    testMethod: "Jon",
+    sampleVolume: "1ml",
+    containerColor: "Blue",
+    department: "gfg",
+    gender: "male",
+    reportType: "yes",
+    sampleType: ["Sample Type 2"],
+    active: true,
+  },
+
   // Add more rows if needed
 ];
 
-const LabTestMasterTable = () => {
+const LabTestMasterTable = ({ onSetEditRow }) => {
   const [rows, setRows] = useState(initialRows); // Rows to display
   const [searchTerm, setSearchTerm] = useState(""); // Search term
 
-  const handleEdit = () => {};
-  const handleDelete = () => {};
-  const handleToggleActive = () => {};
+  const handleEdit = (row) => {
+    // console.log("Editing row:", row);
+    onSetEditRow(row); // Call edit function with selected row
+  };
+
+  const handleToggleActive = (row) => {
+    const updatedRows = rows.map((r) =>
+      r.id === row.id ? { ...r, active: !r.active } : r
+    );
+    setRows(updatedRows);
+  };
+
   // Handle search logic
   const handleSearch = (event) => {
     const term = event.target.value.toLowerCase();
     setSearchTerm(term);
 
     // Filter rows based on search term
-    const filteredRows = initialRows.filter(
-      (row) =>
-        row.testName.toLowerCase().includes(term) ||
-        row.testCode.toLowerCase().includes(term) ||
-        row.department.toLowerCase().includes(term)
-    );
+    const filteredRows = initialRows.filter((row) => {
+      const testName = row.testName ? row.testName.toLowerCase() : "";
+      const testCode = row.testCode ? String(row.testCode).toLowerCase() : ""; // Convert testCode to string
+      const department = row.department ? row.department.toLowerCase() : "";
+
+      return (
+        testName.includes(term) ||
+        testCode.includes(term) ||
+        department.includes(term)
+      );
+    });
+
     setRows(filteredRows);
   };
+
   const exportToExcel = () => {
-    const headers = ["S.No", "Rate Type", "Center", "Active"];
-    const data = rows.map((row) => [
-      row.id,
-      row.rateType,
-      row.center.join(", "),
-      row.active ? "Active" : "Inactive",
-    ]);
+    const columns = MasterLabTestMaster(handleToggleActive, handleEdit);
+    const headers = columns.map((column) => column.headerName);
+    const data = rows.map((row) => columns.map((column) => row[column.field]));
 
     ExportToExcel(data, headers, "rate_type_master.xlsx");
   };
@@ -89,21 +117,10 @@ const LabTestMasterTable = () => {
           Export
         </button>
       </div>
-      <Box sx={{ height: 300, width: "100%", mt: 2 }}>
-        <DataGrid
+      <Box sx={{ height: 300, width: "100%" }}>
+        <DataGridTable
           rows={rows} // Filtered rows
-          columns={MasterLabTestMaster(
-            handleEdit,
-            handleDelete,
-            handleToggleActive
-          )}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-          columnHeaderHeight={20}
-          rowHeight={25}
-          headerHeight={20}
-          hideFooterSelectedRowCount
+          columns={MasterLabTestMaster(handleToggleActive, handleEdit)}
         />
       </Box>
     </div>

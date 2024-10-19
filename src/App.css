@@ -63,7 +63,15 @@ a{
   font-weight: 600 !important;
 }
 
+/* switch button */
+/* .MuiSwitch-track{
+  background-color: red !important;
+  opacity: 1 !important;
+} */
 
+.Mui-checked{
+   color: 'green', !important;
+}
 /* form lable  */
 .formlableborder {
   border: 1px solid rgba(0, 0, 0, 0.15) !important;

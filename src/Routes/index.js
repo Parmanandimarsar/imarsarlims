@@ -10,6 +10,8 @@ import MultiMaster from "../Components/Form/Master/MultiMaster/";
 import LabMaster from "../Components/Form/Master/LabShortMaster";
 import AddLetterHead from "../Components/Form/Master/AddLetterHead";
 import LabTestMaster from "../Components/Form/Master/LabTestMaster/LabTestMaster";
+import MenuMaster from "../Components/Form/Master/MenuMaster";
+import ObservationMapping from "../Components/Form/Master/ObservationMapping";
 
 const router = createBrowserRouter([
   {
@@ -48,14 +50,14 @@ const router = createBrowserRouter([
         path: "/lab-test-master",
         element: <LabTestMaster />,
       },
-      // {
-      //   path: "/miscmaster",
-      //   element: <MiscMaster />,
-      // },
-      // {
-      //   path: "/vehicle-order",
-      //   element: <VehicleOrder />,
-      // },
+      {
+        path: "/menu-master",
+        element: <MenuMaster />,
+      },
+      {
+        path: "/observation-mapping",
+        element: <ObservationMapping/>,
+      },
       // {
       //   path: "/Purchase-Challan-Vehicle",
       //   element: <PurchaseChallanVehicle />,
@@ -84,62 +86,7 @@ const router = createBrowserRouter([
       //   path: "/sales-invoice",
       //   element: <SalesInvoice />,
       // },
-      // {
-      //   path: "/delivery-challan",
-      //   element: <DeliveryChallan />,
-      // },
-      // {
-      //   path: "/delivery-invoice",
-      //   element: <DeliveryInvoice />,
-      // },
-      // {
-      //   path: "/account-payment-voucher",
-      //   element: <AccountsPaymentVoucher />,
-      // },
-      // {
-      //   path: "/contra-voucher",
-      //   element: <ContraVoucher />,
-      // },
-      // {
-      //   path: "/cash-books",
-      //   element: <CashBooks />,
-      // },
-      // {
-      //   path: "/expense-book",
-      //   element: <ExpenseBook />,
-      // },
-      // {
-      //   path: "/ledger-view",
-      //   element: <LedgerView />,
-      // },
-      // {
-      //   path: "/income",
-      //   element: <Income />,
-      // },
-      // {
-      //   path: "/receipt",
-      //   element: <Receipt />,
-      // },
-      // {
-      //   path: "/bank-book",
-      //   element: <BankBook />,
-      // },
-      // {
-      //   path: "/hsncode-master",
-      //   element: <HSNCODEMaster />,
-      // },
-      // {
-      //   path: "/parts-master",
-      //   element: <PartsMaster />,
-      // },
-      // {
-      //   path: "/location-master",
-      //   element: <LocationMaster />,
-      // },
-      // {
-      //   path: "/ledger-group",
-      //   element: <LedgerGroup />,
-      // },
+     
       // {
       //   path: "/location-master",
       //   element: <LocationMaster />,
