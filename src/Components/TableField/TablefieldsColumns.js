@@ -1,4 +1,4 @@
-import { IconButton, Switch } from "@mui/material";
+import { Button, IconButton, Switch } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
@@ -1045,19 +1045,70 @@ export const MasterLabTestMaster = (handleToggleActive, handleEdit) => [
     ),
   },
 ];
-export const MasterMenu = (handleEdit) => [
-  { field: "menu", headerName: "Menu", flex: 1, disableColumnMenu: true },
-  { field: "submenu", headerName: "Submenu", flex: 1, disableColumnMenu: true },
+
+export const MasterMenu = (handleEdit, handleDelete) => [
   {
-    field: "menuurl",
+    field: "menuName",
+    headerName: "Menu Name",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "displaySequence",
+    headerName: "Display Sequence",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "isParentMenu",
+    headerName: "Parent Menu",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) =>
+      params.value ? (
+        <p className="text-green-600">{"Yes"}</p>
+      ) : (
+        <p className="text-red-600">{"No"}</p>
+      ), // Conditional rendering for boolean
+  },
+  {
+    field: "menuUrl",
     headerName: "Menu URL",
     flex: 1,
     disableColumnMenu: true,
   },
-  { field: "icon", headerName: "Icon", flex: 1, disableColumnMenu: true },
   {
-    field: "actions",
-    headerName: "Actions",
+    field: "active",
+    headerName: "Active",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (params.value ? "Yes" : "No"), // Conditional rendering for boolean
+  },
+  {
+    field: "doNotDisplay",
+    headerName: "Hide Page",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (params.value ? "Yes" : "No"), // Conditional rendering for boolean
+  },
+  {
+    field: "activate",
+    headerName: "Activate",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleDelete(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "edit",
+    headerName: "Edit",
     flex: 1,
     disableColumnMenu: true,
     renderCell: (params) => (
@@ -1090,6 +1141,258 @@ export const MasterObservationMapping = [
     disableColumnMenu: true,
   },
 ];
+export const DrTestApprovalMasterColumns = (
+  handleToggleActive,
+  handleEdit
+) => [
+  {
+    field: "doctorName",
+    headerName: "Doctor Name",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "centre",
+    headerName: "Centre",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "employee",
+    headerName: "Employee",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "signUpload",
+    headerName: "Sign	",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => {
+      // console.log("param",params);
+
+      return <ImageView imageUrl={params.row.signUpload} />;
+    },
+  },
+
+  // {
+  //   field: "active",
+  //   headerName: "Active",
+  //   flex: 1,
+  //   disableColumnMenu: true,
+  //   renderCell: (params) =>
+  //     params.value ? (
+  //       <p className="text-green-600">{"Yes"}</p>
+  //     ) : (
+  //       <p className="text-red-600">{"No"}</p>
+  //     ), // Conditional rendering for boolean
+  // },
+
+  {
+    field: "deActivate",
+    headerName: "DeActivate",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex justify-center items-center">
+        <Switch
+          size="small"
+          checked={params.value}
+          onChange={() => handleToggleActive(params.row)}
+        />
+      </div>
+    ),
+  },
+  {
+    field: "edit",
+    headerName: "Edit",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+export const TestOutSourceLabMasterColumns = (
+  handleDelete,
+  handleEdit
+) => [
+  {
+    field: "bookingCentre",
+    headerName: "Booking Centre",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "processingCentre",
+    headerName: "Processing Centre",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "department",
+    headerName: "Department",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "labTest",
+    headerName: "LabTest",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "action",
+    headerName: "Action",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleDelete(params.row)}
+        >
+          <DeleteIcon sx={{ fontSize: "15px", 
+            // color:"#ff1744"
+          }} />
+        </IconButton>
+      </div>
+    ),
+  },
+
+  // {
+  //   field: "deActivate",
+  //   headerName: "DeActivate",
+  //   flex: 1,
+  //   disableColumnMenu: true,
+  //   renderCell: (params) => (
+  //     <div className="flex justify-center items-center">
+  //       <Switch
+  //         size="small"
+  //         checked={params.value}
+  //         onChange={() => handleToggleActive(params.row)}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  {
+    field: "edit",
+    headerName: "Edit",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+
+export const OuthouseSetteliteProcessingMasterColumns = (
+  handleDelete,
+  handleEdit
+) => [
+  {
+    field: "bookingCentre",
+    headerName: "Booking Centre",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "department",
+    headerName: "Department",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "investigation",
+    headerName: "Investigation",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "lab",
+    headerName: "Lab",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "rate",
+    headerName: "Rate",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "action",
+    headerName: "Action",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleDelete(params.row)}
+        >
+          <DeleteIcon sx={{ fontSize: "15px", 
+            // color:"#ff1744"
+          }} />
+        </IconButton>
+      </div>
+    ),
+  },
+
+  // {
+  //   field: "deActivate",
+  //   headerName: "DeActivate",
+  //   flex: 1,
+  //   disableColumnMenu: true,
+  //   renderCell: (params) => (
+  //     <div className="flex justify-center items-center">
+  //       <Switch
+  //         size="small"
+  //         checked={params.value}
+  //         onChange={() => handleToggleActive(params.row)}
+  //       />
+  //     </div>
+  //   ),
+  // },
+  {
+    field: "edit",
+    headerName: "Edit",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+];
+
+
 
 export const MasterHSNCodeTable = [
   {

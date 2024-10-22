@@ -1,171 +1,114 @@
-import React, { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { DataGrid } from "@mui/x-data-grid";
+import React, { useState, useEffect } from "react";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import {
+  Grid,
+  TextField,
+  Checkbox,
   Button,
+  FormControlLabel,
+  MenuItem,
+  Select,
   FormControl,
   FormLabel,
-  Select,
-  MenuItem,
   Box,
-  Divider,
   Typography,
-  TextField,
+  Divider,
 } from "@mui/material";
-import * as Yup from "yup";
-import { Grid } from "@mui/material";
-import MailIcon from "@mui/icons-material/Mail"; // Example icon
-import { v4 as uuidv4 } from "uuid"; // For generating unique IDs
-import { MasterMenu } from "../../TableField/TablefieldsColumns"; // Import your table column definitions
+import { MasterMenu } from "../../TableField/TablefieldsColumns";
+import DataGridTable from "../../ConstantItems/DataGridTable";
+
+// Validation Schema using Yup
+const validationSchema = Yup.object().shape({
+  menuName: Yup.string().required("Menu Name is required"),
+  displaySequence: Yup.number().required("Display Sequence is required"),
+  // Add conditional validation for 'menuUrl'
+  menuUrl: Yup.string().when("isParentMenu", {
+    is: (value) => value === false,
+    then: (schema) => schema.required("Menu URL is required"),
+    otherwise: (schema) => schema,
+  }),
+});
 
 const MenuMaster = () => {
-  const [editRow, setEditRow] = useState(null); // For handling editing a row
-  const [rows, setRows] = useState([
-    {
-      id: "1",
-      menu: "Master",
-      icon: "MailIcon", // Store as a string
-      subItems: [
-        {
-          id: uuidv4(), // Generate unique ID for submenu
-          submenu: "Client-Master",
-          menuurl: "/client-master",
-          icon: "MailIcon", // Store as a string
-        },
-        {
-          id: uuidv4(), // Generate unique ID for submenu
-          submenu: "Master",
-          menuurl: "/client-master",
-          icon: "MailIcon", // Store as a string
-        },
-      ],
-    },
-    {
-      id: "2",
-      menu: "Client",
-      icon: "MailIcon", // Store as a string
-      subItems: [
-        {
-          id: uuidv4(), // Generate unique ID for submenu
-          submenu: "Client-Master",
-          menuurl: "/client-master",
-          icon: "MailIcon", // Store as a string
-        },
-      ],
-    },
-  ]);
-  console.log("rows", rows);
+  const [menuOptions, setMenuOptions] = useState([]);
+  const [menuList, setMenuList] = useState([]); // State to hold the list of menus
+  const [editRow, setEditRow] = useState(null); // State to hold the row being edited
+  console.log("menulist", menuList);
 
-  const iconMapper = {
-    MailIcon: <MailIcon />,
-    OtherIcon: <MailIcon />, // Use the appropriate icon component here
-  };
+  // Simulate API call to fetch menu items
+  useEffect(() => {
+    const parentMenus = menuList.filter((menu) => menu.isParentMenu);
+    setMenuOptions(parentMenus);
+  }, [menuList]);
+  console.log("menuOptions", menuOptions);
 
   const initialValues = {
+    menuName: "",
+    displaySequence: "",
+    menuUrl: "",
+    isParentMenu: true,
+    active: true,
+    doNotDisplay: false,
     menu: "",
-    submenu: "",
-    menuurl: "",
-    icon: "",
+    activate:true,
   };
 
-  const validationSchema = Yup.object().shape({
-    menu: Yup.string().required("Menu Name is required"),
-    submenu: Yup.string().required("Submenu Name is required"),
-    menuurl: Yup.string().required("Submenu URL is required"),
-    icon: Yup.string().required("Icon is required"),
-  });
+  const handleFormSubmit = (values, { resetForm, setErrors }) => {
+    console.log("values", values);
 
-  const handleEdit = (row) => {
-    const { menu, submenu, menuurl, icon, id } = row;
-    setEditRow({ menu, submenu, menuurl, icon, id }); // Set the complete edit state including submenu ID
-  };
+    const isDuplicate = menuList.some(
+      (menu) =>
+        menu.menuName.toLowerCase() === values.menuName.toLowerCase() &&
+        menu.id !== editRow?.id
+    );
 
-  const onSubmit = (values, { setSubmitting, resetForm }) => {
-    const formData = { ...values };
-
+    if (isDuplicate) {
+      // Set error for the duplicate menuName
+      setErrors({ menuName: "Menu name already exists" });
+      return; // Stop the submission
+    }
     if (editRow) {
-      // Update existing submenu
-      setRows((prevRows) =>
-        prevRows.map((row) =>
-          row.menu === formData.menu
-            ? {
-                ...row,
-                subItems: row.subItems.map((subItem) =>
-                  subItem.id === editRow.id // Match by submenu ID
-                    ? { ...subItem, ...formData } // Update submenu with form data
-                    : subItem
-                ),
-              }
-            : row
+      // Update existing row
+      setMenuList(
+        menuList.map((menu) =>
+          menu.id === editRow.id ? { ...values, id: editRow.id } : menu
         )
       );
-      setEditRow(null); // Reset edit state
+      setEditRow(null);
     } else {
-      // Add new submenu or menu
-      const menuExists = rows.find((row) => row.menu === formData.menu);
-
-      if (menuExists) {
-        // Add new submenu to existing menu
-        setRows((prevRows) =>
-          prevRows.map((row) =>
-            row.menu === formData.menu
-              ? {
-                  ...row,
-                  subItems: [
-                    ...row.subItems,
-                    {
-                      ...formData,
-                      id: uuidv4(), // Assign a new unique ID to the submenu
-                    },
-                  ],
-                }
-              : row
-          )
-        );
-      } else {
-        // Add new menu
-        setRows((prevRows) => [
-          ...prevRows,
-          {
-            id: (prevRows.length + 1).toString(),
-            menu: formData.menu,
-            icon: formData.icon,
-            subItems: [
-              {
-                ...formData,
-                id: uuidv4(), // Assign a new unique ID to the submenu
-              },
-            ],
-          },
-        ]);
-      }
+      // Add new menu item
+      setMenuList([...menuList, { ...values, id: new Date().getTime() }]); // Assign a unique ID using timestamp
     }
-
     resetForm(); // Reset the form after submission
-    setSubmitting(false);
+  };
+
+  const handleEdit = (row) => {
+    setEditRow(row); // Set the row to be edited
+  };
+
+  const handleDelete = (id) => {
+    setMenuList(menuList.filter((menu) => menu.id !== id)); // Delete menu item by filtering it out
   };
 
   return (
     <div className="mb-[50px] pl-2">
-      <Box className="bg-[#fff] rounded-lg shadow-lg" autoComplete="off">
-        <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
-          <Typography className="titleheadingtext">
-            Add Menu & Submenu
-          </Typography>
+      <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
+        <Box className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg project-thim">
+          <Typography className="pl-1">Menu Master</Typography>
         </Box>
         <Divider className="divider" />
 
         <Formik
+          enableReinitialize
           initialValues={editRow || initialValues}
           validationSchema={validationSchema}
-          onSubmit={onSubmit}
-          enableReinitialize
+          onSubmit={handleFormSubmit}
         >
-          {({ isSubmitting, touched, errors }) => (
-            <Form className="p-1">
-              <Divider className="divider" />
-              <Grid container spacing={1}>
-                {/* Menu Name Field */}
+          {({ touched, errors, handleChange, setFieldValue, values }) => (
+            <Form>
+              <Grid container spacing={1} className="pl-1">
+                {/* Menu Name */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -175,28 +118,25 @@ const MenuMaster = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Menu Name</FormLabel>
+                        <FormLabel>Menu/Sub N.</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
-                          name="menu"
+                          name="menuName"
                           fullWidth
+                          placeholder="Enter Menu/Sub Name"
                           variant="outlined"
                           size="small"
-                          error={touched.menu && !!errors.menu}
-                        />
-                        <ErrorMessage
-                          name="menu"
-                          component="div"
-                          className="text-red-600 text-xs"
+                          error={touched.menuName && Boolean(errors.menuName)}
+                          helperText={touched.menuName && errors.menuName}
                         />
                       </Grid>
                     </Grid>
                   </FormControl>
                 </Grid>
 
-                {/* Submenu Name Field */}
+                {/* Display Sequence */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -206,28 +146,31 @@ const MenuMaster = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Submenu Name</FormLabel>
+                        <FormLabel>Display Seq.</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <Field
                           as={TextField}
-                          name="submenu"
+                          name="displaySequence"
+                          placeholder="Display Sequence"
+                          type="number"
                           fullWidth
                           variant="outlined"
                           size="small"
-                          error={touched.submenu && !!errors.submenu}
-                        />
-                        <ErrorMessage
-                          name="submenu"
-                          component="div"
-                          className="text-red-600 text-xs"
+                          error={
+                            touched.displaySequence &&
+                            Boolean(errors.displaySequence)
+                          }
+                          helperText={
+                            touched.displaySequence && errors.displaySequence
+                          }
                         />
                       </Grid>
                     </Grid>
                   </FormControl>
                 </Grid>
 
-                {/* Submenu URL Field */}
+                {/* Is Parent Menu */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
                     <Grid container alignItems="center">
@@ -237,97 +180,160 @@ const MenuMaster = () => {
                         className="formlableborder"
                         sx={{ mr: "3px" }}
                       >
-                        <FormLabel>Submenu URL</FormLabel>
+                        <FormLabel>Parent Menu</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
-                        <Field
-                          as={TextField}
-                          name="menuurl"
-                          fullWidth
-                          variant="outlined"
-                          size="small"
-                          error={touched.menuurl && !!errors.menuurl}
-                        />
-                        <ErrorMessage
-                          name="menuurl"
-                          component="div"
-                          className="text-red-600 text-xs"
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              name="isParentMenu"
+                              checked={values.isParentMenu}
+                              onChange={(e) => {
+                                setFieldValue("isParentMenu", e.target.checked);
+                              }}
+                            />
+                          }
+                          label="Parent Menu"
                         />
                       </Grid>
                     </Grid>
                   </FormControl>
                 </Grid>
 
-                {/* Icon Dropdown */}
-                <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <FormControl fullWidth>
-                    <Grid container alignItems="center">
-                      <Grid
-                        item
-                        xs={3}
-                        className="formlableborder"
-                        sx={{ mr: "3px" }}
-                      >
-                        <FormLabel>Icon</FormLabel>
-                      </Grid>
-                      <Grid item xs={8}>
-                        <Field
-                          as={Select}
-                          name="icon"
-                          fullWidth
-                          variant="outlined"
-                          size="small"
-                        >
-                          <MenuItem value="" disabled>
-                            -Select Icon-
-                          </MenuItem>
-                          <MenuItem value="MailIcon">Mail Icon</MenuItem>
-                          <MenuItem value="OtherIcon">Other Icon</MenuItem>
-                        </Field>
-                        <ErrorMessage
-                          name="icon"
-                          component="div"
-                          className="text-red-600 text-xs"
-                        />
-                      </Grid>
+                {/* Conditionally Render Fields */}
+                {!values.isParentMenu && (
+                  <>
+                    {/* Menu Dropdown */}
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                      <FormControl fullWidth>
+                        <Grid container alignItems="center">
+                          <Grid
+                            item
+                            xs={3}
+                            className="formlableborder"
+                            sx={{ mr: "3px" }}
+                          >
+                            <FormLabel>Menu</FormLabel>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Field
+                              as={Select}
+                              name="menu"
+                              fullWidth
+                              displayEmpty
+                              variant="outlined"
+                              size="small"
+                              value={values.menu} // <-- Ensure value is set
+                              onChange={(e) =>
+                                setFieldValue("menu", e.target.value)
+                              } // <-- Handle change correctly
+                            >
+                              <MenuItem value="" disabled>
+                                Select Parent Menu
+                              </MenuItem>
+                              {menuOptions?.map((option, index) => (
+                                <MenuItem key={index} value={option.menuName}>
+                                  {option.menuName}
+                                </MenuItem>
+                              ))}
+                            </Field>
+                          </Grid>
+                        </Grid>
+                      </FormControl>
                     </Grid>
+
+                    {/* Menu URL */}
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                      <FormControl fullWidth>
+                        <Grid container alignItems="center">
+                          <Grid
+                            item
+                            xs={3}
+                            className="formlableborder"
+                            sx={{ mr: "3px" }}
+                          >
+                            <FormLabel>Menu URL</FormLabel>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <Field
+                              as={TextField}
+                              name="menuUrl"
+                              fullWidth
+                              placeholder="Enter Menu URL"
+                              variant="outlined"
+                              size="small"
+                              error={touched.menuUrl && Boolean(errors.menuUrl)}
+                              helperText={touched.menuUrl && errors.menuUrl}
+                            />
+                          </Grid>
+                        </Grid>
+                      </FormControl>
+                    </Grid>
+                  </>
+                )}
+
+                {/* Active and Do not Display */}
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  sx={{ disply: "block" }}
+                >
+                  <FormControl fullWidth>
+                    <div clasName="flex">
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="active"
+                            checked={values.active}
+                            onChange={handleChange}
+                          />
+                        }
+                        label="Active"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            name="doNotDisplay"
+                            checked={values.doNotDisplay}
+                            onChange={handleChange}
+                          />
+                        }
+                        label="Hide Page"
+                      />
+                    </div>
                   </FormControl>
+                </Grid>
+
+                {/* Submit Button */}
+                <Grid item xs={12}>
+                  <Box className=" h-6 flex justify-end ">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className="border px-3 mx-5 border-none rounded-lg project-thim text-white"
+                    >
+                      {editRow ? "Update" : "Save"}
+                    </Button>
+                  </Box>
                 </Grid>
               </Grid>
-              <Divider className="divider" />
-              <button
-                type="submit"
-                className="border-none project-thim rounded-md text-white  "
-                disabled={isSubmitting}
-              >
-                {editRow ? "Update" : "Save"}
-              </button>
             </Form>
           )}
         </Formik>
-      </Box>
 
-      {/* Data Grid */}
-      <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
-        <DataGrid
-         className="datagridtable"
-          rows={rows
-            .map((row) =>
-              row.subItems.map((subItem) => ({
-                ...subItem,
-                menu: row.menu,
-                icon: subItem.icon,
-              }))
-            )
-            .flat()}
-          columns={MasterMenu(handleEdit)}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          columnHeaderHeight={20}
-          rowHeight={25}
-          headerHeight={20}
-        />
-      </div>
+        {/* Menu List Table */}
+        <Divider className="divider" />
+        <div className="h-[150px] w-full">
+          <DataGridTable
+            rows={menuList}
+            columns={MasterMenu(handleEdit, handleDelete)}
+          />
+        </div>
+      </Box>
     </div>
   );
 };

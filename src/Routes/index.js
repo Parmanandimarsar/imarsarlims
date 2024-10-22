@@ -12,6 +12,9 @@ import AddLetterHead from "../Components/Form/Master/AddLetterHead";
 import LabTestMaster from "../Components/Form/Master/LabTestMaster/LabTestMaster";
 import MenuMaster from "../Components/Form/Master/MenuMaster";
 import ObservationMapping from "../Components/Form/Master/ObservationMapping";
+import DrTestApprovalMaster from "../Components/Form/LabOpration/DrTestApprovalMaster";
+import TestOutSourceLabMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
+import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/OuthouseSetteliteProcessingMaster";
 
 const router = createBrowserRouter([
   {
@@ -58,18 +61,18 @@ const router = createBrowserRouter([
         path: "/observation-mapping",
         element: <ObservationMapping/>,
       },
-      // {
-      //   path: "/Purchase-Challan-Vehicle",
-      //   element: <PurchaseChallanVehicle />,
-      // },
-      // {
-      //   path: "/vehicle-order",
-      //   element: <VehicleOrder />,
-      // },
-      // {
-      //   path: "/payment-voucher",
-      //   element: <PaymentVoucher />,
-      // },
+      {
+        path: "/dr-test-approval-master",
+        element: <DrTestApprovalMaster/>,
+      },
+      {
+        path: "/test-out-source-labMaster",
+        element: <TestOutSourceLabMaster/>,
+      },
+      {
+        path: "/outhouse-settelite-processing-master",
+        element: <OuthouseSetteliteProcessingMaster />,
+      },
       // {
       //   path: "/sales-model",
       //   element: <SalesModel />,
