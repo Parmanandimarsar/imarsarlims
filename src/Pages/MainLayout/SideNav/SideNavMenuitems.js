@@ -15,16 +15,16 @@ export const menuItems = [
         { text: "LabTestMaster", link: "/lab-test-master", icon: <MailIcon /> },
         { text: "Menu Master", link: "/menu-master", icon: <MailIcon /> },
         { text: "Observation Mapping", link: "/observation-mapping", icon: <MailIcon /> },
-        // { text: "Ledger Group", link: "/ledger-group", icon: <MailIcon /> },
-        // { text: "Location Master", link: "/location-master", icon: <MailIcon /> },
+       
       ],
     },
     {
-      text: "Purchase Master",
+      text: "Lab Opration",
       icon:<InboxIcon /> ,
       subItems: [
-        { text: "Vehicle Order", link: "/vehicle-order", icon: <MailIcon /> },
-       
+        { text: "Dr Test Approval Master", link: "/dr-test-approval-master", icon: <MailIcon /> },
+        { text: "TestOut Source Lab Master", link: "/test-out-source-labMaster", icon: <MailIcon /> },
+        { text: "Outhouse Settelite Processing Master", link: "/outhouse-settelite-processing-master", icon: <MailIcon /> },
        
       ],
     },
