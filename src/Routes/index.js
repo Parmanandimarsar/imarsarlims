@@ -10,11 +10,11 @@ import MultiMaster from "../Components/Form/Master/MultiMaster/";
 import LabMaster from "../Components/Form/Master/LabShortMaster";
 import AddLetterHead from "../Components/Form/Master/AddLetterHead";
 import LabTestMaster from "../Components/Form/Master/LabTestMaster/LabTestMaster";
-import MenuMaster from "../Components/Form/Master/MenuMaster";
+import MenuMaster from "../Components/Form/Master/MenuMaster/MenuMaster";
 import ObservationMapping from "../Components/Form/Master/ObservationMapping";
 import DrTestApprovalMaster from "../Components/Form/LabOpration/DrTestApprovalMaster";
-import TestOutSourceLabMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
-import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/OuthouseSetteliteProcessingMaster";
+import TestOutSourceLabMaster from "../Components/Form/LabOpration/OuthouseSetteliteProcessingMaster";
+import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
 
 const router = createBrowserRouter([
   {
@@ -67,11 +67,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/test-out-source-labMaster",
-        element: <TestOutSourceLabMaster/>,
+        element: <OuthouseSetteliteProcessingMaster />,
       },
       {
         path: "/outhouse-settelite-processing-master",
-        element: <OuthouseSetteliteProcessingMaster />,
+        element: <TestOutSourceLabMaster/>,
       },
       // {
       //   path: "/sales-model",

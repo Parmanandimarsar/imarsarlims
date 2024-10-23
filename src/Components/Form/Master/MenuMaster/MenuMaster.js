@@ -15,8 +15,9 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import { MasterMenu } from "../../TableField/TablefieldsColumns";
-import DataGridTable from "../../ConstantItems/DataGridTable";
+import { MasterMenu } from "../../../TableField/TablefieldsColumns";
+import DataGridTable from "../../../ConstantItems/DataGridTable";
+import MappingMenuMaster from "./MappingMenuMaster";
 
 // Validation Schema using Yup
 const validationSchema = Yup.object().shape({
@@ -33,7 +34,9 @@ const validationSchema = Yup.object().shape({
 const MenuMaster = () => {
   const [menuOptions, setMenuOptions] = useState([]);
   const [menuList, setMenuList] = useState([]); // State to hold the list of menus
+  const [filteredMenuList, setFilteredMenuList] = useState([]);
   const [editRow, setEditRow] = useState(null); // State to hold the row being edited
+  const [searchTerm, setSearchTerm] = useState(""); // Search term
   console.log("menulist", menuList);
 
   // Simulate API call to fetch menu items
@@ -51,7 +54,7 @@ const MenuMaster = () => {
     active: true,
     doNotDisplay: false,
     menu: "",
-    activate:true,
+    activate: true,
   };
 
   const handleFormSubmit = (values, { resetForm, setErrors }) => {
@@ -70,15 +73,18 @@ const MenuMaster = () => {
     }
     if (editRow) {
       // Update existing row
-      setMenuList(
-        menuList.map((menu) =>
-          menu.id === editRow.id ? { ...values, id: editRow.id } : menu
-        )
+      const updatedMenuList = menuList.map((menu) =>
+        menu.id === editRow.id ? { ...values, id: editRow.id } : menu
       );
+      menuList(updatedMenuList);
+      setFilteredMenuList(updatedMenuList);
       setEditRow(null);
     } else {
       // Add new menu item
-      setMenuList([...menuList, { ...values, id: new Date().getTime() }]); // Assign a unique ID using timestamp
+      const newMenu = { ...values, id: new Date().getTime() }; // Assign a unique ID using timestamp
+      const updatedMenuList = [...menuList, newMenu];
+      setMenuList(updatedMenuList);
+      setFilteredMenuList(updatedMenuList);
     }
     resetForm(); // Reset the form after submission
   };
@@ -89,6 +95,18 @@ const MenuMaster = () => {
 
   const handleDelete = (id) => {
     setMenuList(menuList.filter((menu) => menu.id !== id)); // Delete menu item by filtering it out
+  };
+  const handleSearch = (event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+
+    // Filter rows based on search term
+    const filteredRows = menuList.filter((row) =>
+      row.menuName ? row.menuName.toLowerCase().includes(term) : false
+    );
+
+    // Update the state with the filtered results
+    setFilteredMenuList(filteredRows);
   };
 
   return (
@@ -306,20 +324,41 @@ const MenuMaster = () => {
                     </div>
                   </FormControl>
                 </Grid>
+               
+                <Grid container spacing={0} className="pl-1">
+                  <Box className=" w-full flex  justify-between  ">
+                    <Grid item xs={12} sm={6} md={4} lg={3}>
+                      <FormControl fullWidth>
+                        <Grid container alignItems="center">
+                          <Grid item xs={3} className="formlableborder">
+                            <FormLabel>Search</FormLabel>
+                          </Grid>
+                          <Grid item xs={8}>
+                            <TextField
+                              fullWidth
+                              placeholder="Search by Menu Name"
+                              variant="outlined"
+                              size="small"
+                              value={searchTerm}
+                              onChange={handleSearch}
+                            />
+                          </Grid>
+                        </Grid>
+                      </FormControl>
+                    </Grid>
 
-                {/* Submit Button */}
-                <Grid item xs={12}>
-                  <Box className=" h-6 flex justify-end ">
-                    <Button
+                    {/* Submit Button */}
+
+                    <button
                       type="submit"
                       variant="contained"
                       color="primary"
                       className="border px-3 mx-5 border-none rounded-lg project-thim text-white"
                     >
                       {editRow ? "Update" : "Save"}
-                    </Button>
-                  </Box>
-                </Grid>
+                    </button>
+                    </Box>
+                    </Grid>
               </Grid>
             </Form>
           )}
@@ -329,10 +368,14 @@ const MenuMaster = () => {
         <Divider className="divider" />
         <div className="h-[150px] w-full">
           <DataGridTable
-            rows={menuList}
+            rows={filteredMenuList}
             columns={MasterMenu(handleEdit, handleDelete)}
           />
         </div>
+
+
+
+        <MappingMenuMaster/>
       </Box>
     </div>
   );
