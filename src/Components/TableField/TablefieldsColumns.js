@@ -1221,7 +1221,7 @@ export const DrTestApprovalMasterColumns = (
     ),
   },
 ];
-export const TestOutSourceLabMasterColumns = (
+export const  OuthouseSetteliteProcessingMasterColumns= (
   handleDelete,
   handleEdit
 ) => [
@@ -1304,7 +1304,7 @@ export const TestOutSourceLabMasterColumns = (
 ];
 
 
-export const OuthouseSetteliteProcessingMasterColumns = (
+export const TestOutSourceLabMasterColumns = (
   handleDelete,
   handleEdit
 ) => [
