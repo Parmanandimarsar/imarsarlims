@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const ImageView = ({ imageUrl }) => {
-  const [showImage, setShowImage] = useState(false); 
+  const [showImage, setShowImage] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(null);
+
+  useEffect(() => {
+    // If the imageUrl is a File, create an object URL
+    if (imageUrl instanceof File) {
+      const objectUrl = URL.createObjectURL(imageUrl);
+      setPreviewUrl(objectUrl);
+
+      // Clean up object URL to avoid memory leaks
+      return () => URL.revokeObjectURL(objectUrl);
+    } else {
+      // If imageUrl is not a File (i.e., a string), use it as is (default image case)
+      setPreviewUrl(imageUrl);
+    }
+  }, [imageUrl]);
 
   const handleToggleImage = () => {
-    setShowImage((prev) => !prev); 
+    setShowImage((prev) => !prev);
   };
 
   return (
     <div className="flex flex-col items-center">
       {/* Show image initially */}
-      {showImage && imageUrl ? (
+      {showImage && previewUrl ? (
         <img
-        //   src={imageUrl} 
-        src={URL.createObjectURL(imageUrl)}
+          src={previewUrl} // Use previewUrl, which could be a File URL or a string
           alt="Letter Head"
           style={{
             width: "100px",
@@ -21,11 +35,11 @@ const ImageView = ({ imageUrl }) => {
             display: "block",
             marginTop: "0px",
           }}
-          onClick={handleToggleImage} 
+          onClick={handleToggleImage}
         />
       ) : (
         <button size="small" onClick={handleToggleImage}>
-          View Letter Head
+          View Image
         </button>
       )}
 
@@ -36,10 +50,3 @@ const ImageView = ({ imageUrl }) => {
 };
 
 export default ImageView;
-// {values.letterHead && (
-                        //   <img
-                        //     src={URL.createObjectURL(values.letterHead)}
-                        //     alt="Letter Head Preview"
-                        //     className="mt-2 w-32 h-auto border rounded"
-                        //   />
-                        // )}

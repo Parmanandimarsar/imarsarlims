@@ -17,7 +17,7 @@ import {
   Divider,
   ListItemText,
 } from "@mui/material";
-import { ExportToExcel } from "../../ConstantItems/ExcelExport";
+import { ExportToExcel } from "../../ConstantComponents/ExcelExport";
 
 const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
 

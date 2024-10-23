@@ -15,7 +15,7 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
-import DataGridTable from "../../ConstantItems/DataGridTable";
+import DataGridTable from "../../ConstantComponents/DataGridTable";
 import { TestOutSourceLabMasterColumns } from "../../TableField/TablefieldsColumns";
 
 // Validation Schema using Yup

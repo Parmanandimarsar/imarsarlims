@@ -1392,7 +1392,62 @@ export const TestOutSourceLabMasterColumns = (
   },
 ];
 
+export const NABLMasterColumns = (
+  handleDelete,
+) => [
+  {
+    field: "bookingCenter",
+    headerName: "Booking Centre",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "department",
+    headerName: "Department",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "investigation",
+    headerName: "Investigation",
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "logo",
+    headerName: "Logo",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => {
+      // console.log("param",params);
 
+      return <ImageView imageUrl={params.row.logo} />;
+    },
+  },
+ 
+  {
+    field: "action",
+    headerName: "Action",
+    flex: 1,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2 ">
+        <IconButton
+          aria-label="edit"
+          color="primary"
+          onClick={() => handleDelete(params.row)}
+        >
+          <DeleteIcon sx={{ fontSize: "15px", 
+            // color:"#ff1744"
+          }} />
+        </IconButton>
+      </div>
+    ),
+  },
+
+  
+  
+];
 
 export const MasterHSNCodeTable = [
   {

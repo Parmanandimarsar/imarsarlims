@@ -15,6 +15,7 @@ import ObservationMapping from "../Components/Form/Master/ObservationMapping";
 import DrTestApprovalMaster from "../Components/Form/LabOpration/DrTestApprovalMaster";
 import TestOutSourceLabMaster from "../Components/Form/LabOpration/OuthouseSetteliteProcessingMaster";
 import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
+import NABLMaster from "../Components/Form/LabOpration/NABLMaster";
 
 const router = createBrowserRouter([
   {
@@ -73,10 +74,10 @@ const router = createBrowserRouter([
         path: "/outhouse-settelite-processing-master",
         element: <TestOutSourceLabMaster/>,
       },
-      // {
-      //   path: "/sales-model",
-      //   element: <SalesModel />,
-      // },
+      {
+        path: "/nabl-master",
+        element: <NABLMaster />,
+      },
       // {
       //   path: "/receipt-booking",
       //   element: <ReceiptBooking />,
