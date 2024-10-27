@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  FormLabel,
 } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { RxCross2 } from "react-icons/rx";
-
 
 const ForgotPassword = ({ open, onClose }) => {
   const forgotPasswordValidationSchema = Yup.object().shape({
@@ -38,9 +38,15 @@ const ForgotPassword = ({ open, onClose }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="xs" fullWidth className=" relative ">
-      <div className=" absolute  right-5 top-4  "  onClick={onClose}>
-        <RxCross2 className="text-gray-500 text-2xl"/>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth="xs"
+      fullWidth
+      className=" relative "
+    >
+      <div className=" absolute  right-5 top-4  " onClick={onClose}>
+        <RxCross2 className="text-gray-500 text-2xl" />
       </div>
       <DialogTitle className="  text-center py-4">Reset Password</DialogTitle>
       <Formik
@@ -50,22 +56,21 @@ const ForgotPassword = ({ open, onClose }) => {
       >
         {({ errors, touched, isSubmitting }) => (
           <Form autoComplete="off">
-            <DialogContent className="p-6 ">
+            <DialogContent className="pl-6 pr-6">
               <Typography variant="body1" className="mb-4 text-gray-700 ">
                 Enter your email and mobile number to reset your password.
               </Typography>
-
+              <FormLabel>Email Address</FormLabel>
               <Field
                 as={TextField}
                 autoFocus
-                margin="normal"
+               
                 id="forgotPasswordEmail"
-                label="Email Address"
                 name="forgotPasswordEmail"
                 type="email"
                 fullWidth
                 variant="outlined"
-                className="bg-gray-50"
+                
                 error={
                   touched.forgotPasswordEmail && !!errors.forgotPasswordEmail
                 }
@@ -73,17 +78,16 @@ const ForgotPassword = ({ open, onClose }) => {
                   touched.forgotPasswordEmail && errors.forgotPasswordEmail
                 }
               />
-
+              <FormLabel>Mobile Number</FormLabel>
               <Field
                 as={TextField}
-                margin="normal"
+               
                 id="forgotPasswordMobile"
-                label="Mobile Number"
                 name="forgotPasswordMobile"
                 type="tel"
                 fullWidth
                 variant="outlined"
-                className="bg-gray-50"
+               
                 error={
                   touched.forgotPasswordMobile && !!errors.forgotPasswordMobile
                 }
@@ -94,7 +98,6 @@ const ForgotPassword = ({ open, onClose }) => {
             </DialogContent>
 
             <DialogActions className=" p-4">
-             
               <Button
                 type="submit"
                 color="primary"

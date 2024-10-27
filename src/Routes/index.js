@@ -16,6 +16,7 @@ import DrTestApprovalMaster from "../Components/Form/LabOpration/DrTestApprovalM
 import TestOutSourceLabMaster from "../Components/Form/LabOpration/OuthouseSetteliteProcessingMaster";
 import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
 import NABLMaster from "../Components/Form/LabOpration/NABLMaster";
+import ManageTestReportOrdering from "../Components/Form/LabOpration/ManageTestReportOrdering";
 
 const router = createBrowserRouter([
   {
@@ -78,10 +79,10 @@ const router = createBrowserRouter([
         path: "/nabl-master",
         element: <NABLMaster />,
       },
-      // {
-      //   path: "/receipt-booking",
-      //   element: <ReceiptBooking />,
-      // },
+      {
+        path: "/managetestreportordering",
+        element: <ManageTestReportOrdering/>,
+      },
       // {
       //   path: "/sales-challan",
       //   element: <SalesChallan />,

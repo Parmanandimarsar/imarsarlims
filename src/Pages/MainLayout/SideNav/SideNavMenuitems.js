@@ -26,6 +26,7 @@ export const menuItems = [
         { text: "TestOut Source Lab Master", link: "/test-out-source-labMaster", icon: <MailIcon /> },
         { text: "Outhouse Settelite Processing Master", link: "/outhouse-settelite-processing-master", icon: <MailIcon /> },
         { text: "NABL Master", link: "/nabl-master", icon: <MailIcon /> },
+        { text: "Manage Test Report Ordering", link: "/managetestreportordering", icon: <MailIcon /> },
       ],
     },
     {
