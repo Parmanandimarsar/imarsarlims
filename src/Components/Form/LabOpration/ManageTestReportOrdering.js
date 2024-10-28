@@ -1,25 +1,39 @@
-
 import React, { useState } from "react";
 import {
   Box,
-  Divider,
   Grid,
   FormControl,
   FormLabel,
   TextField,
   Typography,
+  Divider,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
 } from "@mui/material";
-import CustomDropdowSearchPopover from "../../ConstantComponents/PopoverSearchSelectSingalDropComp";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import {
+  DndContext,
+  closestCenter,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import {
   SortableContext,
   useSortable,
-  verticalListSortingStrategy,
   arrayMove,
+  verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import CustomDropdowSearchPopover from "../../ConstantComponents/PopoverSearchSelectSingalDropComp";
 
-// Sample data for departments and tests
+// Mock data
 const centres = [
   { id: 1, name: "Department 1" },
   { id: 2, name: "Department 2" },
@@ -41,36 +55,58 @@ const testsByDepartment = {
   ],
 };
 
+// Sortable row component for drag-and-drop
+function SortableRow({ id, children }) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
+  return (
+    <TableRow ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      {children}
+    </TableRow>
+  );
+}
+
 const ManageTestReportOrdering = () => {
   const [department, setDepartment] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
-  const [rows, setRows] = useState([]); // Table rows data will be set based on department
+  const [hasChanges, setHasChanges] = useState(true);
+  const [rows, setRows] = useState([]);
 
-  // Handle popover open
+  const mouseSensor = useSensor(MouseSensor);
+  const touchSensor = useSensor(TouchSensor);
+  const sensors = useSensors(mouseSensor, touchSensor);
+
+  // Handle popover opening
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
     setSearchQuery("");
   };
 
-  // Handle popover close
+  // Handle popover closing
   const handlePopoverClose = () => {
     setAnchorEl(null);
     setSearchQuery("");
   };
 
-  // Handle department selection and filter tests
-  const handleSelectCentre = (name) => {
+  // Handle department selection
+  const handleSelectDepartment = (name) => {
     setDepartment(name);
     handlePopoverClose();
-
-    // Set the test data based on the selected department
     const selectedTests = testsByDepartment[name] || [];
-    setRows(selectedTests); // Update the rows for the table based on department
+    setRows(selectedTests);
   };
 
-  // Handle drag end (reorder rows)
+  // Handle drag end event
   const handleDragEnd = (event) => {
+    console.log("event", event);
+    setHasChanges(true);
     const { active, over } = event;
     if (active.id !== over.id) {
       setRows((prevRows) => {
@@ -81,6 +117,23 @@ const ManageTestReportOrdering = () => {
     }
   };
 
+  const handleSaveChanges = async () => {
+    try {
+      // Replace with your API call
+      await fetch("/your-api-endpoint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(rows),
+      });
+      alert("Changes saved successfully!");
+      setHasChanges(false);
+    } catch (error) {
+      console.error("Error saving changes:", error);
+      alert("Failed to save changes. Please try again.");
+    }
+  };
+  console.log("rows", rows);
+
   return (
     <div className="mb-[50px] pl-2">
       <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
@@ -89,12 +142,17 @@ const ManageTestReportOrdering = () => {
         </Box>
         <Divider className="divider" />
 
-        {/* Department dropdown */}
         <Grid container spacing={1} className="pl-1">
+          {/* Department Selection */}
           <Grid item xs={12} sm={6} md={4} lg={3}>
             <FormControl fullWidth>
               <Grid container alignItems="center">
-                <Grid item xs={3} className="formlableborder" sx={{ mr: "3px" }}>
+                <Grid
+                  item
+                  xs={3}
+                  className="formlableborder"
+                  sx={{ mr: "3px" }}
+                >
                   <FormLabel>Department</FormLabel>
                 </Grid>
                 <Grid item xs={8}>
@@ -115,7 +173,7 @@ const ManageTestReportOrdering = () => {
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
                     options={centres}
-                    onSelect={handleSelectCentre}
+                    onSelect={handleSelectDepartment}
                   />
                 </Grid>
               </Grid>
@@ -123,47 +181,52 @@ const ManageTestReportOrdering = () => {
           </Grid>
         </Grid>
 
-        {/* Draggable Table */}
         {department && (
-          <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={rows.map((row) => row.id)} strategy={verticalListSortingStrategy}>
-              <Box>
-                <table className="min-w-full table-auto">
-                  <thead>
-                    <tr>
-                      <th className="px-4 py-2 text-left">SNO</th>
-                      <th className="px-4 py-2 text-left">Test Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={rows.map((row) => row.id)}
+              strategy={verticalListSortingStrategy}
+            >
+              <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
+                <Table>
+                  <TableHead className="project-thim">
+                    <TableRow>
+                      <TableCell sx={{ color: "#ffff" }}>S/N</TableCell>
+                      <TableCell sx={{ color: "#ffff" }}>Test Name</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
                     {rows.map((row, index) => (
-                      <SortableRow key={row.id} row={row} index={index} />
+                      <SortableRow key={row.id} id={row.id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>{row.name}</TableCell>
+                      </SortableRow>
                     ))}
-                  </tbody>
-                </table>
-              </Box>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </SortableContext>
           </DndContext>
         )}
+        {/* Save Changes Button */}
+        <Box sx={{ display: "flex",  mt: 2 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={handleSaveChanges}
+            disabled={!hasChanges}
+            sx={{ backgroundColor: "#0b5394" }}
+          >
+            Save Changes
+          </Button>
+        </Box>
       </Box>
     </div>
-  );
-};
-
-// Sortable row component
-const SortableRow = ({ row, index }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: row.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <tr ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <td className="px-4 py-2">{index + 1}</td> {/* Serial Number Column */}
-      <td className="px-4 py-2">{row.name}</td> {/* Test Name Column */}
-    </tr>
   );
 };
 

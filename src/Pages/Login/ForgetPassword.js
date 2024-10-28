@@ -41,14 +41,23 @@ const ForgotPassword = ({ open, onClose }) => {
     <Dialog
       open={open}
       onClose={onClose}
-      maxWidth="xs"
-      fullWidth
-      className=" relative "
-    >
-      <div className=" absolute  right-5 top-4  " onClick={onClose}>
+      
+      className="ResetPassword relative "
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        "& .MuiDialog-paper": {
+          borderRadius: "10px",
+          padding: "20px",
+          width: "65%",
+          maxWidth: "600px", // Controls max width
+        },
+      }}    >
+      <div className=" absolute  right-2 top-2  " onClick={onClose}>
         <RxCross2 className="text-gray-500 text-2xl" />
       </div>
-      <DialogTitle className="  text-center py-4">Reset Password</DialogTitle>
+      <DialogTitle  sx={{fontWeight:700}}>Reset Password</DialogTitle>
       <Formik
         initialValues={forgotPasswordInitialValues}
         validationSchema={forgotPasswordValidationSchema}
@@ -57,9 +66,13 @@ const ForgotPassword = ({ open, onClose }) => {
         {({ errors, touched, isSubmitting }) => (
           <Form autoComplete="off">
             <DialogContent className="pl-6 pr-6">
-              <Typography variant="body1" className="mb-4 text-gray-700 ">
+              <Typography  
+              sx={{ fontWeight: "700" , fontSize:"14px" }}
+              className=" text-[#0b5394]">
                 Enter your email and mobile number to reset your password.
               </Typography>
+
+              <div className="mb-2">
               <FormLabel>Email Address</FormLabel>
               <Field
                 as={TextField}
@@ -78,6 +91,8 @@ const ForgotPassword = ({ open, onClose }) => {
                   touched.forgotPasswordEmail && errors.forgotPasswordEmail
                 }
               />
+              </div>
+              <div className="mb-2">
               <FormLabel>Mobile Number</FormLabel>
               <Field
                 as={TextField}
@@ -95,14 +110,17 @@ const ForgotPassword = ({ open, onClose }) => {
                   touched.forgotPasswordMobile && errors.forgotPasswordMobile
                 }
               />
+              </div>
             </DialogContent>
 
-            <DialogActions className=" p-4">
+            <DialogActions sx={{width:"100%" ,mx:"auto"}}>
               <Button
                 type="submit"
                 color="primary"
                 variant="contained"
-                className="w-full py-2"
+                className="w-full "
+                size="small"
+                sx={{background:"#0b5394" }}
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Submitting..." : "Submit"}
