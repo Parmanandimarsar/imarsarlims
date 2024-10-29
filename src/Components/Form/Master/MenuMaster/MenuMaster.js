@@ -16,7 +16,7 @@ import {
   Divider,
 } from "@mui/material";
 import { MasterMenu } from "../../../TableField/TablefieldsColumns";
-import DataGridTable from "../../../ConstantItems/DataGridTable";
+import DataGridTable from "../../../ConstantComponents/DataGridTable";
 import MappingMenuMaster from "./MappingMenuMaster";
 
 // Validation Schema using Yup
@@ -366,7 +366,7 @@ const MenuMaster = () => {
 
         {/* Menu List Table */}
         <Divider className="divider" />
-        <div className="h-[150px] w-full">
+        <div className="h-[200px] w-full">
           <DataGridTable
             rows={filteredMenuList}
             columns={MasterMenu(handleEdit, handleDelete)}

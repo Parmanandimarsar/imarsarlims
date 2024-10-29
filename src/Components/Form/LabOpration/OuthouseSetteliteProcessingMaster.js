@@ -14,7 +14,7 @@ import {
   Divider,
   Checkbox,
 } from "@mui/material";
-import DataGridTable from "../../ConstantItems/DataGridTable";
+import DataGridTable from "../../ConstantComponents/DataGridTable";
 import { OuthouseSetteliteProcessingMasterColumns } from "../../TableField/TablefieldsColumns";
 
 // Validation Schema using Yup

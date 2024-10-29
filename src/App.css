@@ -18,9 +18,10 @@
   /* background: linear-gradient(170deg, rgba(41, 109, 152, 1) 10%, rgba(0, 0, 25, 1) 100%) !important */
   background: linear-gradient(
     178deg,
-    rgba(41, 109, 152, 1) 70%,
+    #296d98 70%,
     #fc3752 100%
   ) !important;
+  
 }
 input{
   font-size: 10px !important;
@@ -119,7 +120,10 @@ height: 0px !important;
 }
 /* field checkbox */
 .MuiTypography-root {
-  font-size: 11px !important; /* Set desired font size */
+  /* font-size: 11px !important;  */
+}
+.MuiTypography-body1{
+  font-size: 11px !important; 
 }
 /* .MuiList-root{
   padding-top: 0px !important;
@@ -262,4 +266,21 @@ padding: 0px !important;
 
 .MuiTabs-scroller::-webkit-scrollbar-thumb:hover {
   background-color: #555; 
+}
+
+
+/* modal /dailogbox */
+.MuiDialogContent-root{
+  padding: 0px 0px !important;
+}
+.MuiDialogTitle-root{
+  padding: 0px 0px !important;
+  /* padding-top: 20px !important; */
+}
+.MuiDialog-paper{
+  border-radius: 15px !important;
+}
+/* custum table */
+.MuiTableCell-root{
+  padding: 0px !important;
 }

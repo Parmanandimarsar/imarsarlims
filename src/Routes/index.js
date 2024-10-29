@@ -15,6 +15,10 @@ import ObservationMapping from "../Components/Form/Master/ObservationMapping";
 import DrTestApprovalMaster from "../Components/Form/LabOpration/DrTestApprovalMaster";
 import TestOutSourceLabMaster from "../Components/Form/LabOpration/OuthouseSetteliteProcessingMaster";
 import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
+import NABLMaster from "../Components/Form/LabOpration/NABLMaster";
+import ManageTestReportOrdering from "../Components/Form/LabOpration/ManageTestReportOrdering";
+import ReportingHelpMaster from "../Components/Form/LabOpration/ReportingHelpMaster/ReportingHelpMaster";
+
 
 const router = createBrowserRouter([
   {
@@ -73,18 +77,18 @@ const router = createBrowserRouter([
         path: "/outhouse-settelite-processing-master",
         element: <TestOutSourceLabMaster/>,
       },
-      // {
-      //   path: "/sales-model",
-      //   element: <SalesModel />,
-      // },
-      // {
-      //   path: "/receipt-booking",
-      //   element: <ReceiptBooking />,
-      // },
-      // {
-      //   path: "/sales-challan",
-      //   element: <SalesChallan />,
-      // },
+      {
+        path: "/nabl-master",
+        element: <NABLMaster />,
+      },
+      {
+        path: "/manage-test-report-ordering",
+        element: <ManageTestReportOrdering/>,
+      },
+      {
+        path: "/reporting-help-master",
+        element: <ReportingHelpMaster/>,
+      },
       // {
       //   path: "/sales-invoice",
       //   element: <SalesInvoice />,

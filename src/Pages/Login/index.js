@@ -6,19 +6,26 @@ import {
   Container,
   Box,
   Link,
+  FormLabel,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import ForgotPassword from "./ForgetPassword";
 import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import img from "../../../src/assets/images/imarsaricon.jpg";
 
 const Login = () => {
   const [open, setOpen] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // state for password visibility
   const navigate = useNavigate();
+
   const loginValidationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email format")
-      .required("Email is required"),
+      .required("UserName is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
@@ -30,8 +37,7 @@ const Login = () => {
   };
 
   const handleLoginSubmit = (values, { setSubmitting }) => {
-    console.log(values,"value");
-    
+    console.log(values, "value");
     setSubmitting(true);
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
@@ -48,22 +54,40 @@ const Login = () => {
     setOpen(false);
   };
 
+  // Toggle password visibility
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
-    <Container className="flex items-center justify-center min-h-screen bg-gray-100">
+    <Container className="flex items-center justify-center min-h-screen bg-[#ffff]">
       <Box
-        className="w-full max-w-md p-8 bg-white shadow-md rounded-lg"
+        className="w-full max-w-[20rem] p-8 bg-white shadow-md rounded-lg"
         sx={{
           boxShadow: 3,
         }}
       >
-        <Typography
-          variant="h4"
-          component="h1"
-          className="mb-6 text-center font-bold text-gray-700"
-        >
-          Login
-        </Typography>
-
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box>
+            <Typography
+              variant="h5"
+              component="h1"
+              sx={{ fontWeight: "700" }}
+              className=" text-[#0b5394]"
+            >
+              iMARSAR-LIMS
+            </Typography>
+            <Typography
+              // variant="h6"
+              component="h1"
+              sx={{ fontWeight: "600" }}
+              className="mb-6  font-bold text-gray-700"
+            >
+              Login to your Account
+            </Typography>
+          </Box>
+          <img src={img} alt="logo" className="w-[90px] h-[59px]" />
+        </Box>
         <Formik
           initialValues={initialValues}
           validationSchema={loginValidationSchema}
@@ -72,14 +96,13 @@ const Login = () => {
           {({ errors, touched, isSubmitting }) => (
             <Form autoComplete="off">
               <div className="mb-4">
+                <FormLabel>Username</FormLabel>
                 <Field
                   as={TextField}
-                  label="Email"
                   name="email"
                   type="email"
                   fullWidth
                   variant="outlined"
-                  className="bg-gray-50"
                   error={touched.email && !!errors.email}
                   helperText={touched.email && errors.email}
                   autoComplete="off"
@@ -87,25 +110,37 @@ const Login = () => {
               </div>
 
               <div className="mb-4">
+                <FormLabel>Password</FormLabel>
                 <Field
                   as={TextField}
-                  label="Password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"} // conditional type
                   fullWidth
                   variant="outlined"
-                  className="bg-gray-50"
                   error={touched.password && !!errors.password}
                   helperText={touched.password && errors.password}
                   autoComplete="new-password"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </div>
 
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex justify-end items-center mb-4">
                 <Link
                   onClick={handleClickOpen}
                   variant="body2"
-                  className="text-blue-500 hover:underline cursor-pointer"
+                  className="text-[#0b5394] hover:underline cursor-pointer"
                 >
                   Forgot password?
                 </Link>
@@ -116,10 +151,12 @@ const Login = () => {
                 variant="contained"
                 color="primary"
                 fullWidth
-                className="py-2 text-lg font-semibold"
+                size="small"
+                sx={{background:"#0b5394" }}
+                className="py-1 text-lg font-semibold"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? "Logging in..." : "Login"}
+                {isSubmitting ? "Logging in..." : "SIGN IN"}
               </Button>
             </Form>
           )}
