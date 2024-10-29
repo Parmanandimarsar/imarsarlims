@@ -17,7 +17,8 @@ import TestOutSourceLabMaster from "../Components/Form/LabOpration/OuthouseSette
 import OuthouseSetteliteProcessingMaster from "../Components/Form/LabOpration/TestOutSourceLabMaster";
 import NABLMaster from "../Components/Form/LabOpration/NABLMaster";
 import ManageTestReportOrdering from "../Components/Form/LabOpration/ManageTestReportOrdering";
-import ReportingHelpMaster from "../Components/Form/LabOpration/ReportingHelpMaster";
+import ReportingHelpMaster from "../Components/Form/LabOpration/ReportingHelpMaster/ReportingHelpMaster";
+
 
 const router = createBrowserRouter([
   {
