@@ -28,7 +28,8 @@ export const menuItems = [
         { text: "NABL Master", link: "/nabl-master", icon: <MailIcon /> },
         { text: "Manage Test Report Ordering", link: "/manage-test-report-ordering", icon: <MailIcon /> },
         { text: "Reporting Help Master", link: "/reporting-help-master", icon: <MailIcon /> },
-        // { text: "Manage Test Report Ordering", link: "/managetestreportordering", icon: <MailIcon /> },
+        { text: "Interpretation Master", link: "/interpretation-master", icon: <MailIcon /> },
+        // { text: "Interpretation Master", link: "/interpretation-master", icon: <MailIcon /> },
       ],
     },
     {
