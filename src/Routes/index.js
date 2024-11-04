@@ -19,6 +19,7 @@ import NABLMaster from "../Components/Form/LabOpration/NABLMaster";
 import ManageTestReportOrdering from "../Components/Form/LabOpration/ManageTestReportOrdering";
 import ReportingHelpMaster from "../Components/Form/LabOpration/ReportingHelpMaster/ReportingHelpMaster";
 import InterpretationMaster from "../Components/Form/LabOpration/InterpretationMaster";
+import TATMaster from "../Components/Form/LabOpration/TATMaster";
 
 
 const router = createBrowserRouter([
@@ -95,7 +96,11 @@ const router = createBrowserRouter([
         element: <InterpretationMaster/>,
       },
      
-      // {
+      {
+        path: "/tat-master",
+        element: <TATMaster />,
+      },
+       // {
       //   path: "/location-master",
       //   element: <LocationMaster />,
       // },

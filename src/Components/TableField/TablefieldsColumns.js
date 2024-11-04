@@ -1,7 +1,9 @@
-import { Button, IconButton, Switch } from "@mui/material";
+import { Button, IconButton, Switch, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import dayjs from "dayjs";
 
 export const MasterRateTypeColumns = (
   handleToggleActive,
@@ -1141,10 +1143,7 @@ export const MasterObservationMapping = [
     disableColumnMenu: true,
   },
 ];
-export const DrTestApprovalMasterColumns = (
-  handleToggleActive,
-  handleEdit
-) => [
+export const DrTestApprovalMasterColumns = (handleToggleActive, handleEdit) => [
   {
     field: "doctorName",
     headerName: "Doctor Name",
@@ -1221,7 +1220,7 @@ export const DrTestApprovalMasterColumns = (
     ),
   },
 ];
-export const  OuthouseSetteliteProcessingMasterColumns= (
+export const OuthouseSetteliteProcessingMasterColumns = (
   handleDelete,
   handleEdit
 ) => [
@@ -1261,9 +1260,12 @@ export const  OuthouseSetteliteProcessingMasterColumns= (
           color="primary"
           onClick={() => handleDelete(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", 
-            // color:"#ff1744"
-          }} />
+          <DeleteIcon
+            sx={{
+              fontSize: "15px",
+              // color:"#ff1744"
+            }}
+          />
         </IconButton>
       </div>
     ),
@@ -1303,11 +1305,7 @@ export const  OuthouseSetteliteProcessingMasterColumns= (
   },
 ];
 
-
-export const TestOutSourceLabMasterColumns = (
-  handleDelete,
-  handleEdit
-) => [
+export const TestOutSourceLabMasterColumns = (handleDelete, handleEdit) => [
   {
     field: "bookingCentre",
     headerName: "Booking Centre",
@@ -1350,9 +1348,12 @@ export const TestOutSourceLabMasterColumns = (
           color="primary"
           onClick={() => handleDelete(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", 
-            // color:"#ff1744"
-          }} />
+          <DeleteIcon
+            sx={{
+              fontSize: "15px",
+              // color:"#ff1744"
+            }}
+          />
         </IconButton>
       </div>
     ),
@@ -1392,9 +1393,7 @@ export const TestOutSourceLabMasterColumns = (
   },
 ];
 
-export const NABLMasterColumns = (
-  handleDelete,
-) => [
+export const NABLMasterColumns = (handleDelete) => [
   {
     field: "bookingCenter",
     headerName: "Booking Centre",
@@ -1424,7 +1423,7 @@ export const NABLMasterColumns = (
       return <ImageView imageUrl={params.row.logo} />;
     },
   },
- 
+
   {
     field: "action",
     headerName: "Action",
@@ -1437,24 +1436,26 @@ export const NABLMasterColumns = (
           color="primary"
           onClick={() => handleDelete(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", 
-            // color:"#ff1744"
-          }} />
+          <DeleteIcon
+            sx={{
+              fontSize: "15px",
+              // color:"#ff1744"
+            }}
+          />
         </IconButton>
       </div>
     ),
   },
-
-  
-  
 ];
 
-
- export const ReportingHelpMastercolumns =(handleDelete)=> [
-  { field: "id", headerName: "SNo",flex: 1,
-    disableColumnMenu: true,},
-  { field: "masterName", headerName: "Master Name",flex: 1,
-    disableColumnMenu: true,},
+export const ReportingHelpMastercolumns = (handleDelete) => [
+  { field: "id", headerName: "SNo", flex: 1, disableColumnMenu: true },
+  {
+    field: "masterName",
+    headerName: "Master Name",
+    flex: 1,
+    disableColumnMenu: true,
+  },
   {
     field: "remove",
     headerName: "Remove",
@@ -1462,13 +1463,76 @@ export const NABLMasterColumns = (
     disableColumnMenu: true,
     renderCell: (params) => (
       <IconButton
-      aria-label="delete"
-      color="secondary"
-      onClick={() => handleDelete(params.row)}
-    >
-      <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
-    </IconButton>
+        aria-label="delete"
+        color="secondary"
+        onClick={() => handleDelete(params.row)}
+      >
+        <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+      </IconButton>
     ),
   },
 ];
 
+export const TATMastercolumns = () => [
+  { field: "id", headerName: "SNo", flex: 1, disableColumnMenu: true },
+  {
+    field: "startTime",
+    headerName: "Start Time",
+    width: 150,
+    editable: true,
+    type: 'date',
+    
+  },
+
+  {
+    field: "endTime",
+    headerName: "End Time",
+    width: 150,
+    editable: true,
+    
+  },
+  {
+    field: "testName",
+    headerName: "Test Name",
+    editable: true,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "regColl",
+    headerName: "Reg Coll.",
+    editable: true,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "collRecv",
+    headerName: "Coll-Recv.",
+    editable: true,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "tatType",
+    headerName: "Tat Type",
+    editable: true,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "mins",
+    headerName: "Mins",
+    editable: true,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "days",
+    headerName: "Days",
+    editable: true,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+
+  
+];

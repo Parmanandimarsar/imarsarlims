@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     backgroundColor: "#e0f7fa", // Light cyan for even rows
   },
 });
-const DataGridTable = ({ rows, columns }) => {
+const DataGridTable = ({ rows, columns}) => {
   const classes = useStyles();
   return (
     <>
@@ -20,6 +20,7 @@ const DataGridTable = ({ rows, columns }) => {
         rowsPerPageOptions={[5]}
         disableSelectionOnClick
         columnHeaderHeight={20}
+       
         rowHeight={25}
         headerHeight={20}
         hideFooterSelectedRowCount
