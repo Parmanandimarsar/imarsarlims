@@ -2,7 +2,7 @@ import { Button, IconButton, Switch, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import dayjs from "dayjs";
 
 export const MasterRateTypeColumns = (
@@ -1473,38 +1473,44 @@ export const ReportingHelpMastercolumns = (handleDelete) => [
   },
 ];
 
-export const TATMastercolumns = () => [
+export const TATMastercolumns = (handleProcessRowUpdate) => [
   { field: "id", headerName: "SNo", flex: 1, disableColumnMenu: true },
   {
     field: "startTime",
     headerName: "Start Time",
     width: 150,
-    editable: true,
-    type: 'date',
-    
-  },
 
+    renderCell: (params) => (
+      <TimePicker
+        value={params.row.startTime}
+        onChange={(newTime) => {
+          const updatedRow = { ...params.row, startTime: newTime };
+          handleProcessRowUpdate(updatedRow);
+        }}
+        slotProps={{ textField: { fullWidth: true } }}
+      />
+    ),
+    editable: true,
+  },
   {
     field: "endTime",
     headerName: "End Time",
     width: 150,
+
+    renderCell: (params) => (
+      <TimePicker
+        value={params.row.endTime}
+        onChange={(newTime) => {
+          const updatedRow = { ...params.row, endTime: newTime };
+          handleProcessRowUpdate(updatedRow);
+        }}
+        slotProps={{ textField: { fullWidth: true } }}
+      />
+    ),
     editable: true,
-    
   },
-  {
-    field: "testName",
-    headerName: "Test Name",
-    editable: true,
-    flex: 1,
-    disableColumnMenu: true,
-  },
-  {
-    field: "regColl",
-    headerName: "Reg Coll.",
-    editable: true,
-    flex: 1,
-    disableColumnMenu: true,
-  },
+  { field: "testName", headerName: "Test Name", flex: 1, editable: true },
+  { field: "regColl", headerName: "Reg Coll.", flex: 1, editable: true },
   {
     field: "collRecv",
     headerName: "Coll-Recv.",
@@ -1533,6 +1539,4 @@ export const TATMastercolumns = () => [
     flex: 1,
     disableColumnMenu: true,
   },
-
-  
 ];
