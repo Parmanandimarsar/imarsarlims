@@ -1,10 +1,11 @@
-import { Button, IconButton, Switch, TextField } from "@mui/material";
+import { Button, IconButton, Switch, TextField ,Select, MenuItem } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import dayjs from "dayjs";
-
+import { format } from "date-fns";
 export const MasterRateTypeColumns = (
   handleToggleActive,
   handleEdit,
@@ -1174,19 +1175,6 @@ export const DrTestApprovalMasterColumns = (handleToggleActive, handleEdit) => [
     },
   },
 
-  // {
-  //   field: "active",
-  //   headerName: "Active",
-  //   flex: 1,
-  //   disableColumnMenu: true,
-  //   renderCell: (params) =>
-  //     params.value ? (
-  //       <p className="text-green-600">{"Yes"}</p>
-  //     ) : (
-  //       <p className="text-red-600">{"No"}</p>
-  //     ), // Conditional rendering for boolean
-  // },
-
   {
     field: "deActivate",
     headerName: "DeActivate",
@@ -1271,21 +1259,6 @@ export const OuthouseSetteliteProcessingMasterColumns = (
     ),
   },
 
-  // {
-  //   field: "deActivate",
-  //   headerName: "DeActivate",
-  //   flex: 1,
-  //   disableColumnMenu: true,
-  //   renderCell: (params) => (
-  //     <div className="flex justify-center items-center">
-  //       <Switch
-  //         size="small"
-  //         checked={params.value}
-  //         onChange={() => handleToggleActive(params.row)}
-  //       />
-  //     </div>
-  //   ),
-  // },
   {
     field: "edit",
     headerName: "Edit",
@@ -1473,70 +1446,212 @@ export const ReportingHelpMastercolumns = (handleDelete) => [
   },
 ];
 
-export const TATMastercolumns = (handleProcessRowUpdate) => [
-  { field: "id", headerName: "SNo", flex: 1, disableColumnMenu: true },
+// export const TATMastercolumns = (handleProcessRowUpdate) => [
+//   { field: "id", headerName: "SNo", flex: 1 },
+//   {
+//     field: "startTime",
+//     headerName: "Start Time",
+//     width: 150,
+
+//     renderCell: (params) => (
+//       <TimePicker
+//         value={params.row.startTime}
+//         onChange={(newTime) => {
+//           const updatedRow = { ...params.row, startTime: newTime };
+//           handleProcessRowUpdate(updatedRow);
+//         }}
+//         slotProps={{ textField: { fullWidth: true } }}
+//       />
+//     ),
+//     editable: true,
+//   },
+//   {
+//     field: "endTime",
+//     headerName: "End Time",
+//     width: 150,
+
+//     renderCell: (params) => (
+//       <TimePicker
+//         value={params.row.endTime}
+//         onChange={(newTime) => {
+//           const updatedRow = { ...params.row, endTime: newTime };
+//           handleProcessRowUpdate(updatedRow);
+//         }}
+//         slotProps={{ textField: { fullWidth: true } }}
+//       />
+//     ),
+//     editable: true,
+//   },
+//   { field: "testName", headerName: "Test Name", flex: 1, editable: true },
+//   { field: "regColl", headerName: "Reg Coll.", flex: 1, editable: true },
+//   {
+//     field: "collRecv",
+//     headerName: "Coll-Recv.",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+//   {
+//     field: "tatType",
+//     headerName: "Tat Type",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+//   {
+//     field: "mins",
+//     headerName: "Mins",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+//   {
+//     field: "days",
+//     headerName: "Days",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+// ];
+
+
+
+
+
+
+export const TATMasterColumns = (updateRow, toggleDaySelection) => [
+  { field: "id", headerName: "SNo.", width: 50 },
   {
     field: "startTime",
     headerName: "Start Time",
     width: 150,
-
     renderCell: (params) => (
+      <LocalizationProvider >
       <TimePicker
-        value={params.row.startTime}
-        onChange={(newTime) => {
-          const updatedRow = { ...params.row, startTime: newTime };
-          handleProcessRowUpdate(updatedRow);
+        ampm
+        value={dayjs(params.value, "hh:mm A")}
+        onChange={(newValue) => {
+          const formattedTime = dayjs(newValue).format("hh:mm A");
+          updateRow(params.id, "startTime", formattedTime);
         }}
-        slotProps={{ textField: { fullWidth: true } }}
+        renderInput={(props) => <TextField {...props} />}
       />
+    </LocalizationProvider>
     ),
-    editable: true,
   },
   {
     field: "endTime",
     headerName: "End Time",
     width: 150,
-
     renderCell: (params) => (
-      <TimePicker
-        value={params.row.endTime}
-        onChange={(newTime) => {
-          const updatedRow = { ...params.row, endTime: newTime };
-          handleProcessRowUpdate(updatedRow);
-        }}
-        slotProps={{ textField: { fullWidth: true } }}
+      <LocalizationProvider >
+        <TimePicker
+          ampm
+          value={dayjs(params.value, "hh:mm A")}
+          onChange={(newValue) => {
+            const formattedTime = dayjs(newValue).format("hh:mm A");
+            updateRow(params.id, "endTime", formattedTime);
+          }}
+          renderInput={(props) => <TextField {...props} />}
+        />
+      </LocalizationProvider>
+    ),
+  },
+  { field: "testName", headerName: "Test Name", width: 200 },
+  {
+    field: "regColl",
+    headerName: "Reg Coll.",
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "regColl", e.target.value)}
       />
     ),
-    editable: true,
   },
-  { field: "testName", headerName: "Test Name", flex: 1, editable: true },
-  { field: "regColl", headerName: "Reg Coll.", flex: 1, editable: true },
   {
     field: "collRecv",
-    headerName: "Coll-Recv.",
-    editable: true,
-    flex: 1,
-    disableColumnMenu: true,
+    headerName: "Coll Recv.",
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "collRecv", e.target.value)}
+      />
+    ),
   },
   {
     field: "tatType",
-    headerName: "Tat Type",
-    editable: true,
-    flex: 1,
-    disableColumnMenu: true,
+    headerName: "TAT Type",
+    width: 100,
+    renderCell: (params) => (
+      <Select
+        value={params.value}
+        onChange={(e) => {
+          const newTatType = e.target.value;
+          updateRow(params.id, "tatType", newTatType);
+          
+          // Automatically reset mins/days based on tatType
+          if (newTatType === "Mins") {
+            updateRow(params.id, "days", ""); // Reset days if tatType is Mins
+          } else if (newTatType === "Days") {
+            updateRow(params.id, "mins", ""); // Reset mins if tatType is Days
+          }
+        }}
+      >
+        <MenuItem value="Mins">Mins</MenuItem>
+        <MenuItem value="Days">Days</MenuItem>
+      </Select>
+    ),
   },
   {
     field: "mins",
     headerName: "Mins",
-    editable: true,
-    flex: 1,
-    disableColumnMenu: true,
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "mins", e.target.value)}
+        disabled={params.row.tatType === "Days"} // Disable if tatType is Days
+      />
+    ),
   },
   {
     field: "days",
     headerName: "Days",
-    editable: true,
-    flex: 1,
-    disableColumnMenu: true,
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "days", e.target.value)}
+        disabled={params.row.tatType === "Mins"} // Disable if tatType is Mins
+      />
+    ),
+  },
+  {
+    field: "daysOfWeek",
+    headerName: "Days of Week",
+    width: 200,
+    renderCell: (params) => (
+      <div>
+        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          <span
+            key={day}
+            onClick={() => toggleDaySelection(params.id, day)}
+            style={{
+              cursor: "pointer",
+              marginRight: 8,
+              color: params.row.selectedDays.includes(day) ? "navy" : "black",
+              fontWeight: params.row.selectedDays.includes(day)
+                ? "bold"
+                : "normal",
+            }}
+          >
+            {day}
+          </span>
+        ))}
+      </div>
+    ),
   },
 ];
+

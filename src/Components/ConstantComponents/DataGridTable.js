@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 });
 
-const DataGridTable = ({ rows, columns, editable = false, processRowUpdate }) => {
+const DataGridTable = ({ rows, columns}) => {
   const classes = useStyles();
 
   return (
@@ -30,8 +30,7 @@ const DataGridTable = ({ rows, columns, editable = false, processRowUpdate }) =>
           ? classes.evenRow
           : classes.oddRow
       }
-      editMode={editable ? "row" : "cell"}
-      {...(editable && { processRowUpdate })}
+      
     />
   );
 };
