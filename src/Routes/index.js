@@ -20,7 +20,8 @@ import ManageTestReportOrdering from "../Components/Form/LabOpration/ManageTestR
 import ReportingHelpMaster from "../Components/Form/LabOpration/ReportingHelpMaster/ReportingHelpMaster";
 import InterpretationMaster from "../Components/Form/LabOpration/InterpretationMaster";
 import TATMaster from "../Components/Form/LabOpration/TATMaster";
-
+import ReportingFormulaMaster from "../Components/Form/LabOpration/ReportingFormulaMaster";
+import LabTestMappingMaster from "../Components/Form/LabOpration/LabTestMappingMaster";
 
 const router = createBrowserRouter([
   {
@@ -37,11 +38,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/employee-master",
-        element: <EmployeeMaster/>,
+        element: <EmployeeMaster />,
       },
       {
         path: "/rate-type-master",
-        element: <RateTypeMaster/>,
+        element: <RateTypeMaster />,
       },
       {
         path: "/multimaster",
@@ -65,11 +66,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/observation-mapping",
-        element: <ObservationMapping/>,
+        element: <ObservationMapping />,
       },
       {
         path: "/dr-test-approval-master",
-        element: <DrTestApprovalMaster/>,
+        element: <DrTestApprovalMaster />,
       },
       {
         path: "/test-out-source-labMaster",
@@ -77,7 +78,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/outhouse-settelite-processing-master",
-        element: <TestOutSourceLabMaster/>,
+        element: <TestOutSourceLabMaster />,
       },
       {
         path: "/nabl-master",
@@ -85,25 +86,29 @@ const router = createBrowserRouter([
       },
       {
         path: "/manage-test-report-ordering",
-        element: <ManageTestReportOrdering/>,
+        element: <ManageTestReportOrdering />,
       },
       {
         path: "/reporting-help-master",
-        element: <ReportingHelpMaster/>,
+        element: <ReportingHelpMaster />,
       },
       {
         path: "/interpretation-master",
-        element: <InterpretationMaster/>,
+        element: <InterpretationMaster />,
       },
-     
+
       {
         path: "/tat-master",
         element: <TATMaster />,
       },
-       // {
-      //   path: "/location-master",
-      //   element: <LocationMaster />,
-      // },
+      {
+        path: "/Reporting-Formula-Master",
+        element: <ReportingFormulaMaster/>,
+      },
+      {
+        path: "/Lab-Test-Mapping-Master",
+        element: <LabTestMappingMaster/>,
+      },
     ],
   },
 

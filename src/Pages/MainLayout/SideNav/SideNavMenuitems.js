@@ -30,6 +30,8 @@ export const menuItems = [
         { text: "Reporting Help Master", link: "/reporting-help-master", icon: <MailIcon /> },
         { text: "Interpretation Master", link: "/interpretation-master", icon: <MailIcon /> },
         { text: "TAT Master", link: "/tat-master", icon: <MailIcon /> },
+        { text: "Reporting Formula Master", link: "/Reporting-Formula-Master", icon: <MailIcon /> },
+        { text: "Lab Test Mapping Master", link: "/Lab-Test-Mapping-Master", icon: <MailIcon /> },
       ],
     },
     {
