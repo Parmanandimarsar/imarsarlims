@@ -220,8 +220,8 @@ const ReportingHelpMaster = () => {
                 <Table stickyHeader size="small" aria-label="Master Name Table">
                   <TableHead>
                     <TableRow>
-                      <TableCell align="left" sx={{ fontWeight: "bold" }}>
-                        Name
+                      <TableCell align="left" sx={{ fontWeight: "bold", color:"white" }} className="tablehead">
+                       Help Name
                       </TableCell>
                     </TableRow>
                   </TableHead>

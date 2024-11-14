@@ -1,8 +1,20 @@
-import { Button, IconButton, Switch } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Switch,
+  TextField,
+  Select,
+  MenuItem,
+  Checkbox,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
-
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import dayjs from "dayjs";
+import { format } from "date-fns";
+import DraggableRow from "../ConstantComponents/DragableComponents/DraggableRow";
 export const MasterRateTypeColumns = (
   handleToggleActive,
   handleEdit,
@@ -1141,10 +1153,7 @@ export const MasterObservationMapping = [
     disableColumnMenu: true,
   },
 ];
-export const DrTestApprovalMasterColumns = (
-  handleToggleActive,
-  handleEdit
-) => [
+export const DrTestApprovalMasterColumns = (handleToggleActive, handleEdit) => [
   {
     field: "doctorName",
     headerName: "Doctor Name",
@@ -1174,19 +1183,6 @@ export const DrTestApprovalMasterColumns = (
       return <ImageView imageUrl={params.row.signUpload} />;
     },
   },
-
-  // {
-  //   field: "active",
-  //   headerName: "Active",
-  //   flex: 1,
-  //   disableColumnMenu: true,
-  //   renderCell: (params) =>
-  //     params.value ? (
-  //       <p className="text-green-600">{"Yes"}</p>
-  //     ) : (
-  //       <p className="text-red-600">{"No"}</p>
-  //     ), // Conditional rendering for boolean
-  // },
 
   {
     field: "deActivate",
@@ -1221,7 +1217,7 @@ export const DrTestApprovalMasterColumns = (
     ),
   },
 ];
-export const  OuthouseSetteliteProcessingMasterColumns= (
+export const OuthouseSetteliteProcessingMasterColumns = (
   handleDelete,
   handleEdit
 ) => [
@@ -1261,29 +1257,17 @@ export const  OuthouseSetteliteProcessingMasterColumns= (
           color="primary"
           onClick={() => handleDelete(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", 
-            // color:"#ff1744"
-          }} />
+          <DeleteIcon
+            sx={{
+              fontSize: "15px",
+              // color:"#ff1744"
+            }}
+          />
         </IconButton>
       </div>
     ),
   },
 
-  // {
-  //   field: "deActivate",
-  //   headerName: "DeActivate",
-  //   flex: 1,
-  //   disableColumnMenu: true,
-  //   renderCell: (params) => (
-  //     <div className="flex justify-center items-center">
-  //       <Switch
-  //         size="small"
-  //         checked={params.value}
-  //         onChange={() => handleToggleActive(params.row)}
-  //       />
-  //     </div>
-  //   ),
-  // },
   {
     field: "edit",
     headerName: "Edit",
@@ -1303,11 +1287,7 @@ export const  OuthouseSetteliteProcessingMasterColumns= (
   },
 ];
 
-
-export const TestOutSourceLabMasterColumns = (
-  handleDelete,
-  handleEdit
-) => [
+export const TestOutSourceLabMasterColumns = (handleDelete, handleEdit) => [
   {
     field: "bookingCentre",
     headerName: "Booking Centre",
@@ -1350,9 +1330,12 @@ export const TestOutSourceLabMasterColumns = (
           color="primary"
           onClick={() => handleDelete(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", 
-            // color:"#ff1744"
-          }} />
+          <DeleteIcon
+            sx={{
+              fontSize: "15px",
+              // color:"#ff1744"
+            }}
+          />
         </IconButton>
       </div>
     ),
@@ -1392,9 +1375,7 @@ export const TestOutSourceLabMasterColumns = (
   },
 ];
 
-export const NABLMasterColumns = (
-  handleDelete,
-) => [
+export const NABLMasterColumns = (handleDelete) => [
   {
     field: "bookingCenter",
     headerName: "Booking Centre",
@@ -1424,7 +1405,7 @@ export const NABLMasterColumns = (
       return <ImageView imageUrl={params.row.logo} />;
     },
   },
- 
+
   {
     field: "action",
     headerName: "Action",
@@ -1437,24 +1418,26 @@ export const NABLMasterColumns = (
           color="primary"
           onClick={() => handleDelete(params.row)}
         >
-          <DeleteIcon sx={{ fontSize: "15px", 
-            // color:"#ff1744"
-          }} />
+          <DeleteIcon
+            sx={{
+              fontSize: "15px",
+              // color:"#ff1744"
+            }}
+          />
         </IconButton>
       </div>
     ),
   },
-
-  
-  
 ];
 
-
- export const ReportingHelpMastercolumns =(handleDelete)=> [
-  { field: "id", headerName: "SNo",flex: 1,
-    disableColumnMenu: true,},
-  { field: "masterName", headerName: "Master Name",flex: 1,
-    disableColumnMenu: true,},
+export const ReportingHelpMastercolumns = (handleDelete) => [
+  { field: "id", headerName: "SNo", flex: 1, disableColumnMenu: true },
+  {
+    field: "masterName",
+    headerName: "Master Name",
+    flex: 1,
+    disableColumnMenu: true,
+  },
   {
     field: "remove",
     headerName: "Remove",
@@ -1462,13 +1445,340 @@ export const NABLMasterColumns = (
     disableColumnMenu: true,
     renderCell: (params) => (
       <IconButton
-      aria-label="delete"
-      color="secondary"
-      onClick={() => handleDelete(params.row)}
-    >
-      <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
-    </IconButton>
+        aria-label="delete"
+        color="secondary"
+        onClick={() => handleDelete(params.row)}
+      >
+        <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+      </IconButton>
     ),
   },
 ];
 
+// export const TATMastercolumns = (handleProcessRowUpdate) => [
+//   { field: "id", headerName: "SNo", flex: 1 },
+//   {
+//     field: "startTime",
+//     headerName: "Start Time",
+//     width: 150,
+
+//     renderCell: (params) => (
+//       <TimePicker
+//         value={params.row.startTime}
+//         onChange={(newTime) => {
+//           const updatedRow = { ...params.row, startTime: newTime };
+//           handleProcessRowUpdate(updatedRow);
+//         }}
+//         slotProps={{ textField: { fullWidth: true } }}
+//       />
+//     ),
+//     editable: true,
+//   },
+//   {
+//     field: "endTime",
+//     headerName: "End Time",
+//     width: 150,
+
+//     renderCell: (params) => (
+//       <TimePicker
+//         value={params.row.endTime}
+//         onChange={(newTime) => {
+//           const updatedRow = { ...params.row, endTime: newTime };
+//           handleProcessRowUpdate(updatedRow);
+//         }}
+//         slotProps={{ textField: { fullWidth: true } }}
+//       />
+//     ),
+//     editable: true,
+//   },
+//   { field: "testName", headerName: "Test Name", flex: 1, editable: true },
+//   { field: "regColl", headerName: "Reg Coll.", flex: 1, editable: true },
+//   {
+//     field: "collRecv",
+//     headerName: "Coll-Recv.",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+//   {
+//     field: "tatType",
+//     headerName: "Tat Type",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+//   {
+//     field: "mins",
+//     headerName: "Mins",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+//   {
+//     field: "days",
+//     headerName: "Days",
+//     editable: true,
+//     flex: 1,
+//     disableColumnMenu: true,
+//   },
+// ];
+
+export const TATMasterColumns = (updateRow, toggleDaySelection) => [
+  { field: "id", headerName: "SNo.", width: 50 },
+  {
+    field: "startTime",
+    headerName: "Start Time",
+    width: 150,
+    renderCell: (params) => (
+      <LocalizationProvider>
+        <TimePicker
+          ampm
+          value={dayjs(params.value, "hh:mm A")}
+          onChange={(newValue) => {
+            const formattedTime = dayjs(newValue).format("hh:mm A");
+            updateRow(params.id, "startTime", formattedTime);
+          }}
+          renderInput={(props) => <TextField {...props} />}
+        />
+      </LocalizationProvider>
+    ),
+  },
+  {
+    field: "endTime",
+    headerName: "End Time",
+    width: 150,
+    renderCell: (params) => (
+      <LocalizationProvider>
+        <TimePicker
+          ampm
+          value={dayjs(params.value, "hh:mm A")}
+          onChange={(newValue) => {
+            const formattedTime = dayjs(newValue).format("hh:mm A");
+            updateRow(params.id, "endTime", formattedTime);
+          }}
+          renderInput={(props) => <TextField {...props} />}
+        />
+      </LocalizationProvider>
+    ),
+  },
+  { field: "testName", headerName: "Test Name", width: 200 },
+  {
+    field: "regColl",
+    headerName: "Reg Coll.",
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "regColl", e.target.value)}
+      />
+    ),
+  },
+  {
+    field: "collRecv",
+    headerName: "Coll Recv.",
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "collRecv", e.target.value)}
+      />
+    ),
+  },
+  {
+    field: "tatType",
+    headerName: "TAT Type",
+    width: 100,
+    renderCell: (params) => (
+      <Select
+        value={params.value}
+        onChange={(e) => {
+          const newTatType = e.target.value;
+          updateRow(params.id, "tatType", newTatType);
+
+          // Automatically reset mins/days based on tatType
+          if (newTatType === "Mins") {
+            updateRow(params.id, "days", ""); // Reset days if tatType is Mins
+          } else if (newTatType === "Days") {
+            updateRow(params.id, "mins", ""); // Reset mins if tatType is Days
+          }
+        }}
+      >
+        <MenuItem value="Mins">Mins</MenuItem>
+        <MenuItem value="Days">Days</MenuItem>
+      </Select>
+    ),
+  },
+  {
+    field: "mins",
+    headerName: "Mins",
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "mins", e.target.value)}
+        disabled={params.row.tatType === "Days"} // Disable if tatType is Days
+      />
+    ),
+  },
+  {
+    field: "days",
+    headerName: "Days",
+    width: 100,
+    renderCell: (params) => (
+      <TextField
+        value={params.value}
+        onChange={(e) => updateRow(params.id, "days", e.target.value)}
+        disabled={params.row.tatType === "Mins"} // Disable if tatType is Mins
+      />
+    ),
+  },
+  {
+    field: "daysOfWeek",
+    headerName: "Days of Week",
+    width: 200,
+    renderCell: (params) => (
+      <div>
+        {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
+          <span
+            key={day}
+            onClick={() => toggleDaySelection(params.id, day)}
+            style={{
+              cursor: "pointer",
+              marginRight: 8,
+              color: params.row.selectedDays.includes(day) ? "navy" : "black",
+              fontWeight: params.row.selectedDays.includes(day)
+                ? "bold"
+                : "normal",
+            }}
+          >
+            {day}
+          </span>
+        ))}
+      </div>
+    ),
+  },
+];
+
+export const LabTestMappingMasterColumns = (
+  handleCheckboxChange,
+  handleRemoveRow
+) => [
+  { field: "sn", headerName: "S/N", width: 50 },
+  { field: "id", headerName: "ID", width: 100 },
+  {
+    field: "name",
+    headerName: "Test Name",
+    width: 200,
+    renderCell: (params) => <DraggableRow row={params.row} />,
+  },
+  {
+    field: "header",
+    headerName: "Header",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.header}
+        onChange={() => handleCheckboxChange(params.row.id, "header")}
+      />
+    ),
+  },
+  {
+    field: "bold",
+    headerName: "Bold",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.bold}
+        onChange={() => handleCheckboxChange(params.row.id, "bold")}
+      />
+    ),
+  },
+  {
+    field: "critical",
+    headerName: "Critical",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.critical}
+        onChange={() => handleCheckboxChange(params.row.id, "critical")}
+      />
+    ),
+  },
+  {
+    field: "dlcCheck",
+    headerName: "DLC Check",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.dlcCheck}
+        onChange={() => handleCheckboxChange(params.row.id, "dlcCheck")}
+      />
+    ),
+  },
+  {
+    field: "printSeparate",
+    headerName: "Print Separate",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.printSeparate}
+        onChange={() => handleCheckboxChange(params.row.id, "printSeparate")}
+      />
+    ),
+  },
+  {
+    field: "showinReport",
+    headerName: "Show in Report",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.showinReport}
+        onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
+      />
+    ),
+  },
+  {
+    field: "interPertation",
+    headerName: "InterPertation",
+    width: 100,
+    // renderCell: (params) => (
+    //   <Checkbox
+    //     size="small"
+    //     checked={params.row.showinReport}
+    //     onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
+    //   />
+    // ),
+  },
+  {
+    field: "refRange	",
+    headerName: "Ref.Range	",
+    width: 100,
+    // renderCell: (params) => (
+    //   <Checkbox
+    //     size="small"
+    //     checked={params.row.showinReport}
+    //     onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
+    //   />
+    // ),
+  },
+  {
+    field: "remove",
+    headerName: "Remove",
+    width: 100,
+    renderCell: (params) => (
+      <IconButton
+        aria-label="delete"
+        color="secondary"
+        onClick={() => handleRemoveRow(params.row.id)}
+      >
+        <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+      </IconButton>
+    ),
+  },
+];

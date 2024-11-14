@@ -163,11 +163,18 @@ height: 0px !important;
 .MuiButtonBase-root .MuiIconButton-root{
 padding: 0px !important;
 }
+
+
 .MuiIconButton-root {
   padding: 0px !important; /* Replace 5px with your desired padding */
 }
 .MuiToolbar-root{
   min-height: 25px !important;
+}
+
+/* custom table  */
+.tablehead{
+  background-color: #17a2b8de !important;
 }
 .headerNav {
   transition: 300ms ease all;
