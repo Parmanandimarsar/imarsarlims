@@ -1,4 +1,12 @@
-import { Button, IconButton, Switch, TextField ,Select, MenuItem } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Switch,
+  TextField,
+  Select,
+  MenuItem,
+  Checkbox,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
@@ -6,6 +14,7 @@ import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import dayjs from "dayjs";
 import { format } from "date-fns";
+import DraggableRow from "../ConstantComponents/DragableComponents/DraggableRow";
 export const MasterRateTypeColumns = (
   handleToggleActive,
   handleEdit,
@@ -1514,11 +1523,6 @@ export const ReportingHelpMastercolumns = (handleDelete) => [
 //   },
 // ];
 
-
-
-
-
-
 export const TATMasterColumns = (updateRow, toggleDaySelection) => [
   { field: "id", headerName: "SNo.", width: 50 },
   {
@@ -1526,17 +1530,17 @@ export const TATMasterColumns = (updateRow, toggleDaySelection) => [
     headerName: "Start Time",
     width: 150,
     renderCell: (params) => (
-      <LocalizationProvider >
-      <TimePicker
-        ampm
-        value={dayjs(params.value, "hh:mm A")}
-        onChange={(newValue) => {
-          const formattedTime = dayjs(newValue).format("hh:mm A");
-          updateRow(params.id, "startTime", formattedTime);
-        }}
-        renderInput={(props) => <TextField {...props} />}
-      />
-    </LocalizationProvider>
+      <LocalizationProvider>
+        <TimePicker
+          ampm
+          value={dayjs(params.value, "hh:mm A")}
+          onChange={(newValue) => {
+            const formattedTime = dayjs(newValue).format("hh:mm A");
+            updateRow(params.id, "startTime", formattedTime);
+          }}
+          renderInput={(props) => <TextField {...props} />}
+        />
+      </LocalizationProvider>
     ),
   },
   {
@@ -1544,7 +1548,7 @@ export const TATMasterColumns = (updateRow, toggleDaySelection) => [
     headerName: "End Time",
     width: 150,
     renderCell: (params) => (
-      <LocalizationProvider >
+      <LocalizationProvider>
         <TimePicker
           ampm
           value={dayjs(params.value, "hh:mm A")}
@@ -1590,7 +1594,7 @@ export const TATMasterColumns = (updateRow, toggleDaySelection) => [
         onChange={(e) => {
           const newTatType = e.target.value;
           updateRow(params.id, "tatType", newTatType);
-          
+
           // Automatically reset mins/days based on tatType
           if (newTatType === "Mins") {
             updateRow(params.id, "days", ""); // Reset days if tatType is Mins
@@ -1655,3 +1659,126 @@ export const TATMasterColumns = (updateRow, toggleDaySelection) => [
   },
 ];
 
+export const LabTestMappingMasterColumns = (
+  handleCheckboxChange,
+  handleRemoveRow
+) => [
+  { field: "sn", headerName: "S/N", width: 50 },
+  { field: "id", headerName: "ID", width: 100 },
+  {
+    field: "name",
+    headerName: "Test Name",
+    width: 200,
+    renderCell: (params) => <DraggableRow row={params.row} />,
+  },
+  {
+    field: "header",
+    headerName: "Header",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.header}
+        onChange={() => handleCheckboxChange(params.row.id, "header")}
+      />
+    ),
+  },
+  {
+    field: "bold",
+    headerName: "Bold",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.bold}
+        onChange={() => handleCheckboxChange(params.row.id, "bold")}
+      />
+    ),
+  },
+  {
+    field: "critical",
+    headerName: "Critical",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.critical}
+        onChange={() => handleCheckboxChange(params.row.id, "critical")}
+      />
+    ),
+  },
+  {
+    field: "dlcCheck",
+    headerName: "DLC Check",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.dlcCheck}
+        onChange={() => handleCheckboxChange(params.row.id, "dlcCheck")}
+      />
+    ),
+  },
+  {
+    field: "printSeparate",
+    headerName: "Print Separate",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.printSeparate}
+        onChange={() => handleCheckboxChange(params.row.id, "printSeparate")}
+      />
+    ),
+  },
+  {
+    field: "showinReport",
+    headerName: "Show in Report",
+    width: 100,
+    renderCell: (params) => (
+      <Checkbox
+        size="small"
+        checked={params.row.showinReport}
+        onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
+      />
+    ),
+  },
+  {
+    field: "interPertation",
+    headerName: "InterPertation",
+    width: 100,
+    // renderCell: (params) => (
+    //   <Checkbox
+    //     size="small"
+    //     checked={params.row.showinReport}
+    //     onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
+    //   />
+    // ),
+  },
+  {
+    field: "refRange	",
+    headerName: "Ref.Range	",
+    width: 100,
+    // renderCell: (params) => (
+    //   <Checkbox
+    //     size="small"
+    //     checked={params.row.showinReport}
+    //     onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
+    //   />
+    // ),
+  },
+  {
+    field: "remove",
+    headerName: "Remove",
+    width: 100,
+    renderCell: (params) => (
+      <IconButton
+        aria-label="delete"
+        color="secondary"
+        onClick={() => handleRemoveRow(params.row.id)}
+      >
+        <DeleteIcon sx={{ fontSize: "15px", color: "red" }} />
+      </IconButton>
+    ),
+  },
+];
