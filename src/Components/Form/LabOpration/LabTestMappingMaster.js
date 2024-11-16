@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Box,
@@ -13,6 +14,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import DraggableDataGrid from "../../ConstantComponents/DragableComponents/DraggableDataGrid";
 import CustomMenuSearch from "../../ConstantComponents/CustomMenuSearch";
+import { LabTestMappingMasterColumns } from "../../TableField/TablefieldsColumns";
 
 const departmentOptions = [
   { id: 1, name: "Department A" },
@@ -21,75 +23,91 @@ const departmentOptions = [
 
 const validationSchema = Yup.object({
   department: Yup.string().required("Department is required"),
-  test: Yup.string().required("Test is required"),
-  profile: Yup.string().required("Profile is required"),
+  testType: Yup.string().required("Test Type is required"),
+  profile: Yup.string().when("testType", {
+    is: (val) => val === "profile",
+    then: (schema) => schema.required("Profile is required"),
+    otherwise: (schema) => schema,
+  }),
+  investigation: Yup.string().when("testType", {
+    is: (val) => val === "test",
+    then: (schema) => schema.required("Investigation is required"),
+    otherwise: (schema) => schema,
+  }),
+  package: Yup.string().when("testType", {
+    is: (val) => val === "package",
+    then: (schema) => schema.required("Package is required"),
+    otherwise: (schema) => schema,
+  }),
 });
 
 const LabTestMappingMaster = () => {
-  const [testOptions, setTestOptions] = useState([]);
-  const [profileOptions, setProfileOptions] = useState([]);
-  const [rows, setRows] = useState([]);
-
   const [anchorElDepartment, setAnchorElDepartment] = useState(null);
-  const [anchorElTest, setAnchorElTest] = useState(null);
+  const [anchorElTestType, setAnchorElTestType] = useState(null);
   const [anchorElProfile, setAnchorElProfile] = useState(null);
-  const [anchorElObservation, setAnchorObservation] = useState(null);
-  const [observationOptions, setObservationOptions] = useState([
+  const [anchorElInvestigation, setAnchorElInvestigation] = useState(null);
+  const [anchorElPackage, setAnchorElPackage] = useState(null);
+  const [anchorElObservation, setAnchorElObservation] = useState(null);
+  const [optionsByTestType, setOptionsByTestType] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [selectedObservations, setSelectedObservations] = useState([]);
+  const [rowsByInvestagation, setRowsByInvestagation] = useState([]);
+  const [rowsByProfile, setRowsByProfile] = useState([]);
+  const [rowsByPackage, setRowsByPackage] = useState([]);
+  const observationOptions = [
     { id: 1, name: "Observation 1" },
     { id: 2, name: "Observation 2" },
-    // Add more items as needed
-  ]);
-
-  const [selectedObservations, setSelectedObservations] = useState([]);
+    { id: 3, name: "Observation 3" },
+    { id: 4, name: "Observation 4" },
+    { id: 5, name: "Observation 5" },
+    { id: 6, name: "Observation 6" },
+  ];
 
   const handleObservationSelect = (newSelectedOptions) => {
+    console.log("newSelectedOptions",newSelectedOptions)
     setSelectedObservations(newSelectedOptions);
   };
 
-  const testOptionsByDepartment = {
-    "Department A": [
-      { id: 1, name: "Test A1" },
-      { id: 2, name: "Test A2" },
+  const OptionsSelectByTestType = {
+    TestType: [
+      { id: 1, name: "Investigation1" },
+      { id: 2, name: "Investigation2" },
     ],
-    "Department B": [
-      { id: 3, name: "Test B1" },
-      { id: 4, name: "Test B2" },
+    Profile: [
+      { id: 3, name: "Profile1" },
+      { id: 4, name: "Profile2" },
     ],
-  };
-  const profileOptionsByTest = {
-    "Test A1": [
-      { id: 1, name: "Profile X1" },
-      { id: 2, name: "Profile X2" },
-    ],
-    "Test B1": [
-      { id: 3, name: "Profile Y1" },
-      { id: 4, name: "Profile Y2" },
+    Package: [
+      { id: 3, name: "Package1" },
+      { id: 4, name: "Package2" },
     ],
   };
 
-  const rowsByProfile = {
-    "Profile X1": [
-      { sn: 1, name: "Sample X1", id: 1 },
-      { sn: 2, name: "Sample X2", id: 2 },
-    ],
-    "Profile X2": [
-      { sn: 3, name: "Sample X3", id: 3 },
-      { sn: 4, name: "Sample X4", id: 4 },
-    ],
+  
+  const rowsDataByProfile = {
     "Profile Y1": [
-      { sn: 5, name: "Sample Y1", id: 5 },
-      { sn: 6, name: "Sample Y2", id: 6 },
+      { sn: 1, name: "Profile X1", id: 1 },
+      { sn: 2, name: "Profile X2", id: 2 },
     ],
     "Profile Y2": [
-      { sn: 7, name: "Sample Y3", id: 7 },
-      { sn: 8, name: "Sample Y4", id: 8 },
+      { sn: 3, name: "Profile X3", id: 3 },
+      { sn: 4, name: "Profile X4", id: 4 },
+    ],
+  };
+  const rowsDataByPackage = {
+    "Package Z1": [
+      { sn: 1, name: "Package X1", id: 1 },
+      { sn: 2, name: "Package X2", id: 2 },
+    ],
+    "Package Z2": [
+      { sn: 3, name: "Package X3", id: 3 },
+      { sn: 4, name: "Package X4", id: 4 },
     ],
   };
 
   const handleRemoveRow = (id) => {
     setRows((prevRows) => prevRows.filter((row) => row.id !== id));
   };
-
   const handleCheckboxChange = (id, field) => {
     setRows((prevRows) =>
       prevRows.map((row) =>
@@ -98,37 +116,49 @@ const LabTestMappingMaster = () => {
     );
   };
   const handleMappingClick = (values) => {
-    // Check if a profile is selected
-    if (values.profile) {
-      // Get rows from the selected profile
-      const profileRows = rowsByProfile[values.profile] || [];
+    let updatedRows = [];
 
-      // Map selected observations to create new rows
+    // Handle rows based on profile, investigation, or package
+    if (values.testType === "Profile" && values.profile) {
+      updatedRows = rowsByProfile[values.profile] || [];
+    } else if (values.testType === "TestType" && values.investigation) {
+      updatedRows = setRowsByInvestagation[values.investigation] || [];
+    } else if (values.testType === "Package" && values.package) {
+      updatedRows = rowsDataByPackage[values.package] || [];
+    }
+
+    // Map selected observations into rows if applicable
+    if (selectedObservations.length > 0) {
       const observationRows = selectedObservations.map((obs, index) => ({
-        sn: profileRows.length + index + 1,
+        sn: updatedRows.length + index + 1,
         name: obs.name,
         id: obs.id,
       }));
-
-      // Update the rows with the profile rows and selected observations
-      setRows([...profileRows, ...observationRows]);
-    } else {
-      alert("Please select a profile before mapping.");
+      updatedRows = [...updatedRows, ...observationRows];
     }
+
+    setRows(updatedRows);
   };
+console.log("rowsByInvestagation",rowsByInvestagation);
 
   return (
     <Box className="mb-[50px] pl-2">
       <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
         <Box
-          className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg project-thim"
+          className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg"
           style={{ backgroundColor: "#1976d2" }}
         >
           <Typography className="pl-1">Lab Test Mapping Master</Typography>
         </Box>
         <Divider />
         <Formik
-          initialValues={{ department: "", test: "", profile: "" }}
+          initialValues={{
+            department: "",
+            testType: "",
+            profile: "",
+            investigation: "",
+            package: "",
+          }}
           validationSchema={validationSchema}
           onSubmit={(values) => {
             console.log("Form values:", values);
@@ -146,7 +176,7 @@ const LabTestMappingMaster = () => {
                       sx={{ mr: "3px" }}
                       className="formlableborder"
                     >
-                      <FormLabel> Department</FormLabel>
+                      <FormLabel>Department</FormLabel>
                     </Grid>
                     <Grid item xs={8}>
                       <FormControl
@@ -161,11 +191,6 @@ const LabTestMappingMaster = () => {
                           placeholder="Select Department"
                           InputProps={{ readOnly: true }}
                         />
-                        {touched.department && errors.department && (
-                          <Typography color="error">
-                            {errors.department}
-                          </Typography>
-                        )}
                         <CustomMenuSearch
                           options={departmentOptions}
                           selectedOptions={
@@ -181,12 +206,8 @@ const LabTestMappingMaster = () => {
                           setSelectedOptions={(value) => {
                             const selectedDepartment = value[0]?.name || "";
                             setFieldValue("department", selectedDepartment);
-                            setFieldValue("test", "");
+                            setFieldValue("testType", "");
                             setFieldValue("profile", "");
-                            setTestOptions(
-                              testOptionsByDepartment[selectedDepartment] || []
-                            );
-                            setProfileOptions([]); // Clear profile options
                           }}
                           anchorEl={anchorElDepartment}
                           onClose={() => setAnchorElDepartment(null)}
@@ -196,7 +217,7 @@ const LabTestMappingMaster = () => {
                   </Grid>
                 </Grid>
 
-                {/* Test Field */}
+                {/* TestType Field */}
                 <Grid item xs={12} sm={6} md={4}>
                   <Grid container alignItems="center">
                     <Grid
@@ -205,94 +226,219 @@ const LabTestMappingMaster = () => {
                       sx={{ mr: "3px" }}
                       className="formlableborder"
                     >
-                      <FormLabel> Test</FormLabel>
+                      <FormLabel>Test Type</FormLabel>
                     </Grid>
                     <Grid item xs={8}>
                       <FormControl
-                        error={Boolean(errors.test && touched.test)}
+                        error={Boolean(errors.testType && touched.testType)}
                         fullWidth
                       >
                         <TextField
-                          onClick={(e) => setAnchorElTest(e.currentTarget)}
-                          value={values.test}
-                          placeholder="Select Test"
+                          onClick={(e) => setAnchorElTestType(e.currentTarget)}
+                          value={values.testType}
+                          placeholder="Select Test Type"
                           InputProps={{ readOnly: true }}
                         />
-                        {touched.test && errors.test && (
-                          <Typography color="error">{errors.test}</Typography>
-                        )}
                         <CustomMenuSearch
-                          options={testOptions}
+                          options={[
+                            { id: 1, name: "TestType" }, // Changed to match conditionals exactly
+                            { id: 2, name: "Profile" },
+                            { id: 3, name: "Package" },
+                          ]}
                           selectedOptions={
-                            values.test
-                              ? [{ id: values.test, name: values.test }]
+                            values.testType
+                              ? [
+                                  {
+                                    id: values.testType,
+                                    name: values.testType,
+                                  },
+                                ]
                               : []
                           }
                           setSelectedOptions={(value) => {
-                            const selectedTest = value[0]?.name || "";
-                            setFieldValue("test", selectedTest);
-                            setFieldValue("profile", ""); // Reset profile on test change
-                            setProfileOptions(
-                              profileOptionsByTest[selectedTest] || []
+                            const selectedTestType = value[0]?.name || "";
+                            setFieldValue("testType", selectedTestType);
+                            setFieldValue("profile", "");
+                            setFieldValue("investigation", "");
+                            setFieldValue("package", "");
+                            setOptionsByTestType(
+                              OptionsSelectByTestType[selectedTestType] || []
                             );
                           }}
-                          anchorEl={anchorElTest}
-                          onClose={() => setAnchorElTest(null)}
+                          anchorEl={anchorElTestType}
+                          onClose={() => setAnchorElTestType(null)}
                         />
                       </FormControl>
                     </Grid>
                   </Grid>
                 </Grid>
 
-                {/* Profile Field */}
-                <Grid item xs={12} sm={6} md={4}>
-                  <Grid container alignItems="center">
-                    <Grid
-                      item
-                      xs={3}
-                      sx={{ mr: "3px" }}
-                      className="formlableborder"
-                    >
-                      <FormLabel> Profile</FormLabel>
-                    </Grid>
-                    <Grid item xs={8}>
-                      <FormControl
-                        error={Boolean(errors.profile && touched.profile)}
-                        fullWidth
+                {/* Conditionally Rendered Fields based on TestType */}
+                {(values.testType === "TestType" || values.testType === "") && (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        sx={{ mr: "3px" }}
+                        className="formlableborder"
                       >
-                        <TextField
-                          onClick={(e) => setAnchorElProfile(e.currentTarget)}
-                          value={values.profile}
-                          placeholder="Select Profile"
-                          InputProps={{ readOnly: true }}
-                        />
-                        {touched.profile && errors.profile && (
-                          <Typography color="error">
-                            {errors.profile}
-                          </Typography>
-                        )}
-                        <CustomMenuSearch
-                          options={profileOptions}
-                          selectedOptions={
-                            values.profile
-                              ? [{ id: values.profile, name: values.profile }]
-                              : []
-                          }
-                          setSelectedOptions={(value) => {
-                            const selectedProfile = value[0]?.name || "";
-                            setFieldValue("profile", selectedProfile);
-                            // Fetch rows based on profile selection
-                            setRows(rowsByProfile[selectedProfile] || []);
-                          }}
-                          anchorEl={anchorElProfile}
-                          onClose={() => setAnchorElProfile(null)}
-                        />
-                      </FormControl>
+                        <FormLabel>Investigation</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl
+                          error={Boolean(
+                            errors.investigation && touched.investigation
+                          )}
+                          fullWidth
+                        >
+                          <TextField
+                            onClick={(e) =>
+                              setAnchorElInvestigation(e.currentTarget)
+                            }
+                            value={values.investigation}
+                            placeholder="Select Investigation"
+                            InputProps={{ readOnly: true }}
+                          />
+                          <CustomMenuSearch
+                            options={optionsByTestType}
+                            selectedOptions={
+                              values.investigation
+                                ? [
+                                    {
+                                      id: values.investigation,
+                                      name: values.investigation,
+                                    },
+                                  ]
+                                : []
+                            }
+                            setSelectedOptions={(value) => {
+                              const selectedInvestigation =
+                                value[0]?.name || "";
+                              const newRows =rowsByInvestagation[selectedInvestigation
+                                ] || [];
+
+                              setFieldValue(
+                                "investigation",
+                                selectedInvestigation
+                              );
+
+                              setRows(newRows);
+                              setRowsByInvestagation(newRows);
+                            }}
+                            anchorEl={anchorElInvestigation}
+                            onClose={() => setAnchorElInvestigation(null)}
+                          />
+                        </FormControl>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </Grid>
+                )}
 
+                {values.testType === "Profile" && (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        sx={{ mr: "3px" }}
+                        className="formlableborder"
+                      >
+                        <FormLabel>Profile</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl
+                          error={Boolean(errors.profile && touched.profile)}
+                          fullWidth
+                        >
+                          <TextField
+                            onClick={(e) => setAnchorElProfile(e.currentTarget)}
+                            value={values.profile}
+                            placeholder="Select Profile"
+                            InputProps={{ readOnly: true }}
+                          />
+                          <CustomMenuSearch
+                            options={optionsByTestType}
+                            selectedOptions={
+                              values.profile
+                                ? [
+                                    {
+                                      id: values.profile,
+                                      name: values.profile,
+                                    },
+                                  ]
+                                : []
+                            }
+                            setSelectedOptions={(value) => {
+                              const selectedProfile = value[0]?.name || "";
+
+                              setFieldValue("profile", selectedProfile);
+                             const newRows =rowsDataByProfile[selectedProfile] || []
+                              setRowsByProfile(newRows)
+                              setRows(rowsByProfile|| []);
+                              
+                            }}
+                            anchorEl={anchorElProfile}
+                            onClose={() => setAnchorElProfile(null)}
+                          />
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                )}
+
+                {values.testType === "Package" && (
+                  <Grid item xs={12} sm={6} md={4}>
+                    <Grid container alignItems="center">
+                      <Grid
+                        item
+                        xs={3}
+                        sx={{ mr: "3px" }}
+                        className="formlableborder"
+                      >
+                        <FormLabel>Package</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <FormControl
+                          error={Boolean(errors.package && touched.package)}
+                          fullWidth
+                        >
+                          <TextField
+                            onClick={(e) => setAnchorElPackage(e.currentTarget)}
+                            value={values.package}
+                            placeholder="Select Package"
+                            InputProps={{ readOnly: true }}
+                          />
+                          <CustomMenuSearch
+                            options={optionsByTestType}
+                            selectedOptions={
+                              values.package
+                                ? [
+                                    {
+                                      id: values.package,
+                                      name: values.package,
+                                    },
+                                  ]
+                                : []
+                            }
+                            setSelectedOptions={(value) => {
+                              const selectedPackage = value[0]?.name || "";
+                              setFieldValue("package", selectedPackage);
+                              setRowsByPackage(
+                                rowsDataByPackage[selectedPackage] || []
+                              );
+                              setRows((pre) => [...pre, ...rowsByPackage]);
+                              // setRows(rowsByPackage)
+                            }}
+                            anchorEl={anchorElPackage}
+                            onClose={() => setAnchorElPackage(null)}
+                          />
+                        </FormControl>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                )}
+              </Grid>
               <Divider />
               <Grid container spacing={1} p={1}>
                 <Grid item xs={12} sm={4} md={3}>
@@ -308,7 +454,9 @@ const LabTestMappingMaster = () => {
                     <Grid item xs={8}>
                       <FormControl fullWidth>
                         <TextField
-                          onClick={(e) => setAnchorObservation(e.currentTarget)}
+                          onClick={(e) =>
+                            setAnchorElObservation(e.currentTarget)
+                          }
                           placeholder="Select Observation"
                           value={
                             selectedObservations.length
@@ -324,36 +472,37 @@ const LabTestMappingMaster = () => {
                           selectedOptions={selectedObservations} // Use selectedObservations from state
                           setSelectedOptions={handleObservationSelect} // Ensure this function is defined
                           anchorEl={anchorElObservation}
-                          onClose={() => setAnchorObservation(null)}
+                          onClose={() => setAnchorElObservation(null)}
                           isCheckboxMenu
                         />
                       </FormControl>
                     </Grid>
                   </Grid>
                 </Grid>
-                <Box textAlign="center">
-                  <Button
-                    type="submit"
-                    size="small"
-                    variant="contained"
-                    color="primary"
-                    onClick={()=>handleMappingClick(values)}
-                  >
-                    Mapping
-                  </Button>
-                </Box>
               </Grid>
+              <Box display="flex" justifyContent="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => handleMappingClick(values)}
+                  // disabled={!values.profile}
+                >
+                  Mapping Observations
+                </Button>
+              </Box>
+
+              <DraggableDataGrid
+                rows={rows}
+                columns={LabTestMappingMasterColumns(
+                  handleCheckboxChange,
+                  handleRemoveRow
+                )}
+                // onRemoveRow={handleRemoveRow}
+                // handleCheckboxChange={handleCheckboxChange}
+              />
             </Form>
           )}
         </Formik>
-       
-
-        <DraggableDataGrid
-          rows={rows}
-          setRows={setRows}
-          handleRemoveRow={handleRemoveRow}
-          handleCheckboxChange={handleCheckboxChange}
-        />
       </Box>
     </Box>
   );

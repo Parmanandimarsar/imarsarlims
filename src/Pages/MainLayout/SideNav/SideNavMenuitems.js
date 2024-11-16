@@ -32,6 +32,7 @@ export const menuItems = [
         { text: "TAT Master", link: "/tat-master", icon: <MailIcon /> },
         { text: "Reporting Formula Master", link: "/Reporting-Formula-Master", icon: <MailIcon /> },
         { text: "Lab Test Mapping Master", link: "/Lab-Test-Mapping-Master", icon: <MailIcon /> },
+        { text: "Test", link: "/test", icon: <MailIcon /> },
       ],
     },
     {

@@ -22,6 +22,7 @@ import InterpretationMaster from "../Components/Form/LabOpration/InterpretationM
 import TATMaster from "../Components/Form/LabOpration/TATMaster";
 import ReportingFormulaMaster from "../Components/Form/LabOpration/ReportingFormulaMaster";
 import LabTestMappingMaster from "../Components/Form/LabOpration/LabTestMappingMaster";
+import Test from "../Components/Form/LabOpration/Test";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ const router = createBrowserRouter([
       {
         path: "/Lab-Test-Mapping-Master",
         element: <LabTestMappingMaster/>,
+      },
+      {
+        path: "/test",
+        element: <Test/>,
       },
     ],
   },

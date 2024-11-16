@@ -16,7 +16,7 @@ import {
 import DataGridTable from "../DataGridTable";
 import { LabTestMappingMasterColumns } from "../../TableField/TablefieldsColumns";
 
-const DraggableDataGrid = ({ rows, setRows ,handleCheckboxChange,handleRemoveRow}) => {
+const DraggableDataGrid = ({ rows,columns, setRows ,handleCheckboxChange,handleRemoveRow}) => {
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor));
 
   const handleDragEnd = (event) => {
@@ -41,7 +41,7 @@ const DraggableDataGrid = ({ rows, setRows ,handleCheckboxChange,handleRemoveRow
         <Box mt={2} height={300}>
           <DataGridTable
             rows={rows}
-            columns={LabTestMappingMasterColumns(handleCheckboxChange,handleRemoveRow)}
+            columns={columns}
             disableSelectionOnClick
           />
         </Box>
