@@ -21,8 +21,9 @@ import ReportingHelpMaster from "../Components/Form/LabOpration/ReportingHelpMas
 import InterpretationMaster from "../Components/Form/LabOpration/InterpretationMaster";
 import TATMaster from "../Components/Form/LabOpration/TATMaster";
 import ReportingFormulaMaster from "../Components/Form/LabOpration/ReportingFormulaMaster";
-import LabTestMappingMaster from "../Components/Form/LabOpration/LabTestMappingMaster";
+import LabTestMappingMaster from "../Components/Form/LabOpration/LabTestMappingMaster/LabTestMappingMaster";
 import Test from "../Components/Form/LabOpration/Test";
+import LabObservationWithRange from "../Components/Form/LabOpration/LabTestMappingMaster/LabObservationWithRange";
 
 const router = createBrowserRouter([
   {
@@ -111,8 +112,8 @@ const router = createBrowserRouter([
         element: <LabTestMappingMaster/>,
       },
       {
-        path: "/test",
-        element: <Test/>,
+        path: "/lab-observation-with-range/:id",
+        element: <LabObservationWithRange />,
       },
     ],
   },

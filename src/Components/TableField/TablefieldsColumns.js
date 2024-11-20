@@ -15,6 +15,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import dayjs from "dayjs";
 import { format } from "date-fns";
 import DraggableRow from "../ConstantComponents/DragableComponents/DraggableRow";
+import { FaRegShareFromSquare } from "react-icons/fa6";
 export const MasterRateTypeColumns = (
   handleToggleActive,
   handleEdit,
@@ -1756,17 +1757,24 @@ export const LabTestMappingMasterColumns = (
     // ),
   },
   {
-    field: "refRange	",
-    headerName: "Ref.Range	",
+    field: "refRange",
+    headerName: "Ref.Range",
     width: 100,
-    // renderCell: (params) => (
-    //   <Checkbox
-    //     size="small"
-    //     checked={params.row.showinReport}
-    //     onChange={() => handleCheckboxChange(params.row.id, "showinReport")}
-    //   />
-    // ),
+    renderCell: (params) => (
+      <a
+        href={`/lab-observation-with-range/${params.row.id}`} // Dynamic URL
+        // href={`/interpretation-master`} // Dynamic URL
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ textDecoration: "none" }}
+      >
+        <FaRegShareFromSquare
+          style={{ fontSize: "20px", color: "blue", cursor: "pointer" }}
+        />
+      </a>
+    ),
   },
+  
   {
     field: "remove",
     headerName: "Remove",

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Box,
@@ -12,9 +11,10 @@ import {
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import DraggableDataGrid from "../../ConstantComponents/DragableComponents/DraggableDataGrid";
-import CustomMenuSearch from "../../ConstantComponents/CustomMenuSearch";
-import { LabTestMappingMasterColumns } from "../../TableField/TablefieldsColumns";
+import DraggableDataGrid from "../../../ConstantComponents/DragableComponents/DraggableDataGrid";
+import CustomMenuSearch from "../../../ConstantComponents/CustomMenuSearch";
+import { LabTestMappingMasterColumns } from "../../../TableField/TablefieldsColumns";
+import NewObservationModal from "./NewObservationModal";
 
 const departmentOptions = [
   { id: 1, name: "Department A" },
@@ -48,12 +48,11 @@ const LabTestMappingMaster = () => {
   const [anchorElInvestigation, setAnchorElInvestigation] = useState(null);
   const [anchorElPackage, setAnchorElPackage] = useState(null);
   const [anchorElObservation, setAnchorElObservation] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [optionsByTestType, setOptionsByTestType] = useState([]);
   const [rows, setRows] = useState([]);
   const [selectedObservations, setSelectedObservations] = useState([]);
-  const [rowsByInvestagation, setRowsByInvestagation] = useState([]);
-  const [rowsByProfile, setRowsByProfile] = useState([]);
-  const [rowsByPackage, setRowsByPackage] = useState([]);
+
   const observationOptions = [
     { id: 1, name: "Observation 1" },
     { id: 2, name: "Observation 2" },
@@ -64,7 +63,7 @@ const LabTestMappingMaster = () => {
   ];
 
   const handleObservationSelect = (newSelectedOptions) => {
-    console.log("newSelectedOptions",newSelectedOptions)
+    console.log("newSelectedOptions", newSelectedOptions);
     setSelectedObservations(newSelectedOptions);
   };
 
@@ -83,23 +82,32 @@ const LabTestMappingMaster = () => {
     ],
   };
 
-  
-  const rowsDataByProfile = {
-    "Profile Y1": [
+  const rowsDataByInvestagation = {
+    Investigation1: [
       { sn: 1, name: "Profile X1", id: 1 },
       { sn: 2, name: "Profile X2", id: 2 },
     ],
-    "Profile Y2": [
+    Investigation2: [
+      { sn: 3, name: "Profile X3", id: 3 },
+      { sn: 4, name: "Profile X4", id: 4 },
+    ],
+  };
+  const rowsDataByProfile = {
+    Profile1: [
+      { sn: 1, name: "Profile X1", id: 1 },
+      { sn: 2, name: "Profile X2", id: 2 },
+    ],
+    Profile2: [
       { sn: 3, name: "Profile X3", id: 3 },
       { sn: 4, name: "Profile X4", id: 4 },
     ],
   };
   const rowsDataByPackage = {
-    "Package Z1": [
+    Package1: [
       { sn: 1, name: "Package X1", id: 1 },
       { sn: 2, name: "Package X2", id: 2 },
     ],
-    "Package Z2": [
+    Package2: [
       { sn: 3, name: "Package X3", id: 3 },
       { sn: 4, name: "Package X4", id: 4 },
     ],
@@ -120,26 +128,32 @@ const LabTestMappingMaster = () => {
 
     // Handle rows based on profile, investigation, or package
     if (values.testType === "Profile" && values.profile) {
-      updatedRows = rowsByProfile[values.profile] || [];
+      updatedRows = rowsDataByProfile[values.profile] || [];
     } else if (values.testType === "TestType" && values.investigation) {
-      updatedRows = setRowsByInvestagation[values.investigation] || [];
+      updatedRows = rowsDataByInvestagation[values.investigation] || [];
     } else if (values.testType === "Package" && values.package) {
       updatedRows = rowsDataByPackage[values.package] || [];
     }
 
+    console.log("selectedObservations", selectedObservations);
+
     // Map selected observations into rows if applicable
     if (selectedObservations.length > 0) {
       const observationRows = selectedObservations.map((obs, index) => ({
-        sn: updatedRows.length + index + 1,
+        sn: updatedRows.length + index + 1, // Incrementing `sn` properly
         name: obs.name,
-        id: obs.id,
+        id: new Date().getTime() + index, // Ensuring unique `id` for each row
       }));
+
+      console.log("observationRows", observationRows);
+
       updatedRows = [...updatedRows, ...observationRows];
     }
 
     setRows(updatedRows);
   };
-console.log("rowsByInvestagation",rowsByInvestagation);
+  const handleOpen = () => setIsModalOpen(true);
+  const handleClose = () => setIsModalOpen(false);
 
   return (
     <Box className="mb-[50px] pl-2">
@@ -315,7 +329,9 @@ console.log("rowsByInvestagation",rowsByInvestagation);
                             setSelectedOptions={(value) => {
                               const selectedInvestigation =
                                 value[0]?.name || "";
-                              const newRows =rowsByInvestagation[selectedInvestigation
+                              const newRows =
+                                rowsDataByInvestagation[
+                                  selectedInvestigation
                                 ] || [];
 
                               setFieldValue(
@@ -324,7 +340,6 @@ console.log("rowsByInvestagation",rowsByInvestagation);
                               );
 
                               setRows(newRows);
-                              setRowsByInvestagation(newRows);
                             }}
                             anchorEl={anchorElInvestigation}
                             onClose={() => setAnchorElInvestigation(null)}
@@ -373,10 +388,10 @@ console.log("rowsByInvestagation",rowsByInvestagation);
                               const selectedProfile = value[0]?.name || "";
 
                               setFieldValue("profile", selectedProfile);
-                             const newRows =rowsDataByProfile[selectedProfile] || []
-                              setRowsByProfile(newRows)
-                              setRows(rowsByProfile|| []);
-                              
+                              const newRows =
+                                rowsDataByProfile[selectedProfile] || [];
+
+                              setRows(newRows);
                             }}
                             anchorEl={anchorElProfile}
                             onClose={() => setAnchorElProfile(null)}
@@ -424,11 +439,10 @@ console.log("rowsByInvestagation",rowsByInvestagation);
                             setSelectedOptions={(value) => {
                               const selectedPackage = value[0]?.name || "";
                               setFieldValue("package", selectedPackage);
-                              setRowsByPackage(
-                                rowsDataByPackage[selectedPackage] || []
-                              );
-                              setRows((pre) => [...pre, ...rowsByPackage]);
-                              // setRows(rowsByPackage)
+                              const newRows =
+                                rowsDataByPackage[selectedPackage] || [];
+
+                              setRows(newRows);
                             }}
                             anchorEl={anchorElPackage}
                             onClose={() => setAnchorElPackage(null)}
@@ -481,16 +495,22 @@ console.log("rowsByInvestagation",rowsByInvestagation);
                 </Grid>
               </Grid>
               <Box display="flex" justifyContent="center">
-                <Button
-                  variant="contained"
-                  color="primary"
+                <button
+                 
                   onClick={() => handleMappingClick(values)}
                   // disabled={!values.profile}
                 >
                   Mapping Observations
-                </Button>
+                </button>
+                <button
+                 
+                  onClick={() => handleOpen()}
+                  // disabled={!values.profile}
+                >
+                  New Observations
+                </button>
               </Box>
-
+             
               <DraggableDataGrid
                 rows={rows}
                 columns={LabTestMappingMasterColumns(
@@ -504,6 +524,7 @@ console.log("rowsByInvestagation",rowsByInvestagation);
           )}
         </Formik>
       </Box>
+      <NewObservationModal open={isModalOpen} handleClose={handleClose} />
     </Box>
   );
 };
