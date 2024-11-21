@@ -6,6 +6,7 @@ import {
   Select,
   MenuItem,
   Checkbox,
+  Box,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -1790,3 +1791,59 @@ export const LabTestMappingMasterColumns = (
     ),
   },
 ];
+
+
+export const ReferenceRangeLabOprationColumns = (handleAddClick,handleEditClick,handleDeleteClick) => [
+  { field: "gender", headerName: "Gender", width: 100, },
+  { field: "fromAge", headerName: "From Age", width: 100, editable: true, cellClassName: "editable-cell", },
+  { field: "toAge", headerName: "To Age", width: 100, editable: true , cellClassName: "editable-cell",},
+  { field: "minValue", headerName: "Min Value", width: 100, editable: true, cellClassName: "editable-cell", },
+  { field: "maxValue", headerName: "Max Value", width: 100, editable: true, cellClassName: "editable-cell", },
+  { field: "minCritical", headerName: "Min Critical", width: 100, editable: true , cellClassName: "editable-cell",},
+  { field: "mixCritical", headerName: "Mix Critical", width: 100, editable: true , cellClassName: "editable-cell",},
+  { field: "minAutoapp", headerName: "Min Autoapp.", width: 100, editable: true , cellClassName: "editable-cell",},
+  { field: "maxAutoApp", headerName: "Max AutoApp.", width: 100, editable: true , cellClassName: "editable-cell",},
+  { field: "unit", headerName: "Unit", width: 100, editable: true , cellClassName: "editable-cell",},
+  { field: "refRange", headerName: "Ref. Range", width: 100, editable: true, cellClassName: "editable-cell", },
+  { field: "defaultValue", headerName: "Default Value", width: 100, editable: true, cellClassName: "editable-cell", },
+  {
+    field: "action",
+    headerName: "Action",
+    width: 150,
+    renderCell: (params) => {
+      if (params.row.action === "add") {
+        return (
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={handleAddClick}
+          >
+            Add
+          </Button>
+        );
+      }else{
+        return (
+          <Box>
+            <IconButton
+              color="primary"
+              size="small"
+              onClick={() => handleEditClick(params.row.id)}
+            >
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              color="secondary"
+              size="small"
+              onClick={() => handleDeleteClick(params.row.id)}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        );
+      }
+     
+    },
+  },
+];
+

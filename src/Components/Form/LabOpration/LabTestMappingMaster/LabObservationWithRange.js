@@ -45,7 +45,7 @@ const LabObservationWithRange = ({ open, handleClose }) => {
       <Box className="mb-[50px] pl-2">
         <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
           <Box
-            className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg"
+            className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg"
             style={{ backgroundColor: "#1976d2" }}
           >
             <Typography className="pl-1">Observation Master Form</Typography>

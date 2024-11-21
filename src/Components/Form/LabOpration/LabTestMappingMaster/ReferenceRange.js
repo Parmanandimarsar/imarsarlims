@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import {
   Grid,
-  TextField,
   Select,
   MenuItem,
   FormControl,
@@ -10,9 +9,10 @@ import {
   Box,
   Typography,
   Divider,
-  Button,
 } from "@mui/material";
 import * as Yup from "yup";
+import DataGridTable from "../../../ConstantComponents/DataGridTable";
+import { ReferenceRangeLabOprationColumns } from "../../../TableField/TablefieldsColumns";
 
 const ReferenceRange = () => {
   // Validation Schema
@@ -31,17 +31,70 @@ const ReferenceRange = () => {
     gender: "",
   };
 
+  // State for table rows
+  const [rows, setRows] = useState([
+    {
+      // id: new Date().getTime(),
+      id: 1,
+      fromAge: "12",
+      toAge: "",
+      minValue: "",
+      maxValue: "",
+      minCritical: "",
+      maxCritical: "",
+      minAutoapp: "",
+      maxAutoApp: "",
+      unit: "",
+      refRange: "",
+      defaultValue: "",
+      action: "add",
+    },
+  ]);
+
   // Form Submit Handler
   const handleFormSubmit = (values, { resetForm }) => {
     console.log("Form Submitted with values:", values);
     resetForm();
   };
 
+  // Handle Gender Change
+  const handleGenderChange = (e, handleChange) => {
+    const selectedGender = e.target.value;
+    handleChange(e);
+
+    // Update rows based on gender selection
+    if (selectedGender === "both") {
+      setRows((prevRows) => [
+        ...prevRows,
+        { id: prevRows.length + 1, gender: "Male",action: "Edit/Delete" },
+        { id: prevRows.length + 2, gender: "Female",action: "Edit/Delete" },
+      ]);
+    } else if (selectedGender === "Male" || selectedGender === "Female") {
+      setRows((prevRows) => [
+        ...prevRows,
+        { id: prevRows.length + 1, gender: selectedGender,action: "Edit/Delete" },
+      ]);
+    }
+  };
+  const handleAddClick = () => {
+    console.log("Rows data:", rows);
+  };
+
+  // Handle Edit Button
+  const handleEditClick = (id) => {
+    console.log("Edit row with ID:", id);
+    // Additional logic for editing can be added here
+  };
+
+  // Handle Delete Button
+  const handleDeleteClick = (id) => {
+    setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+  };
   return (
     <Box className="mb-[50px] pl-2">
       <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
         <Box
-          className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg"
+          className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg"
           style={{ backgroundColor: "#1976d2" }}
         >
           <Typography className="pl-1">Reference Range Form</Typography>
@@ -163,7 +216,6 @@ const ReferenceRange = () => {
                     </Grid>
                   </FormControl>
                 </Grid>
-
                 {/* Gender Dropdown */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl fullWidth>
@@ -185,12 +237,13 @@ const ReferenceRange = () => {
                           variant="outlined"
                           size="small"
                           value={values.gender}
-                          onChange={handleChange}
+                          onChange={(e) => handleGenderChange(e, handleChange)}
                           error={touched.gender && Boolean(errors.gender)}
                         >
                           <MenuItem value="" disabled>
                             Select Gender
                           </MenuItem>
+                          <MenuItem value="both">Both(M&F)</MenuItem>
                           <MenuItem value="Male">Male</MenuItem>
                           <MenuItem value="Female">Female</MenuItem>
                           <MenuItem value="Other">Other</MenuItem>
@@ -199,25 +252,16 @@ const ReferenceRange = () => {
                     </Grid>
                   </FormControl>
                 </Grid>
-
-                {/* Submit Button */}
-                <Grid item xs={12}>
-                  <Box className=" h-6 flex justify-end ">
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      color="primary"
-                      className="border px-3 mx-5 border-none rounded-lg project-thim text-white"
-                    >
-                      Save
-                    </Button>
-                  </Box>
-                </Grid>
               </Grid>
             </Form>
           )}
         </Formik>
-
+        <Divider className="divider" />
+        {/* Table */}
+        <DataGridTable
+          rows={rows}
+          columns={ReferenceRangeLabOprationColumns(handleAddClick,handleEditClick,handleDeleteClick)}
+        />
         <Divider className="divider" />
       </Box>
     </Box>
