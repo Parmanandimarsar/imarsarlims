@@ -1,238 +1,98 @@
-// import * as React from 'react';
-// import Box from '@mui/material/Box';
-// import Button from '@mui/material/Button';
-// import AddIcon from '@mui/icons-material/Add';
-// import EditIcon from '@mui/icons-material/Edit';
-// import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-// import SaveIcon from '@mui/icons-material/Save';
-// import CancelIcon from '@mui/icons-material/Close';
-// import {
-//   GridRowModes,
-//   DataGrid,
-//   GridToolbarContainer,
-//   GridActionsCellItem,
-//   GridRowEditStopReasons,
-// } from '@mui/x-data-grid';
-// import {
-//   randomCreatedDate,
-//   randomTraderName,
-//   randomId,
-//   randomArrayItem,
-// } from '@mui/x-data-grid-generator';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  
+  Box,
+} from "@mui/material";
+import JoditEditor from "jodit-react";
 
-// const roles = ['Market', 'Finance', 'Development'];
-// const randomRole = () => {
-//   return randomArrayItem(roles);
-// };
+const Test = () => {
+  const editor = useRef(null);
 
-// const initialRows = [
-//   {
-//     id: randomId(),
-//     name: randomTraderName(),
-//     age: 25,
-//     joinDate: randomCreatedDate(),
-//     role: randomRole(),
-//   },
-//   {
-//     id: randomId(),
-//     name: randomTraderName(),
-//     age: 36,
-//     joinDate: randomCreatedDate(),
-//     role: randomRole(),
-//   },
-//   {
-//     id: randomId(),
-//     name: randomTraderName(),
-//     age: 19,
-//     joinDate: randomCreatedDate(),
-//     role: randomRole(),
-//   },
-//   {
-//     id: randomId(),
-//     name: randomTraderName(),
-//     age: 28,
-//     joinDate: randomCreatedDate(),
-//     role: randomRole(),
-//   },
-//   {
-//     id: randomId(),
-//     name: randomTraderName(),
-//     age: 23,
-//     joinDate: randomCreatedDate(),
-//     role: randomRole(),
-//   },
-// ];
+  const [categories, setCategories] = useState([]); // List of categories
+  
 
-// function EditToolbar(props) {
-//   const { setRows, setRowModesModel } = props;
+  const [post, setPost] = useState({
+    title: "",
+    content: "",
+    categoryId: "",
+  });
 
-//   const handleClick = () => {
-//     const id = randomId();
-//     setRows((oldRows) => [
-//       ...oldRows,
-//       { id, name: '', age: '', role: '', isNew: true },
-//     ]);
-//     setRowModesModel((oldModel) => ({
-//       ...oldModel,
-//       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
-//     }));
-//   };
+  const [image, setImage] = useState(null);
 
-//   return (
-//     <GridToolbarContainer>
-//       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-//         Add record
-//       </Button>
-//     </GridToolbarContainer>
-//   );
-// }
+  // Handle field changes
+ 
 
-// export default function Test() {
-//   const [rows, setRows] = React.useState(initialRows);
-//   const [rowModesModel, setRowModesModel] = React.useState({});
+  const contentFieldChanaged = (data) => {
+    setPost({ ...post, content: data });
+  };
 
-//   const handleRowEditStop = (params, event) => {
-//     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-//       event.defaultMuiPrevented = true;
-//     }
-//   };
+  // Handle file input
+  
+  // Submit form
+  const createPost = (event) => {
+    event.preventDefault();
+    console.log(post);
+    console.log(image);
+  };
 
-//   const handleEditClick = (id) => () => {
-//     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-//   };
+  return (
+    <Box className="wrapper" sx={{ mt: 3 }}>
+      <Card elevation={3}>
+        <CardContent>
+          
+          <form onSubmit={createPost}>
+            {/* Title Input */}
+           
 
-//   const handleSaveClick = (id) => () => {
-//     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-//   };
+            {/* JoditEditor for Post Content */}
+            <Box my={3}>
+              <Typography variant="subtitle1" gutterBottom>
+                Post Content
+              </Typography>
+              <JoditEditor
+                ref={editor}
+                value={post.content}
+                onChange={(newContent) => contentFieldChanaged(newContent)}
+              />
+            </Box>
 
-//   const handleDeleteClick = (id) => () => {
-//     setRows(rows.filter((row) => row.id !== id));
-//   };
+            {/* Buttons */}
+            <Grid container justifyContent="center" spacing={2}>
+              <Grid item>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                >
+                  Create Post
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={() =>
+                    setPost({ title: "", content: "", categoryId: "" })
+                  }
+                >
+                  Reset Content
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+      </Card>
+    </Box>
+  );
+};
 
-//   const handleCancelClick = (id) => () => {
-//     setRowModesModel({
-//       ...rowModesModel,
-//       [id]: { mode: GridRowModes.View, ignoreModifications: true },
-//     });
-
-//     const editedRow = rows.find((row) => row.id === id);
-//     if (editedRow.isNew) {
-//       setRows(rows.filter((row) => row.id !== id));
-//     }
-//   };
-
-//   const processRowUpdate = (newRow) => {
-//     const updatedRow = { ...newRow, isNew: false };
-//     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-//     return updatedRow;
-//   };
-
-//   const handleRowModesModelChange = (newRowModesModel) => {
-//     setRowModesModel(newRowModesModel);
-//   };
-
-//   const columns = [
-//     { field: 'name', headerName: 'Name', width: 180, editable: true },
-//     {
-//       field: 'age',
-//       headerName: 'Age',
-//       type: 'number',
-//       width: 80,
-//       align: 'left',
-//       headerAlign: 'left',
-//       editable: true,
-//     },
-//     {
-//       field: 'joinDate',
-//       headerName: 'Join date',
-//       type: 'date',
-//       width: 180,
-//       editable: true,
-//     },
-//     {
-//       field: 'role',
-//       headerName: 'Department',
-//       width: 220,
-//       editable: true,
-//       type: 'singleSelect',
-//       valueOptions: ['Market', 'Finance', 'Development'],
-//     },
-//     {
-//       field: 'actions',
-//       type: 'actions',
-//       headerName: 'Actions',
-//       width: 100,
-//       cellClassName: 'actions',
-//       getActions: ({ id }) => {
-//         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-//         if (isInEditMode) {
-//           return [
-//             <GridActionsCellItem
-//               icon={<SaveIcon />}
-//               label="Save"
-//               sx={{
-//                 color: 'primary.main',
-//               }}
-//               onClick={handleSaveClick(id)}
-//             />,
-//             <GridActionsCellItem
-//               icon={<CancelIcon />}
-//               label="Cancel"
-//               className="textPrimary"
-//               onClick={handleCancelClick(id)}
-//               color="inherit"
-//             />,
-//           ];
-//         }
-
-//         return [
-//           <GridActionsCellItem
-//             icon={<EditIcon />}
-//             label="Edit"
-//             className="textPrimary"
-//             onClick={handleEditClick(id)}
-//             color="inherit"
-//           />,
-//           <GridActionsCellItem
-//             icon={<DeleteIcon />}
-//             label="Delete"
-//             onClick={handleDeleteClick(id)}
-//             color="inherit"
-//           />,
-//         ];
-//       },
-//     },
-//   ];
-
-//   return (
-//     <Box
-//       sx={{
-//         height: 500,
-//         width: '100%',
-//         '& .actions': {
-//           color: 'text.secondary',
-//         },
-//         '& .textPrimary': {
-//           color: 'text.primary',
-//         },
-//       }}
-//     >
-//       <DataGrid
-//         rows={rows}
-//         columns={columns}
-//         editMode="row"
-//         rowModesModel={rowModesModel}
-//         onRowModesModelChange={handleRowModesModelChange}
-//         onRowEditStop={handleRowEditStop}
-//         processRowUpdate={processRowUpdate}
-//         slots={{
-//           toolbar: EditToolbar,
-//         }}
-//         slotProps={{
-//           toolbar: { setRows, setRowModesModel },
-//         }}
-//       />
-//     </Box>
-//   );
-// }
+export default Test;

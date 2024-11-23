@@ -27,6 +27,10 @@ input{
   font-size: 10px !important;
   color: #888 !important;
 }
+/* Radiobutton */
+.MuiRadio-root{
+  padding: 0px !important;
+}
 p{
   margin-top: 0px !important;
   margin-bottom: 0px !important;
