@@ -1,6 +1,4 @@
-
-
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Divider,
@@ -10,11 +8,11 @@ import {
   TextField,
   Typography,
   Checkbox,
-  Button,
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import DataGridTable from "../../ConstantComponents/DataGridTable"
+import DataGridTable from "../../ConstantComponents/DataGridTable";
+import { MicroOrganismAntibioticMastercolumns } from "../../TableField/TablefieldsColumns";
 
 const microTypeOptions = [
   { id: 1, name: "Antibiotic" },
@@ -34,43 +32,51 @@ const validationSchema = Yup.object({
 });
 
 const MicroOrganismAntibioticMaster = () => {
-  const [savedData, setSavedData] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [rows, setRows] = useState([]);
+  const [filterMicroType, setFilterMicroType] = useState("");
+  const [filterStatus, setFilterStatus] = useState("");
+  const [editRows, setEditRows] = useState();
+  const initialValues = {
+    microType: "",
+    organismAntibiotic: "",
+    machineCode: "",
+    active: false,
+  };
+  const filteredData = rows.filter((row) => {
+    const matchesMicroType =
+      !filterMicroType || row.microType === filterMicroType;
+    const matchesStatus =
+      !filterStatus ||
+      (filterStatus === "Active" && row.active) ||
+      (filterStatus === "Inactive" && !row.active);
+    return matchesMicroType && matchesStatus;
+  });
+  const handleEdit = (row) => {
+    console.log("edit", row);
 
-  const columns = [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "microType", headerName: "Micro Type", width: 200 },
-    {
-      field: "organismAntibiotic",
-      headerName: "Organism Antibiotic",
-      width: 200,
-    },
-    { field: "machineCode", headerName: "Machine Code", width: 200 },
-    { field: "active", headerName: "Active", width: 100 },
-  ];
-
-  const filteredData = savedData.filter(
-    (row) =>
-      row.microType.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      row.organismAntibiotic
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase()) ||
-      row.machineCode.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    setEditRows(row);
+  };
+  const handleFormSubmit = (values, { resetForm }) => {
+    console.log("Form Submitted with values:", values);
+    if (editRows) {
+      setRows((prev) =>
+        prev.map((item) =>
+          item.id === editRows.id ? { ...item, ...values } : item
+        )
+      );
+      setEditRows(null); // Clear the edit state
+    } else {
+      setRows((prev) => [...prev, { ...values, id: new Date().getTime() }]);
+    }
+    resetForm(); // Reset the form after submission
+  };
 
   return (
     <Formik
-      initialValues={{
-        microType: "",
-        organismAntibiotic: "",
-        machineCode: "",
-        active: false,
-      }}
+      enableReinitialize
+      initialValues={editRows || initialValues}
       validationSchema={validationSchema}
-      onSubmit={(values, { resetForm }) => {
-        setSavedData((prev) => [...prev, { id: prev.length + 1, ...values }]);
-        resetForm();
-      }}
+      onSubmit={handleFormSubmit}
     >
       {({ values, setFieldValue, errors, touched }) => (
         <Form>
@@ -87,7 +93,8 @@ const MicroOrganismAntibioticMaster = () => {
               <Divider className="divider" />
 
               <Grid container spacing={1} p={1}>
-                {/* Micro Type Field */}
+                {/* Form Fields */}
+                {/* Micro Type */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl
                     fullWidth
@@ -125,7 +132,6 @@ const MicroOrganismAntibioticMaster = () => {
                     </Grid>
                   </FormControl>
                 </Grid>
-
                 {/* Organism Antibiotic Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl
@@ -189,7 +195,7 @@ const MicroOrganismAntibioticMaster = () => {
 
                 {/* Active Checkbox */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
-                  <Box sx={{display:"flex"}}>
+                  <Box sx={{ display: "flex" }}>
                     <FormControl fullWidth>
                       <Grid container alignItems="center">
                         <Grid item xs={3} className="formlableborder">
@@ -197,6 +203,7 @@ const MicroOrganismAntibioticMaster = () => {
                         </Grid>
                         <Grid item xs={8}>
                           <Checkbox
+                            size="small"
                             checked={values.active}
                             onChange={(e) =>
                               setFieldValue("active", e.target.checked)
@@ -205,28 +212,87 @@ const MicroOrganismAntibioticMaster = () => {
                         </Grid>
                       </Grid>
                     </FormControl>
-                    <button type="submit" className="project-thim border-none text-white rounded-md" variant="contained" color="primary">
+                    <button
+                      type="submit"
+                      className="project-thim border-none text-white rounded-md"
+                      variant="contained"
+                      color="primary"
+                    >
                       Save
                     </button>
                   </Box>
                 </Grid>
               </Grid>
 
-              {/* Buttons */}
-              <Box textAlign="center" p={2}>
-                <TextField
-                  style={{ marginLeft: "20px", width: "200px" }}
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </Box>
+              <Divider className="divider" />
+              <Grid container spacing={1} p={1} >
+                {/* Filter Section */}
 
+                {/* Filter by Micro Type */}
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl
+                    fullWidth
+                    error={Boolean(errors.machineCode && touched.machineCode)}
+                  >
+                    <Grid container alignItems="center">
+                      <Grid item xs={3} className="formlableborder">
+                        <FormLabel>Micro Type</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          select
+                          SelectProps={{ native: true }}
+                          value={filterMicroType}
+                          onChange={(e) => setFilterMicroType(e.target.value)}
+                          fullWidth
+                        >
+                          <option value="">All</option>
+                          {microTypeOptions.map((option) => (
+                            <option key={option.id} value={option.name}>
+                              {option.name}
+                            </option>
+                          ))}
+                        </TextField>
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
+                {/* Filter by Status */}
+
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <FormControl
+                    fullWidth
+                    error={Boolean(errors.machineCode && touched.machineCode)}
+                  >
+                    <Grid container alignItems="center">
+                      <Grid item xs={3} className="formlableborder">
+                        <FormLabel>Filter by Status</FormLabel>
+                      </Grid>
+                      <Grid item xs={8}>
+                        <TextField
+                          select
+                          SelectProps={{ native: true }}
+                          value={filterStatus}
+                          onChange={(e) => setFilterStatus(e.target.value)}
+                          fullWidth
+                        >
+                          <option value="">All</option>
+                          {statusOptions.map((option) => (
+                            <option key={option.id} value={option.name}>
+                              {option.name}
+                            </option>
+                          ))}
+                        </TextField>
+                      </Grid>
+                    </Grid>
+                  </FormControl>
+                </Grid>
+              </Grid>
               {/* DataGrid Table */}
               <Box mt={2}>
                 <DataGridTable
                   rows={filteredData}
-                  columns={columns}
+                  columns={MicroOrganismAntibioticMastercolumns(handleEdit)}
                   pageSize={5}
                   autoHeight
                 />

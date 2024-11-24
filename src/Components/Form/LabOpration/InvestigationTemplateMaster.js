@@ -74,7 +74,7 @@ const InvestigationTemplateMaster = () => {
                   style={{ backgroundColor: "#1976d2" }}
                 >
                   <Typography style={{ color: "#fff" }}>
-                    Investigation Template Master
+                    Template Master
                   </Typography>
                 </Box>
                 <Divider className="divider" />
@@ -257,7 +257,7 @@ const InvestigationTemplateMaster = () => {
                 </Grid>
                 {/* Jodit Editor */}
                 <div style={{ margin: "20px" }}>
-                  <h2>Jodit Editor</h2>
+                 
                   <JoditEditor
                     ref={editor}
                     value={editorData}
@@ -275,7 +275,7 @@ const InvestigationTemplateMaster = () => {
                 </div>
 
                 <Box textAlign="center" p={2}>
-                  <button type="submit">Submit</button>
+                  <button type="submit" className="project-thim text-white border-none rounded-md">Submit</button>
                 </Box>
               </Box>
             </div>

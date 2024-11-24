@@ -254,7 +254,7 @@ const CommentMaster = () => {
 
                 {/* Jodit Editor */}
                 <Grid item xs={12}>
-                  <h2>Jodit Editor</h2>
+                  
                   <JoditEditor
                     ref={editor}
                     value={editorData}
