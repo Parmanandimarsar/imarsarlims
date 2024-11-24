@@ -30,12 +30,12 @@ const DataGridTable = ({ rows, columns}) => {
           ? classes.evenRow
           : classes.oddRow
       }
-      sx={{
-        "& .editable-cell": {
-          backgroundColor: "#e3f2fd", // Light blue for editable cells
-          cursor: "pointer",
-        },
-      }}
+      // sx={{
+      //   "& .editable-cell": {
+      //     backgroundColor: "#e3f2fd", // Light blue for editable cells
+      //     cursor: "pointer",
+      //   },
+      // }}
     />
   );
 };

@@ -1,107 +1,98 @@
-import React, { useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
-import { TextField, MenuItem, Button, Box } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  
+  Box,
+} from "@mui/material";
+import JoditEditor from "jodit-react";
 
 const Test = () => {
+  const editor = useRef(null);
 
-    const [primaryDropdown, setPrimaryDropdown] = useState("");
-    const [secondaryDropdown, setSecondaryDropdown] = useState([]);
-    const [selectedData, setSelectedData] = useState({
-      a: [],
-      b: [],
-      c: [],
-    });
-    const [rows, setRows] = useState([]);
+  const [categories, setCategories] = useState([]); // List of categories
   
-    const primaryOptions = ["a", "b", "c"];
-    const secondaryOptions = [
-      { id: 1, name: "Option 1" },
-      { id: 2, name: "Option 2" },
-      { id: 3, name: "Option 3" },
-      { id: 4, name: "Option 4" },
-    ];
-  
-    const handlePrimaryChange = (event) => {
-      setPrimaryDropdown(event.target.value);
-      setRows(selectedData[event.target.value] || []);
-    };
-  
-    const handleSecondaryChange = (event) => {
-      const {
-        target: { value },
-      } = event;
-      setSecondaryDropdown(typeof value === "string" ? value.split(",") : value);
-    };
-  
-    const handleSaveData = () => {
-      if (!primaryDropdown) {
-        alert("Please select a primary category (a, b, or c).");
-        return;
-      }
-      const updatedData = {
-        ...selectedData,
-        [primaryDropdown]: [...selectedData[primaryDropdown], ...secondaryDropdown],
-      };
-      setSelectedData(updatedData);
-      setRows(updatedData[primaryDropdown]);
-      setSecondaryDropdown([]);
-    };
-  
-    const columns = [
-      { field: "id", headerName: "ID", width: 100 },
-      { field: "name", headerName: "Name", width: 200 },
-    ];
 
+  const [post, setPost] = useState({
+    title: "",
+    content: "",
+    categoryId: "",
+  });
 
+  const [image, setImage] = useState(null);
+
+  // Handle field changes
+ 
+
+  const contentFieldChanaged = (data) => {
+    setPost({ ...post, content: data });
+  };
+
+  // Handle file input
+  
+  // Submit form
+  const createPost = (event) => {
+    event.preventDefault();
+    console.log(post);
+    console.log(image);
+  };
 
   return (
-    <Box sx={{ padding: 2 }}>
-    <TextField
-      select
-      label="Select Category"
-      value={primaryDropdown}
-      onChange={handlePrimaryChange}
-      fullWidth
-    >
-      {primaryOptions.map((option) => (
-        <MenuItem key={option} value={option}>
-          {option}
-        </MenuItem>
-      ))}
-    </TextField>
+    <Box className="wrapper" sx={{ mt: 3 }}>
+      <Card elevation={3}>
+        <CardContent>
+          
+          <form onSubmit={createPost}>
+            {/* Title Input */}
+           
 
-    <TextField
-      select
-      label="Select Options"
-      value={secondaryDropdown}
-      onChange={handleSecondaryChange}
-      SelectProps={{
-        multiple: true,
-      }}
-      fullWidth
-      sx={{ marginTop: 2 }}
-    >
-      {secondaryOptions.map((option) => (
-        <MenuItem key={option.id} value={option}>
-          {option.name}
-        </MenuItem>
-      ))}
-    </TextField>
+            {/* JoditEditor for Post Content */}
+            <Box my={3}>
+              <Typography variant="subtitle1" gutterBottom>
+                Post Content
+              </Typography>
+              <JoditEditor
+                ref={editor}
+                value={post.content}
+                onChange={(newContent) => contentFieldChanaged(newContent)}
+              />
+            </Box>
 
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={handleSaveData}
-      sx={{ marginTop: 2 }}
-    >
-      Save Data
-    </Button>
-
-    <Box sx={{ height: 400, marginTop: 2 }}>
-      <DataGrid rows={rows} columns={columns} pageSize={5} />
+            {/* Buttons */}
+            <Grid container justifyContent="center" spacing={2}>
+              <Grid item>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                >
+                  Create Post
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="secondary"
+                  size="large"
+                  onClick={() =>
+                    setPost({ title: "", content: "", categoryId: "" })
+                  }
+                >
+                  Reset Content
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </CardContent>
+      </Card>
     </Box>
-  </Box>
-  )
-}
+  );
+};
 
-export default Test
+export default Test;

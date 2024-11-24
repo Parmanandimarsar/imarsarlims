@@ -1793,7 +1793,7 @@ export const LabTestMappingMasterColumns = (
 ];
 
 
-export const ReferenceRangeLabOprationColumns = (handleAddClick,handleEditClick,handleDeleteClick) => [
+export const ReferenceRangeLabOprationColumns = (handleAddRow,handleEditClick,handleDeleteClick) => [
   { field: "gender", headerName: "Gender", width: 100, },
   { field: "fromAge", headerName: "From Age", width: 100, editable: true, cellClassName: "editable-cell", },
   { field: "toAge", headerName: "To Age", width: 100, editable: true , cellClassName: "editable-cell",},
@@ -1809,7 +1809,7 @@ export const ReferenceRangeLabOprationColumns = (handleAddClick,handleEditClick,
   {
     field: "action",
     headerName: "Action",
-    width: 150,
+    width: 100,
     renderCell: (params) => {
       if (params.row.action === "add") {
         return (
@@ -1817,7 +1817,7 @@ export const ReferenceRangeLabOprationColumns = (handleAddClick,handleEditClick,
             variant="contained"
             color="primary"
             size="small"
-            onClick={handleAddClick}
+            onClick={handleAddRow}
           >
             Add
           </Button>
@@ -1847,3 +1847,26 @@ export const ReferenceRangeLabOprationColumns = (handleAddClick,handleEditClick,
   },
 ];
 
+export const MicroOrganismAntibioticMastercolumns =(handleEdit)=> [
+  { field: "id", headerName: "ID", width: 100,flex: 1, },
+  { field: "microType", headerName: "Micro Type", width: 200,flex: 1, },
+  {
+    field: "organismAntibiotic",
+    headerName: "Organism Antibiotic",
+    width: 200,
+    flex: 1,
+  },
+  { field: "machineCode", headerName: "Machine Code", width: 200,flex: 1, },
+  { field: "active", headerName: "Status", width: 100 ,flex: 1,},
+  { field: "edit", headerName: "Edit", width: 100 , renderCell: (params) => (
+    <div className="flex ml-5 gap-2 ">
+      <IconButton
+        aria-label="edit"
+        color="primary"
+        onClick={() => handleEdit(params.row)}
+      >
+        <EditIcon sx={{ fontSize: "15px" }} />
+      </IconButton>
+    </div>
+  ), },
+];

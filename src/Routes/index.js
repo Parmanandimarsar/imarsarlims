@@ -24,6 +24,9 @@ import ReportingFormulaMaster from "../Components/Form/LabOpration/ReportingForm
 import LabTestMappingMaster from "../Components/Form/LabOpration/LabTestMappingMaster/LabTestMappingMaster";
 import Test from "../Components/Form/LabOpration/Test";
 import LabObservationWithRange from "../Components/Form/LabOpration/LabTestMappingMaster/LabObservationWithRange";
+import InvestigationTemplateMaster from "../Components/Form/LabOpration/InvestigationTemplateMaster";
+import CommentMaster from "../Components/Form/LabOpration/CommentMaster";
+import MicroOrganismAntibioticMaster from "../Components/Form/LabOpration/MicroOrganismAntibioticMaster";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +117,23 @@ const router = createBrowserRouter([
       {
         path: "/lab-observation-with-range/:id",
         element: <LabObservationWithRange />,
+      },
+      {
+        path: "/investigation-template-master",
+        element: <InvestigationTemplateMaster />,
+      },
+      {
+        path: "/comment-master",
+        element: <CommentMaster />,
+      },
+      {
+        path: "/micro-organism-antibiotic-master",
+        element: <MicroOrganismAntibioticMaster />,
+      },
+      
+      {
+        path: "/test",
+        element: <Test />,
       },
     ],
   },

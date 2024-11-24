@@ -13,8 +13,10 @@ import {
 import * as Yup from "yup";
 import DataGridTable from "../../../ConstantComponents/DataGridTable";
 import { ReferenceRangeLabOprationColumns } from "../../../TableField/TablefieldsColumns";
+import { DataGrid } from "@mui/x-data-grid";
 
 const ReferenceRange = () => {
+  const [selectedGender, setSelectedGender] = useState("");
   // Validation Schema
   const validationSchema = Yup.object().shape({
     centre: Yup.string().required("Centre is required"),
@@ -36,7 +38,7 @@ const ReferenceRange = () => {
     {
       // id: new Date().getTime(),
       id: 1,
-      fromAge: "12",
+      fromAge: 0,
       toAge: "",
       minValue: "",
       maxValue: "",
@@ -59,25 +61,68 @@ const ReferenceRange = () => {
 
   // Handle Gender Change
   const handleGenderChange = (e, handleChange) => {
-    const selectedGender = e.target.value;
+    const value = e.target.value;
+    setSelectedGender(value);
     handleChange(e);
-
-    // Update rows based on gender selection
-    if (selectedGender === "both") {
-      setRows((prevRows) => [
-        ...prevRows,
-        { id: prevRows.length + 1, gender: "Male",action: "Edit/Delete" },
-        { id: prevRows.length + 2, gender: "Female",action: "Edit/Delete" },
-      ]);
-    } else if (selectedGender === "Male" || selectedGender === "Female") {
-      setRows((prevRows) => [
-        ...prevRows,
-        { id: prevRows.length + 1, gender: selectedGender,action: "Edit/Delete" },
-      ]);
-    }
   };
-  const handleAddClick = () => {
-    console.log("Rows data:", rows);
+  const processRowUpdate = (newRow) => {
+    console.log("newRow",newRow);
+    
+    const updatedRows = rows.map((row) =>
+      row.id === newRow.id ? { ...row, ...newRow } : row
+    );
+    setRows(updatedRows); // Update the rows state with the updated row
+    console.log("Updated Rows Data:", updatedRows); // Log all rows
+    return newRow; // Return the updated row for the DataGrid
+  };
+  const handleAddRow = () => {
+    const staticRow = rows[0]; // Assuming the first row is static
+    const { toAge,fromAge } = staticRow;
+    console.log(staticRow);
+    if (!toAge) {
+      alert("Please enter a value in the ToAge field.");
+      return;
+    }
+
+    // Generate new rows based on the selected gender
+    let newRows = [];
+    if (selectedGender === "both") {
+      newRows = [
+        {
+          id: rows.length + 1,
+          gender: "Male",
+          fromAge: fromAge,
+          toAge: parseInt(toAge),
+          action: "Edit/Delete",
+        },
+        {
+          id: rows.length + 2,
+          gender: "Female",
+          fromAge:fromAge,
+          toAge:  parseInt(toAge),
+          action: "Edit/Delete",
+        },
+      ];
+    } else if (selectedGender === "Male" || selectedGender === "Female") {
+      newRows = [
+        {
+          id: rows.length + 1,
+          gender: selectedGender,
+          fromAge:fromAge,
+          toAge: parseInt(toAge),
+          action: "Edit/Delete",
+        },
+      ];
+    } else {
+      alert("Please select a gender first!");
+      return;
+    }
+
+    // Add new rows and reset the static row's ToAge field
+    setRows((prevRows) => {
+      const updatedStaticRow = { ...prevRows[0], toAge: "" ,fromAge: parseInt(toAge)+1};
+      return [updatedStaticRow, ...prevRows.slice(1), ...newRows];
+    });
   };
 
   // Handle Edit Button
@@ -258,9 +303,14 @@ const ReferenceRange = () => {
         </Formik>
         <Divider className="divider" />
         {/* Table */}
-        <DataGridTable
+        <DataGrid
           rows={rows}
-          columns={ReferenceRangeLabOprationColumns(handleAddClick,handleEditClick,handleDeleteClick)}
+          columns={ReferenceRangeLabOprationColumns(
+            handleAddRow,
+            handleEditClick,
+            handleDeleteClick
+          )}
+          processRowUpdate={processRowUpdate}
         />
         <Divider className="divider" />
       </Box>
@@ -269,3 +319,4 @@ const ReferenceRange = () => {
 };
 
 export default ReferenceRange;
+
