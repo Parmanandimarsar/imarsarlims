@@ -13,11 +13,12 @@ const useStyles = makeStyles({
 
 const DataGridTable = ({ rows, columns}) => {
   const classes = useStyles();
+// console.log("DataGridTablerow",rows);
 
   return (
     <DataGrid
-      rows={rows}
-      columns={columns}
+    rows={rows || []}          
+    columns={columns || []}
       pageSize={5}
       rowsPerPageOptions={[5]}
       disableSelectionOnClick

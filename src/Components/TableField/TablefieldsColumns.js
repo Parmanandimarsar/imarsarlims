@@ -9,6 +9,7 @@ import {
   Box,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import SellIcon from '@mui/icons-material/Sell';
 import DeleteIcon from "@mui/icons-material/Delete";
 import ImageView from "./ImageView";
 import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
@@ -1848,17 +1849,18 @@ export const ReferenceRangeLabOprationColumns = (handleAddRow,handleEditClick,ha
 ];
 
 export const MicroOrganismAntibioticMastercolumns =(handleEdit)=> [
-  { field: "id", headerName: "ID", width: 100,flex: 1, },
-  { field: "microType", headerName: "Micro Type", width: 200,flex: 1, },
+  { field: "id", headerName: "ID", width: 100,flex: 1,  disableColumnMenu: true},
+  { field: "microType", headerName: "Micro Type", width: 200,flex: 1, disableColumnMenu: true},
   {
     field: "organismAntibiotic",
     headerName: "Organism Antibiotic",
     width: 200,
     flex: 1,
+    disableColumnMenu: true,
   },
-  { field: "machineCode", headerName: "Machine Code", width: 200,flex: 1, },
-  { field: "active", headerName: "Status", width: 100 ,flex: 1,},
-  { field: "edit", headerName: "Edit", width: 100 , renderCell: (params) => (
+  { field: "machineCode", headerName: "Machine Code", width: 200,flex: 1,disableColumnMenu: true, },
+  { field: "active", headerName: "Status", width: 100 ,flex: 1,disableColumnMenu: true,},
+  { field: "edit", headerName: "Edit", width: 100 ,disableColumnMenu: true, renderCell: (params) => (
     <div className="flex ml-5 gap-2 ">
       <IconButton
         aria-label="edit"
@@ -1869,4 +1871,26 @@ export const MicroOrganismAntibioticMastercolumns =(handleEdit)=> [
       </IconButton>
     </div>
   ), },
+  { field: "tag", headerName: "Tag", width: 100 ,disableColumnMenu: true, renderCell: (params) => (
+    <div className="flex ml-5 gap-2 ">
+      <IconButton
+        aria-label="edit"
+        color="primary"
+        // onClick={() => handleEdit(params.row)}
+      >
+        <SellIcon sx={{ fontSize: "15px" }} />
+      </IconButton>
+    </div>
+  ), },
+];
+
+export const CommentMastercolumns =(handleEdit)=>[
+  { field: "id", headerName: "ID", width: 100 ,disableColumnMenu: true,},
+  { field: "type", headerName: "Type", width: 200 ,disableColumnMenu: true,},
+  { field: "selectedOption", headerName: "Item/Observation", width: 200,disableColumnMenu: true, },
+  { field: "commentName", headerName: "Comment Name", width: 200,disableColumnMenu: true, },
+  { field: "joditText", headerName: "Comment Data", width: 200 ,disableColumnMenu: true, },
+  { field: "actions", headerName: "Actions",disableColumnMenu: true, renderCell: (params) => (
+    <button onClick={() => handleEdit(params.row)}>Edit</button>
+  )}
 ];

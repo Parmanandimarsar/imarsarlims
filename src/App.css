@@ -95,6 +95,9 @@ a{
   color: #495057 !important;
   font-size: 11px !important;
 }
+.MuiInputBase-root{
+  font-size: 12px !important;
+}
 .MuiInputBase-input{
   padding: 2px 19px !important;
 }

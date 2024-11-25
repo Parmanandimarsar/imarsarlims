@@ -20,8 +20,8 @@ const centreOptions = [
 ];
 
 const itemOptions = [
-  { id: 1, name: "Item 1" },
-  { id: 2, name: "Item 2" },
+  { id: 1, name: "Test 1" },
+  { id: 2, name: "Test 2" },
 ];
 
 const genderOptions = [
@@ -32,7 +32,7 @@ const genderOptions = [
 
 const validationSchema = Yup.object({
   centre: Yup.string().required("Centre is required"),
-  items: Yup.string().required("Item is required"),
+  test: Yup.string().required("Test is required"),
   templateName: Yup.string().required("Template Name is required"),
   gender: Yup.string().required("Gender is required"),
 });
@@ -55,7 +55,7 @@ const InvestigationTemplateMaster = () => {
       <Formik
         initialValues={{
           centre: "",
-          items: "",
+          test: "",
           templateName: "",
           gender: "",
         }}
@@ -129,11 +129,11 @@ const InvestigationTemplateMaster = () => {
                     </FormControl>
                   </Grid>
 
-                  {/* Item Field */}
+                  {/* Test Field */}
                   <Grid item xs={12} sm={6} md={4} lg={3}>
                     <FormControl
                       fullWidth
-                      error={Boolean(errors.items && touched.items)}
+                      error={Boolean(errors.test && touched.test)}
                     >
                       <Grid container alignItems="center">
                         <Grid
@@ -142,34 +142,34 @@ const InvestigationTemplateMaster = () => {
                           sx={{ mr: "3px" }}
                           className="formlableborder"
                         >
-                          <FormLabel>Item</FormLabel>
+                          <FormLabel>Test</FormLabel>
                         </Grid>
                         <Grid item xs={8}>
                           <TextField
                             fullWidth
                             onClick={(e) => setAnchorElItem(e.currentTarget)}
-                            value={values.items}
-                            placeholder="Select Item"
+                            value={values.test}
+                            placeholder="Select Test"
                             InputProps={{
                               readOnly: true,
                             }}
                           />
-                          {touched.items && errors.items && (
+                          {touched.test && errors.test && (
                             <Typography color="error" variant="caption">
-                              {errors.items}
+                              {errors.test}
                             </Typography>
                           )}
                           <CustomMenuSearch
                             options={itemOptions}
                             selectedOptions={
-                              values.items
-                                ? [{ id: values.items, name: values.items }]
+                              values.test
+                                ? [{ id: values.test, name: values.test }]
                                 : []
                             }
                             setSelectedOptions={(value) =>
-                              setFieldValue("items", value[0]?.name || "")
+                              setFieldValue("test", value[0]?.name || "")
                             }
-                            placeholder="Search Item"
+                            placeholder="Search Test"
                             anchorEl={anchorElItem}
                             onClose={() => setAnchorElItem(null)}
                           />
