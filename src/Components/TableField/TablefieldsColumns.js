@@ -1848,9 +1848,9 @@ export const ReferenceRangeLabOprationColumns = (handleAddRow,handleEditClick,ha
   },
 ];
 
-export const MicroOrganismAntibioticMastercolumns =(handleEdit)=> [
-  { field: "id", headerName: "ID", width: 100,flex: 1,  disableColumnMenu: true},
-  { field: "microType", headerName: "Micro Type", width: 200,flex: 1, disableColumnMenu: true},
+export const MicroOrganismAntibioticMastercolumns = (handleEdit, handleTag) => [
+  { field: "id", headerName: "ID", width: 100, flex: 1, disableColumnMenu: true },
+  { field: "microType", headerName: "Micro Type", width: 200, flex: 1, disableColumnMenu: true },
   {
     field: "organismAntibiotic",
     headerName: "Organism Antibiotic",
@@ -1858,39 +1858,73 @@ export const MicroOrganismAntibioticMastercolumns =(handleEdit)=> [
     flex: 1,
     disableColumnMenu: true,
   },
-  { field: "machineCode", headerName: "Machine Code", width: 200,flex: 1,disableColumnMenu: true, },
-  { field: "active", headerName: "Status", width: 100 ,flex: 1,disableColumnMenu: true,},
-  { field: "edit", headerName: "Edit", width: 100 ,disableColumnMenu: true, renderCell: (params) => (
-    <div className="flex ml-5 gap-2 ">
-      <IconButton
-        aria-label="edit"
-        color="primary"
-        onClick={() => handleEdit(params.row)}
-      >
-        <EditIcon sx={{ fontSize: "15px" }} />
-      </IconButton>
-    </div>
-  ), },
-  { field: "tag", headerName: "Tag", width: 100 ,disableColumnMenu: true, renderCell: (params) => (
-    <div className="flex ml-5 gap-2 ">
-      <IconButton
-        aria-label="edit"
-        color="primary"
-        // onClick={() => handleEdit(params.row)}
-      >
-        <SellIcon sx={{ fontSize: "15px" }} />
-      </IconButton>
-    </div>
-  ), },
+  {
+    field: "machineCode",
+    headerName: "Machine Code",
+    width: 200,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "active",
+    headerName: "Status",
+    width: 100,
+    flex: 1,
+    disableColumnMenu: true,
+  },
+  {
+    field: "edit",
+    headerName: "Edit",
+    width: 80,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      <div className="flex ml-5 gap-2">
+        <IconButton
+          aria-label="Edit row"
+          title="Edit row"
+          color="primary"
+          onClick={() => handleEdit(params.row)}
+        >
+          <EditIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
+  {
+    field: "tag",
+    headerName: "Tag",
+    width: 80,
+    disableColumnMenu: true,
+    renderCell: (params) => (
+      
+      <div className="flex ml-5 gap-2">
+        <IconButton
+          aria-label="Tag row"
+          title="Tag row"
+          color="primary"
+          onClick={() => handleTag(params.row)}
+        >
+          <SellIcon sx={{ fontSize: "15px" }} />
+        </IconButton>
+      </div>
+    ),
+  },
 ];
 
+export const AntibioticTableColumns=[
+  { field: "sn", headerName: "S/N", width: 50,disableColumnMenu: true, },
+  { field: "antibiotic", headerName: "Antibiotic", flex:1, disableColumnMenu: true,},
+  { field: "addedBy", headerName: "Added By",flex:1,disableColumnMenu: true,  },
+  { field: "addedOn", headerName: "Added On", flex:1,disableColumnMenu: true, },
+];
 export const CommentMastercolumns =(handleEdit)=>[
-  { field: "id", headerName: "ID", width: 100 ,disableColumnMenu: true,},
-  { field: "type", headerName: "Type", width: 200 ,disableColumnMenu: true,},
-  { field: "selectedOption", headerName: "Item/Observation", width: 200,disableColumnMenu: true, },
-  { field: "commentName", headerName: "Comment Name", width: 200,disableColumnMenu: true, },
-  { field: "joditText", headerName: "Comment Data", width: 200 ,disableColumnMenu: true, },
+  { field: "id", headerName: "ID", width:100,disableColumnMenu: true,},
+  { field: "type", headerName: "Type", flex:1,disableColumnMenu: true,},
+  { field: "selectedOption", headerName: "Item/Observation", flex:1,disableColumnMenu: true, },
+  { field: "commentName", headerName: "Comment Name", flex:1,disableColumnMenu: true, },
+  { field: "joditText", headerName: "Comment Data", flex:1 ,disableColumnMenu: true, },
   { field: "actions", headerName: "Actions",disableColumnMenu: true, renderCell: (params) => (
     <button onClick={() => handleEdit(params.row)}>Edit</button>
   )}
 ];
+

@@ -26,7 +26,7 @@ import Test from "../Components/Form/LabOpration/Test";
 import LabObservationWithRange from "../Components/Form/LabOpration/LabTestMappingMaster/LabObservationWithRange";
 import InvestigationTemplateMaster from "../Components/Form/LabOpration/InvestigationTemplateMaster";
 import CommentMaster from "../Components/Form/LabOpration/CommentMaster";
-import MicroOrganismAntibioticMaster from "../Components/Form/LabOpration/MicroOrganismAntibioticMaster";
+import MicroOrganismAntibioticMaster from "../Components/Form/LabOpration/MicroOrganismAntibioticMaster/MicroOrganismAntibioticMaster";
 
 const router = createBrowserRouter([
   {

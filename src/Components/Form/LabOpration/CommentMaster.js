@@ -19,8 +19,6 @@ import CustomMenuSearch from "../../ConstantComponents/CustomMenuSearch";
 import DataGridTable from "../../ConstantComponents/DataGridTable";
 import { CommentMastercolumns } from "../../TableField/TablefieldsColumns";
 
-
-
 const itemOptions = [
   { id: 1, name: "Item 1" },
   { id: 2, name: "Item 2" },
@@ -58,9 +56,8 @@ const CommentMaster = () => {
   const [editorData, setEditorData] = useState("");
   const [editRows, setEditRows] = useState();
   const editor = useRef(null);
-  const [rows, setRows] = useState([]
-  ); // State to store table data
-  
+  const [rows, setRows] = useState([]); // State to store table data
+
   const handleEdit = (row) => {
     console.log("handleEdit", row);
 
@@ -106,7 +103,10 @@ const CommentMaster = () => {
           initialValues={{
             type: editRows?.type || initialValues.type,
             commentName: editRows?.commentName || initialValues.commentName,
-            item: editRows?.type === "Item wise" ? editRows?.selectedOption || "" : "",
+            item:
+              editRows?.type === "Item wise"
+                ? editRows?.selectedOption || ""
+                : "",
             observation:
               editRows?.type === "Observation wise"
                 ? editRows?.selectedOption || ""
@@ -118,7 +118,7 @@ const CommentMaster = () => {
         >
           {({ values, setFieldValue, errors, touched }) => (
             // console.log("errors",errors),
-            
+
             <Form>
               <Grid container spacing={1} p={1}>
                 {/* Radio Buttons */}
@@ -291,7 +291,13 @@ const CommentMaster = () => {
                     </FormControl>
                   </Grid>
                 )}
-
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Box textAlign="center" >
+                    <button type="submit" className="project-thim text-white rounded-md border-none">
+                      Save
+                    </button>
+                  </Box>
+                </Grid>
                 {/* Jodit Editor */}
                 <Grid item xs={12}>
                   <JoditEditor
@@ -305,16 +311,13 @@ const CommentMaster = () => {
                       setFieldValue("joditText", newContent)
                     }
                   />
-                  
                 </Grid>
               </Grid>
-              <Box textAlign="center" p={2}>
-                <button type="submit" variant="contained" color="primary">
-                  Submit
-                </button>
-              </Box>
-              
-              <DataGridTable  rows={rows} columns={CommentMastercolumns(handleEdit)}/>
+
+              <DataGridTable
+                rows={rows}
+                columns={CommentMastercolumns(handleEdit)}
+              />
             </Form>
           )}
         </Formik>
