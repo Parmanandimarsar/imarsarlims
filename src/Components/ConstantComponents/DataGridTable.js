@@ -11,13 +11,14 @@ const useStyles = makeStyles({
   },
 });
 
-const DataGridTable = ({ rows, columns}) => {
+const DataGridTable = ({ rows, columns,checkboxSelection=false,onRowSelectionModelChange=false}) => {
   const classes = useStyles();
+// console.log("DataGridTablerow",rows);
 
   return (
     <DataGrid
-      rows={rows}
-      columns={columns}
+    rows={rows || []}          
+    columns={columns || []}
       pageSize={5}
       rowsPerPageOptions={[5]}
       disableSelectionOnClick
@@ -25,6 +26,8 @@ const DataGridTable = ({ rows, columns}) => {
       rowHeight={25}
       headerHeight={20}
       hideFooterSelectedRowCount
+      checkboxSelection={checkboxSelection}
+      onRowSelectionModelChange={onRowSelectionModelChange}
       getRowClassName={(params) =>
         params.indexRelativeToCurrentPage % 2 === 0
           ? classes.evenRow

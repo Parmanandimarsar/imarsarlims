@@ -1,5 +1,4 @@
-
-import React, { useState,useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Divider,
@@ -8,6 +7,7 @@ import {
   Grid,
   TextField,
   Typography,
+  Checkbox,
 } from "@mui/material";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -87,10 +87,7 @@ const InterpretationMaster = () => {
                 className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg project-thim"
                 style={{ backgroundColor: "#1976d2" }}
               >
-                <Typography
-                 
-                  style={{ color: "#fff" }}
-                >
+                <Typography style={{ color: "#fff" }}>
                   Interpretation Master
                 </Typography>
               </Box>
@@ -251,10 +248,44 @@ const InterpretationMaster = () => {
                     </Grid>
                   </FormControl>
                 </Grid>
-
-                {/* ReactQuill Editor */}
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Box sx={{ display: "flex" }}>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid item xs={7} className="formlableborder">
+                          <FormLabel>Print on Report</FormLabel>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Checkbox
+                            size="small"
+                            checked={values.printonreport}
+                            onChange={(e) =>
+                              setFieldValue("printonreport", e.target.checked)
+                            }
+                          />
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid item xs={7} className="formlableborder">
+                          <FormLabel>Print on Package</FormLabel>
+                        </Grid>
+                        <Grid item xs={4}>
+                          <Checkbox
+                            size="small"
+                            checked={values.printonpackages}
+                            onChange={(e) =>
+                              setFieldValue("printonpackages", e.target.checked)
+                            }
+                          />
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                  </Box>
+                </Grid>
+                {/* JoditEditor  */}
                 <Grid item xs={12}>
-               
                   <JoditEditor
                     ref={editor}
                     value={editorData}
@@ -262,13 +293,12 @@ const InterpretationMaster = () => {
                       readonly: false, // Enable editing
                       toolbar: true,
                     }}
-                    onBlur={newContent => setFieldValue("joditText",newContent)}
-                    // onChange={(newContent) => console.log(newContent)} 
+                    onBlur={(newContent) =>
+                      setFieldValue("joditText", newContent)
+                    }
+                    // onChange={(newContent) => console.log(newContent)}
                   />
-                  <div style={{ marginTop: "20px" }}>
-                    <h3>Output Data (HTML):</h3>
-                    <pre>{values.joditText}</pre>
-                  </div>
+                  
                 </Grid>
               </Grid>
               <Box textAlign="center" p={2}>

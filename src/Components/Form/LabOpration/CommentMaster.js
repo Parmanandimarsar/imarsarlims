@@ -16,6 +16,8 @@ import * as Yup from "yup";
 
 import JoditEditor from "jodit-react";
 import CustomMenuSearch from "../../ConstantComponents/CustomMenuSearch";
+import DataGridTable from "../../ConstantComponents/DataGridTable";
+import { CommentMastercolumns } from "../../TableField/TablefieldsColumns";
 
 const itemOptions = [
   { id: 1, name: "Item 1" },
@@ -28,71 +30,109 @@ const observationOptions = [
 ];
 
 const validationSchema = Yup.object({
-  templateName: Yup.string().required("Template name is required"),
-  itemOrObservation: Yup.string().required("Please select an option"),
-  item: Yup.string().when("itemOrObservation", {
+  commentName: Yup.string().required("Comment name is required"),
+  type: Yup.string().required("Please select an option"),
+  item: Yup.string().when("type", {
     is: "Item wise",
     then: (schema) => schema.required("Item is required"),
     otherwise: (schema) => schema,
   }),
-  observation: Yup.string().when("itemOrObservation", {
+  observation: Yup.string().when("type", {
     is: "Observation wise",
     then: (schema) => schema.required("Observation is required"),
     otherwise: (schema) => schema,
   }),
   joditText: Yup.string().required("Text is required"),
 });
-
+const initialValues = {
+  type: "",
+  item: "",
+  observation: "",
+  joditText: "",
+};
 const CommentMaster = () => {
   const [anchorElItem, setAnchorElItem] = useState(null);
   const [anchorElObservation, setAnchorElObservation] = useState(null);
   const [editorData, setEditorData] = useState("");
+  const [editRows, setEditRows] = useState();
   const editor = useRef(null);
+  const [rows, setRows] = useState([]); // State to store table data
+
+  const handleEdit = (row) => {
+    console.log("handleEdit", row);
+
+    setEditRows(row);
+  };
+  const handleFormSubmit = (values, { resetForm }) => {
+    const newRow = {
+      id: editRows ? editRows.id : new Date().getTime(),
+      type: values.type,
+      selectedOption:
+        values.type === "Item wise" ? values.item : values.observation,
+      commentName: values.commentName,
+      joditText: values.joditText,
+    };
+
+    if (editRows) {
+      // Update existing row
+      setRows((prev) =>
+        prev.map((row) =>
+          row.id === editRows.id ? { ...row, ...newRow } : row
+        )
+      );
+      setEditRows(null);
+    } else {
+      // Add new row
+      setRows((prev) => [...prev, newRow]);
+    }
+    resetForm({ values: initialValues }); // Clear form
+  };
 
   return (
-    <Formik
-      initialValues={{
-        templateName: "",
-        itemOrObservation: "",
-        item: "",
-        observation: "",
-        joditText: "",
-      }}
-      validationSchema={validationSchema}
-      onSubmit={(values) => {
-        console.log("Form data:", values);
-      }}
-    >
-      {({ values, setFieldValue, errors, touched }) => (
-        <Form>
-          <div className="mb-[50px] pl-2">
-            <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
-              <Box
-                className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg project-thim"
-                style={{ backgroundColor: "#1976d2" }}
-              >
-                <Typography style={{ color: "#fff" }}>
-                  Comment Master
-                </Typography>
-              </Box>
-              <Divider className="divider" />
+    <div className="mb-[50px] pl-2">
+      <Box className="bg-white rounded-lg shadow-lg" autoComplete="off">
+        <Box
+          className="flex justify-between items-center mb-1 text-white p-1 rounded-t-lg project-thim"
+          style={{ backgroundColor: "#1976d2" }}
+        >
+          <Typography style={{ color: "#fff" }}>Comment Master</Typography>
+        </Box>
+        <Divider className="divider" />
+        <Formik
+          enableReinitialize
+          initialValues={{
+            type: editRows?.type || initialValues.type,
+            commentName: editRows?.commentName || initialValues.commentName,
+            item:
+              editRows?.type === "Item wise"
+                ? editRows?.selectedOption || ""
+                : "",
+            observation:
+              editRows?.type === "Observation wise"
+                ? editRows?.selectedOption || ""
+                : "",
+            joditText: editRows?.joditText || initialValues.joditText,
+          }}
+          validationSchema={validationSchema}
+          onSubmit={handleFormSubmit}
+        >
+          {({ values, setFieldValue, errors, touched }) => (
+            // console.log("errors",errors),
 
+            <Form>
               <Grid container spacing={1} p={1}>
                 {/* Radio Buttons */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl component="fieldset">
-                    
                     <RadioGroup
                       row
-                      name="itemOrObservation"
-                      value={values.itemOrObservation}
-                      onChange={(e) =>
-                        setFieldValue("itemOrObservation", e.target.value)
-                      }
+                      name="type"
+                      value={values.type}
+                      onChange={(e) => setFieldValue("type", e.target.value)}
                     >
                       <FormControlLabel
                         value="Item wise"
-                        control={<Radio sx={{fontSize:"10px"}}/>}
+                        control={<Radio sx={{ fontSize: "10px" }} />}
                         label="Item wise"
                       />
                       <FormControlLabel
@@ -101,18 +141,18 @@ const CommentMaster = () => {
                         label="Observation wise"
                       />
                     </RadioGroup>
-                    {touched.itemOrObservation && errors.itemOrObservation && (
+                    {touched.type && errors.type && (
                       <Typography color="error" variant="caption">
-                        {errors.itemOrObservation}
+                        {errors.type}
                       </Typography>
                     )}
                   </FormControl>
                 </Grid>
-                {/* Template Name Field */}
+                {/* Comment Name Field */}
                 <Grid item xs={12} sm={6} md={4} lg={3}>
                   <FormControl
                     fullWidth
-                    error={Boolean(errors.templateName && touched.templateName)}
+                    error={Boolean(errors.commentName && touched.commentName)}
                   >
                     <Grid container alignItems="center">
                       <Grid
@@ -121,21 +161,21 @@ const CommentMaster = () => {
                         sx={{ mr: "3px" }}
                         className="formlableborder"
                       >
-                        <FormLabel>Template Name</FormLabel>
+                        <FormLabel>Comment Name</FormLabel>
                       </Grid>
                       <Grid item xs={8}>
                         <TextField
                           fullWidth
-                          name="templateName"
-                          value={values.templateName}
+                          name="commentName"
+                          value={values.commentName || ""}
                           onChange={(e) =>
-                            setFieldValue("templateName", e.target.value)
+                            setFieldValue("commentName", e.target.value)
                           }
-                          placeholder="Enter Template Name"
+                          placeholder="Enter Comment Name"
                         />
-                        {touched.templateName && errors.templateName && (
+                        {touched.commentName && errors.commentName && (
                           <Typography color="error" variant="caption">
-                            {errors.templateName}
+                            {errors.commentName}
                           </Typography>
                         )}
                       </Grid>
@@ -144,7 +184,7 @@ const CommentMaster = () => {
                 </Grid>
 
                 {/* Conditional Item Dropdown */}
-                {values.itemOrObservation === "Item wise" && (
+                {values.type === "Item wise" && (
                   <Grid item xs={12} sm={6} md={4} lg={3}>
                     <FormControl
                       fullWidth
@@ -195,7 +235,7 @@ const CommentMaster = () => {
                 )}
 
                 {/* Conditional Observation Dropdown */}
-                {values.itemOrObservation === "Observation wise" && (
+                {values.type === "Observation wise" && (
                   <Grid item xs={12} sm={6} md={4} lg={3}>
                     <FormControl
                       fullWidth
@@ -251,10 +291,15 @@ const CommentMaster = () => {
                     </FormControl>
                   </Grid>
                 )}
-
+                <Grid item xs={12} sm={6} md={4} lg={3}>
+                  <Box textAlign="center" >
+                    <button type="submit" className="project-thim text-white rounded-md border-none">
+                      Save
+                    </button>
+                  </Box>
+                </Grid>
                 {/* Jodit Editor */}
                 <Grid item xs={12}>
-                  
                   <JoditEditor
                     ref={editor}
                     value={editorData}
@@ -266,22 +311,18 @@ const CommentMaster = () => {
                       setFieldValue("joditText", newContent)
                     }
                   />
-                  <div style={{ marginTop: "20px" }}>
-                    <h3>Output Data (HTML):</h3>
-                    <pre>{values.joditText}</pre>
-                  </div>
                 </Grid>
               </Grid>
-              <Box textAlign="center" p={2}>
-                <button type="submit" variant="contained" color="primary">
-                  Submit
-                </button>
-              </Box>
-            </Box>
-          </div>
-        </Form>
-      )}
-    </Formik>
+
+              <DataGridTable
+                rows={rows}
+                columns={CommentMastercolumns(handleEdit)}
+              />
+            </Form>
+          )}
+        </Formik>
+      </Box>
+    </div>
   );
 };
 
