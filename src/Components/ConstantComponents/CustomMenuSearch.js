@@ -8,8 +8,7 @@ import {
 } from "@mui/material";
 
 const CustomMenuSearch = ({
-  options,
-  selectedOptions,
+  options = [], selectedOptions = [],
   setSelectedOptions,
   placeholder,
   anchorEl,
