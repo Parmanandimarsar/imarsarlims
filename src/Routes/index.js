@@ -1,5 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import PrivateRoute from "./PrivateRoute";
 import Login from "../Pages/Login";
 import Home from "../Pages/Header";
 import Layout from "../Pages/MainLayout";
@@ -35,7 +36,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <ClientMaster />,
+        element:<ClientMaster />,
+        
       },
       {
         path: "/client-master",
@@ -153,3 +155,108 @@ const Routes = () => {
 };
 
 export default Routes;
+// children: [
+//       {
+//         path: "/",
+//         element:<PrivateRoute element={<ClientMaster />} />
+        
+//       },
+//       {
+//         path: "/client-master",
+//         element:<PrivateRoute element={<ClientMaster />} />,
+//       },
+//       {
+//         path: "/employee-master",
+//         element:<PrivateRoute element={ <EmployeeMaster />} />,
+//       },
+//       {
+//         path: "/rate-type-master",
+//         element:<PrivateRoute element={ <RateTypeMaster />} />,
+//       },
+//       {
+//         path: "/multimaster",
+//         element: <PrivateRoute element={<MultiMaster />} />,
+//       },
+//       {
+//         path: "/lab-short-master",
+//         element:<PrivateRoute element={ <LabMaster />} />,
+//       },
+//       {
+//         path: "/add-letter-head",
+//         element:<PrivateRoute element={ <AddLetterHead />} />,
+//       },
+//       {
+//         path: "/lab-test-master",
+//         element:<PrivateRoute element={ <LabTestMaster />} />,
+//       },
+//       {
+//         path: "/menu-master",
+//         element:<PrivateRoute element={ <MenuMaster />} />,
+//       },
+//       {
+//         path: "/observation-mapping",
+//         element:<PrivateRoute element={ <ObservationMapping />} />,
+//       },
+//       {
+//         path: "/dr-test-approval-master",
+//         element:<PrivateRoute element={ <DrTestApprovalMaster />} />,
+//       },
+//       {
+//         path: "/test-out-source-labMaster",
+//         element:<PrivateRoute element={ <OuthouseSetteliteProcessingMaster />} />,
+//       },
+//       {
+//         path: "/outhouse-settelite-processing-master",
+//         element:<PrivateRoute element={ <TestOutSourceLabMaster />} />,
+//       },
+//       {
+//         path: "/nabl-master",
+//         element:<PrivateRoute element={ <NABLMaster />} />,
+//       },
+//       {
+//         path: "/manage-test-report-ordering",
+//         element:<PrivateRoute element={ <ManageTestReportOrdering />} />,
+//       },
+//       {
+//         path: "/reporting-help-master",
+//         element:<PrivateRoute element={ <ReportingHelpMaster />} />,
+//       },
+//       {
+//         path: "/interpretation-master",
+//         element:<PrivateRoute element={ <InterpretationMaster />} />,
+//       },
+
+//       {
+//         path: "/tat-master",
+//         element: <PrivateRoute element={<TATMaster />} />,
+//       },
+//       {
+//         path: "/Reporting-Formula-Master",
+//         element: <PrivateRoute element={<ReportingFormulaMaster/>} />,
+//       },
+//       {
+//         path: "/Lab-Test-Mapping-Master",
+//         element: <PrivateRoute element={<LabTestMappingMaster/>} />,
+//       },
+//       {
+//         path: "/lab-observation-with-range/:id",
+//         element: <PrivateRoute element={<LabObservationWithRange />} />,
+//       },
+//       {
+//         path: "/investigation-template-master",
+//         element: <PrivateRoute element={<InvestigationTemplateMaster />} />,
+//       },
+//       {
+//         path: "/comment-master",
+//         element: <PrivateRoute element={<CommentMaster />} />,
+//       },
+//       {
+//         path: "/micro-organism-antibiotic-master",
+//         element: <PrivateRoute element={<MicroOrganismAntibioticMaster />} />,
+//       },
+      
+//       {
+//         path: "/test",
+//         element:<PrivateRoute element={ <Test />} />,
+//       },
+//     ],

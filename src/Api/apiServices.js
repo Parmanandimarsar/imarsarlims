@@ -1,9 +1,9 @@
-// src/services/apiService.js
+
 
 import axiosInstance from "./axiosInstance";
 
 // GET API call
-export const fetchUsers = async () => {
+export const getData = async (endpoint, data) => {
   try {
     const response = await axiosInstance.get("/users");
     return response.data;
@@ -13,9 +13,9 @@ export const fetchUsers = async () => {
 };
 
 // POST API call
-export const createUser = async (userData) => {
+export const postData = async (endpoint, data) => {
   try {
-    const response = await axiosInstance.post("/users", userData);
+    const response = await axiosInstance.post(`/api/${endpoint}`, data);
     return response.data;
   } catch (error) {
     throw error;

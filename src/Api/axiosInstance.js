@@ -1,10 +1,11 @@
-// src/utils/axiosInstance.js
+
 
 import axios from "axios";
 
 // Environment variables
 const baseURL = process.env.REACT_APP_API_BASE_URL;
 const timeout = Number(process.env.REACT_APP_TIMEOUT) || 10000;
+console.log("baseURL",baseURL);
 
 const axiosInstance = axios.create({
   baseURL, // Base URL from .env
