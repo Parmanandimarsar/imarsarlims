@@ -5,7 +5,7 @@ import axiosInstance from "./axiosInstance";
 // GET API call
 export const getData = async (endpoint, data) => {
   try {
-    const response = await axiosInstance.get("/users");
+    const response = await axiosInstance.get(`/api/${endpoint}`, data);
     return response.data;
   } catch (error) {
     throw error; // Caller ko error pass karo
