@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
@@ -14,31 +14,109 @@ import {
   Divider,
   FormControlLabel,
   Checkbox,
-  ListItemText,
   Radio,
   RadioGroup,
+  CircularProgress,
 } from "@mui/material";
+import { postData } from "../../../Api/apiServices";
+import { useDispatch, useSelector } from "react-redux";
+import CustomMenuSearch from "../../ConstantComponents/CustomMenuSearch";
+import {
+  fetchAreaData,
+  fetchCityData,
+  fetchStateData,
+  fetchRoleData,
+  fetchCenterData,
+  fetchDistricData,
+} from "../../../redux/slices/actions/locationMasterActions";
 const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
 const EmployeeMaster = () => {
+  const API_ENDPOINT = "empMaster/SaveEmployee";
   const [imagePreview, setImagePreview] = useState(null);
+  const [anchorElCenter, setAnchorElCenter] = useState(null);
+  const [anchorElRole, setAnchorElRole] = useState(null);
+  const [anchorElState, setAnchorElState] = useState(null);
+  const [anchorElCity, setAnchorElCity] = useState(null);
+  const [anchorElArea, setAnchorElArea] = useState(null);
   const initialValues = {
-    department: [], // Multiple selection field
+    isActive: "",
+    address: "",
+    allowDueReport: "",
+    authenticationdevice: "",
+    bloodGroup: "",
+    centreId: "",
+    defaultrole: "",
+    designationId: "",
+    disapproved: "",
+    dob: "",
+    email: "",
+    empCode: "",
+    employee: "",
+    fName: "",
+    fromIP: "",
+    lName: "",
+    isemailotp: "",
+    mobileNo: "",
+    landline: "",
+    password: "",
+    pinCode: "",
+    fileName: "",
+    qualification: "",
+    isSalesTeamMember: "",
+    title: "",
+    toIP: "",
+    zone: "",
+    state: "",
+    city: "",
+    area: "",
+    userName: "",
+    deptAccess: [], // Multiple selection field
     centre: [], // Multiple selection field
     accessRole: [], // Multiple selection field
     // Add other fields accordingly
   };
+  const dispatch = useDispatch();
+  const {
+    stateData,
+    cityData,
+    districData,
+    areaData,
+    roleData,
+    centerData,
+    loading,
+    error,
+  } = useSelector((state) => state.locationMaster);
+  console.log("districData", districData);
+  console.log("cityData", cityData);
+  console.log("centerData", centerData);
+  useEffect(() => {
+    dispatch(fetchStateData()); // State API call
+    dispatch(fetchDistricData());
+    dispatch(fetchCityData()); // City API call
+    dispatch(fetchAreaData());
+    dispatch(fetchRoleData());
+    dispatch(fetchCenterData());
+  }, []);
 
+  if (loading) return <CircularProgress />;
+  if (error) return <p>Error: {error}</p>;
   const validationSchema = Yup.object().shape({
-    // centreType: Yup.string().required("Centre Type is required"),
+    // centreId: Yup.string().required("Centre Type is required"),
   });
   console.log("setFieldValue", initialValues);
   // Form submission handler
-  const onSubmit = (values, { setSubmitting }) => {
+  const onSubmit = async (values, { setSubmitting }) => {
     console.log("Form Submitted!", values);
-    setTimeout(() => {
-      console.log(values);
-      setSubmitting(false);
-    }, 400);
+
+    try {
+      const response = await postData(API_ENDPOINT, values); // Call the reusable service
+      // setMessage("Employee saved successfully!");
+      // setEmployee({ name: "", email: "", department: "" });
+      console.log("response", response);
+    } catch (err) {
+      // setError("Failed to save employee. Please try again."); // Error message
+      console.error(err);
+    }
   };
 
   return (
@@ -61,7 +139,7 @@ const EmployeeMaster = () => {
             setFieldValue,
             values,
           }) => (
-            
+            console.log("values", values),
             (
               <Form>
                 <Grid container spacing={1} className="pl-1">
@@ -156,16 +234,16 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={TextField}
-                              name="firstName"
+                              name="fName"
                               fullWidth
                               className="mandatoryfield"
                               placeholder="Enter First Name"
                               variant="outlined"
                               size="small"
-                              error={touched.firstName && !!errors.firstName}
+                              error={touched.fName && !!errors.fName}
                             />
                             <ErrorMessage
-                              name="firstName"
+                              name="fName"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -191,16 +269,16 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={TextField}
-                              name="lastName"
+                              name="lName"
                               fullWidth
                               className="mandatoryfield"
                               placeholder="Enter Last Name"
                               variant="outlined"
                               size="small"
-                              error={touched.lastName && !!errors.lastName}
+                              error={touched.lName && !!errors.lName}
                             />
                             <ErrorMessage
-                              name="lastName"
+                              name="lName"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -260,15 +338,16 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={TextField}
-                              name="pincode"
+                              type="number"
+                              name="pinCode"
                               fullWidth
                               placeholder="Enter Pincode"
                               variant="outlined"
                               size="small"
-                              error={touched.pincode && !!errors.pincode}
+                              error={touched.pinCode && !!errors.pinCode}
                             />
                             <ErrorMessage
-                              name="pincode"
+                              name="pinCode"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -329,16 +408,16 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={TextField}
-                              name="mobile"
+                              name="mobileNo"
                               fullWidth
                               className="mandatoryfield"
                               placeholder="Enter Mobile Number"
                               variant="outlined"
                               size="small"
-                              error={touched.mobile && !!errors.mobile}
+                              error={touched.mobileNo && !!errors.mobileNo}
                             />
                             <ErrorMessage
-                              name="mobile"
+                              name="mobileNo"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -364,15 +443,15 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={TextField}
-                              name="mobile2"
+                              name="landline"
                               fullWidth
                               placeholder="Enter Mobile 2 Number"
                               variant="outlined"
                               size="small"
-                              error={touched.mobile2 && !!errors.mobile2}
+                              error={touched.landline && !!errors.landline}
                             />
                             <ErrorMessage
-                              name="mobile2"
+                              name="landline"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -591,16 +670,16 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={TextField}
-                              name="username"
+                              name="userName"
                               fullWidth
                               className="mandatoryfield"
                               placeholder="Enter Username"
                               variant="outlined"
                               size="small"
-                              error={touched.username && !!errors.username}
+                              error={touched.userName && !!errors.userName}
                             />
                             <ErrorMessage
-                              name="username"
+                              name="userName"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -694,13 +773,13 @@ const EmployeeMaster = () => {
                           className="formlableborder mr-1"
                           sx={{ mr: "3px" }}
                         >
-                          <FormLabel>Department</FormLabel>
+                          <FormLabel>Department Acc.</FormLabel>
                         </Grid>
                         <Grid item xs={8}>
                           <FormControl fullWidth>
                             <Field
                               as={Select}
-                              name="department"
+                              name="deptAccess"
                               multiple
                               displayEmpty
                               className="mandatoryfield"
@@ -713,14 +792,14 @@ const EmployeeMaster = () => {
                               {["HR", "Finance", "Operations"].map((dept) => (
                                 <MenuItem key={dept} value={dept}>
                                   <Checkbox
-                                    checked={values.department.includes(dept)}
+                                    checked={values.deptAccess.includes(dept)}
                                   />
                                   {dept}
                                 </MenuItem>
                               ))}
                             </Field>
                             <ErrorMessage
-                              name="department"
+                              name="deptAccess"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -744,34 +823,45 @@ const EmployeeMaster = () => {
                         </Grid>
                         <Grid item xs={8}>
                           <FormControl fullWidth>
-                            <Field
-                              as={Select}
+                            <TextField
                               name="centre"
-                              multiple
+                              onClick={(e) =>
+                                setAnchorElCenter(e.currentTarget)
+                              }
                               className="mandatoryfield"
+                              placeholder="select center"
                               displayEmpty
                               variant="outlined"
-                              renderValue={(selected) =>
-                                selected.join(", ") || "Select Centre"
+                              value={
+                                values.centre.length
+                                  ? values.centre
+                                      .map((dept) => dept.companyName)
+                                      .join(", ")
+                                  : ""
                               }
-                            >
-                              {["Centre 1", "Centre 2", "Centre 3"].map(
-                                (centre) => (
-                                  <MenuItem key={centre} value={centre}>
-                                    <Checkbox
-                                      checked={values.centre.includes(centre)}
-                                    />
-                                    {centre}
-                                  </MenuItem>
-                                )
-                              )}
-                            </Field>
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            ></TextField>
                             <ErrorMessage
                               name="centre"
                               component="div"
                               className="text-red-600 text-xs"
                             />
                           </FormControl>
+
+                          <CustomMenuSearch
+                            options={centerData}
+                            selectedOptions={values.centre}
+                            setSelectedOptions={(value) => {
+                              setFieldValue("centre", value);
+                            }}
+                            placeholder="Search Department"
+                            anchorEl={anchorElCenter}
+                            isCheckboxMenu={true}
+                            onClose={() => setAnchorElCenter(null)}
+                            nameKey="companyName"
+                          />
                         </Grid>
                       </Grid>
                     </FormControl>
@@ -791,31 +881,252 @@ const EmployeeMaster = () => {
                         </Grid>
                         <Grid item xs={8}>
                           <FormControl fullWidth>
-                            <Field
-                              as={Select}
-                              name="accessRole"
-                              multiple
+                            <TextField
+                              name="centre"
+                              onClick={(e) => setAnchorElRole(e.currentTarget)}
+                              className="mandatoryfield"
+                              placeholder="select center"
                               displayEmpty
                               variant="outlined"
-                              className="mandatoryfield"
-                              size="small"
-                              renderValue={(selected) =>
-                                selected.join(", ") || "Select Access Role"
+                              value={
+                                values.accessRole.length
+                                  ? values.accessRole
+                                      .map((dept) => dept.roleName)
+                                      .join(", ")
+                                  : ""
                               }
-                            >
-                              {["Admin", "Manager", "User"].map((role) => (
-                                <MenuItem key={role} value={role}>
-                                  <Checkbox
-                                    checked={values.accessRole.includes(role)}
-                                  />
-                                  {role}
-                                </MenuItem>
-                              ))}
-                            </Field>
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
+
                             <ErrorMessage
                               name="accessRole"
                               component="div"
                               className="text-red-600 text-xs"
+                            />
+                            <CustomMenuSearch
+                              options={roleData}
+                              selectedOptions={values.accessRole}
+                              setSelectedOptions={(value) => {
+                                setFieldValue("accessRole", value);
+                              }}
+                              placeholder="Search Department"
+                              anchorEl={anchorElRole}
+                              isCheckboxMenu={true}
+                              onClose={() => setAnchorElRole(null)}
+                              nameKey="roleName"
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                  </Grid>
+
+                  {/* Zone Select */}
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid
+                          item
+                          xs={3}
+                          className="formlableborder mr-1"
+                          sx={{ mr: "3px" }}
+                        >
+                          <FormLabel>Zone </FormLabel>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <FormControl fullWidth>
+                            <Field
+                              as={Select}
+                              name="zone"
+                              fullWidth
+                              displayEmpty
+                              variant="outlined"
+                              size="small"
+                              error={touched.zone && !!errors.zone}
+                            >
+                              <MenuItem value="" disabled>
+                                Select Zone
+                              </MenuItem>
+                              <MenuItem value="1">Zone 1</MenuItem>
+                              <MenuItem value="2">Zone 2</MenuItem>
+                            </Field>
+                            <ErrorMessage
+                              name="zone"
+                              component="div"
+                              className="text-red-600 text-xs"
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                  </Grid>
+
+                  {/* State Select */}
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid
+                          item
+                          xs={3}
+                          className="formlableborder mr-1"
+                          sx={{ mr: "3px" }}
+                        >
+                          <FormLabel>State </FormLabel>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <FormControl fullWidth>
+                            <TextField
+                              name="state"
+                              onClick={(e) => setAnchorElState(e.currentTarget)}
+                              className="mandatoryfield"
+                              placeholder="select state"
+                              value={values.state}
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
+                            <ErrorMessage
+                              name="state"
+                              component="div"
+                              className="text-red-600 text-xs"
+                            />
+                            <CustomMenuSearch
+                              options={stateData}
+                              selectedOptions={
+                                values.state
+                                  ? [
+                                      {
+                                        id: values.state.id,
+                                        name: values.state.state,
+                                      },
+                                    ]
+                                  : []
+                              }
+                              setSelectedOptions={(value) => {
+                                const selectedItem = value[0];
+                                setFieldValue(
+                                  "state",
+                                  selectedItem?.state || ""
+                                );
+                              }}
+                              placeholder="Search state"
+                              anchorEl={anchorElState}
+                              onClose={() => setAnchorElState(null)}
+                              nameKey="state"
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                  </Grid>
+
+                  {/* City Select */}
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid
+                          item
+                          xs={3}
+                          className="formlableborder mr-1"
+                          sx={{ mr: "3px" }}
+                        >
+                          <FormLabel>City </FormLabel>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <FormControl fullWidth>
+                            <TextField
+                              onClick={(e) => setAnchorElCity(e.currentTarget)}
+                              className="mandatoryfield"
+                              placeholder="select City"
+                              value={values.city.cityName}
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
+                            <ErrorMessage
+                              name="city"
+                              component="div"
+                              className="text-red-600 text-xs"
+                            />
+                            <CustomMenuSearch
+                              options={cityData}
+                              selectedOptions={
+                                values.city
+                                  ? [
+                                      {
+                                        id: values.city.id,
+                                        name: values.city.cityName,
+                                      },
+                                    ]
+                                  : []
+                              }
+                              setSelectedOptions={(value) => {
+                                const selectedItem = value[0];
+
+                                setFieldValue("city", selectedItem || "");
+                              }}
+                              placeholder="Search city"
+                              anchorEl={anchorElCity}
+                              onClose={() => setAnchorElCity(null)}
+                              nameKey="cityName"
+                            />
+                          </FormControl>
+                        </Grid>
+                      </Grid>
+                    </FormControl>
+                  </Grid>
+
+                  {/* Area Select */}
+                  <Grid item xs={12} sm={6} md={4} lg={3}>
+                    <FormControl fullWidth>
+                      <Grid container alignItems="center">
+                        <Grid
+                          item
+                          xs={3}
+                          className="formlableborder mr-1"
+                          sx={{ mr: "3px" }}
+                        >
+                          <FormLabel>Area </FormLabel>
+                        </Grid>
+                        <Grid item xs={8}>
+                          <FormControl fullWidth>
+                            <TextField
+                              fullWidth
+                              onClick={(e) => setAnchorElArea(e.currentTarget)}
+                              value={values.area.areaName}
+                              placeholder="Select Item"
+                              InputProps={{
+                                readOnly: true,
+                              }}
+                            />
+                            <ErrorMessage
+                              name="area"
+                              component="div"
+                              className="text-red-600 text-xs"
+                            />
+                            <CustomMenuSearch
+                              options={areaData}
+                              selectedOptions={
+                                values.area
+                                  ? [
+                                      {
+                                        id: values.area.id,
+                                        name: values.area.areaName,
+                                      },
+                                    ]
+                                  : []
+                              }
+                              setSelectedOptions={(value) => {
+                                const selectedItem = value[0];
+                              
+                                setFieldValue("area", selectedItem || "");
+                              }}
+                              placeholder="Search area"
+                              anchorEl={anchorElArea}
+                              onClose={() => setAnchorElArea(null)}
+                              nameKey="areaName"
                             />
                           </FormControl>
                         </Grid>
@@ -839,24 +1150,24 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={Select}
-                              name="designation"
+                              name="designationId"
                               fullWidth
                               displayEmpty
                               variant="outlined"
                               size="small"
                               error={
-                                touched.designation && !!errors.designation
+                                touched.designationId && !!errors.designationId
                               }
                             >
                               <MenuItem value="" disabled>
                                 Select Designation
                               </MenuItem>
-                              <MenuItem value="Manager">Manager</MenuItem>
-                              <MenuItem value="Supervisor">Supervisor</MenuItem>
-                              <MenuItem value="Staff">Staff</MenuItem>
+                              <MenuItem value="1">Manager</MenuItem>
+                              <MenuItem value="2">Supervisor</MenuItem>
+                              <MenuItem value="3">Staff</MenuItem>
                             </Field>
                             <ErrorMessage
-                              name="designation"
+                              name="designationId"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -882,23 +1193,25 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={Select}
-                              name="defaultCentre"
+                              name="centreId"
                               fullWidth
                               displayEmpty
                               variant="outlined"
                               size="small"
-                              error={
-                                touched.defaultCentre && !!errors.defaultCentre
-                              }
+                              error={touched.centreId && !!errors.centreId}
                             >
                               <MenuItem value="" disabled>
                                 Select Default Centre
                               </MenuItem>
-                              <MenuItem value="Centre 1">Centre 1</MenuItem>
-                              <MenuItem value="Centre 2">Centre 2</MenuItem>
+
+                              {values?.centre.map((defcentre) => (
+                                <MenuItem value={defcentre.id}>
+                                  {defcentre.companyName}{" "}
+                                </MenuItem>
+                              ))}
                             </Field>
                             <ErrorMessage
-                              name="defaultCentre"
+                              name="centreId"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -924,24 +1237,27 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={Select}
-                              name="defaultRole"
+                              name="defaultrole"
                               fullWidth
                               displayEmpty
                               variant="outlined"
                               size="small"
                               error={
-                                touched.defaultRole && !!errors.defaultRole
+                                touched.defaultrole && !!errors.defaultrole
                               }
                             >
                               <MenuItem value="" disabled>
                                 Select Default Role
                               </MenuItem>
-                              <MenuItem value="Admin">Admin</MenuItem>
-                              <MenuItem value="Manager">Manager</MenuItem>
-                              <MenuItem value="User">User</MenuItem>
+                              {values?.accessRole.map((defrole) => (
+                                <MenuItem key={defrole.id} value={defrole.id}>
+                                  {defrole.roleName}{" "}
+                                  {/* Display the name or any other data */}
+                                </MenuItem>
+                              ))}
                             </Field>
                             <ErrorMessage
-                              name="defaultRole"
+                              name="defaultrole"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -964,7 +1280,7 @@ const EmployeeMaster = () => {
                         <Grid item xs={8}>
                           <input
                             type="file"
-                            name="profilpic"
+                            name="fileName"
                             style={{
                               width: "100%",
                               boxSizing: "border-box",
@@ -973,7 +1289,7 @@ const EmployeeMaster = () => {
                             className="mandatoryfield overflow-hidden"
                             onChange={(event) => {
                               const file = event.currentTarget.files[0];
-                              setFieldValue("profilpic", file);
+                              setFieldValue("fileName", file);
                               setImagePreview(URL.createObjectURL(file));
                             }}
                           />
@@ -981,12 +1297,11 @@ const EmployeeMaster = () => {
                       </Grid>
                     </FormControl>
                   </Grid>
-                  {/* Continue with other fields for Department, Centre, Access Role, Zone, State, City, Area, Designation, Default Centre, Default Role as needed */}
                 </Grid>
                 <Divider className="divider" />
                 <Grid container spacing={1}>
                   <div className="w-full flex mt-2  pl-6">
-                    <Grid item xs={12} spacing={2}>
+                    <Grid item xs={12}>
                       <FormControl fullWidth>
                         <Grid container alignItems="center">
                           <Grid item xs={12}>
@@ -994,7 +1309,7 @@ const EmployeeMaster = () => {
                               control={
                                 <Field
                                   type="checkbox"
-                                  name="active"
+                                  name="isActive"
                                   className="m-1"
                                 />
                               }
@@ -1004,7 +1319,7 @@ const EmployeeMaster = () => {
                               control={
                                 <Field
                                   type="checkbox"
-                                  name="salesteammember"
+                                  name="isSalesTeamMember"
                                   className="m-1"
                                 />
                               }
@@ -1014,17 +1329,17 @@ const EmployeeMaster = () => {
                               control={
                                 <Field
                                   type="checkbox"
-                                  name="allowduereport"
+                                  name="allowDueReport"
                                   className="m-1"
                                 />
                               }
-                              label="AllowDueReport"
+                              label="allowDueReport"
                             />
                             <FormControlLabel
                               control={
                                 <Field
                                   type="checkbox"
-                                  name="hiderate"
+                                  name="rate"
                                   className="m-1"
                                 />
                               }
@@ -1034,7 +1349,7 @@ const EmployeeMaster = () => {
                               control={
                                 <Field
                                   type="checkbox"
-                                  name="dis.approved"
+                                  name="disapproved"
                                   className="m-1"
                                 />
                               }
@@ -1044,11 +1359,11 @@ const EmployeeMaster = () => {
                               control={
                                 <Field
                                   type="checkbox"
-                                  name="loginotp"
+                                  name="isemailotp"
                                   className="m-1 p-2"
                                 />
                               }
-                              label="LoginOTP"
+                              label="LoginEmailOTP"
                             />
                             <FormControlLabel
                               control={
@@ -1067,7 +1382,7 @@ const EmployeeMaster = () => {
                   </div>
                 </Grid>
                 <Divider className="divider" />
-                <Grid spacing={1}>
+                <Grid>
                   <div className="flex pl-2 re">
                     <div className="w-[70%]">
                       <Grid container alignItems="center">

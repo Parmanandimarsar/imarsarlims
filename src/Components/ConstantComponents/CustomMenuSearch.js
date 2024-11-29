@@ -8,18 +8,19 @@ import {
 } from "@mui/material";
 
 const CustomMenuSearch = ({
-  options,
-  selectedOptions,
+  options = [], 
+  selectedOptions = [],
   setSelectedOptions,
-  placeholder,
+  placeholder="search by name ",
   anchorEl,
   onClose,
   isCheckboxMenu = false, // Prop to control checkbox display
+  nameKey = "name", // Pass the key to access name dynamically
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredOptions = options.filter((option) =>
-    option.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredOptions = options.filter((option) => option?.[nameKey] &&
+      option[nameKey].toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleSelectOption = (option) => {
@@ -44,7 +45,7 @@ const CustomMenuSearch = ({
   };
 
   return (
-    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose}>
+    <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={onClose} className="customMenuSearch">
       <TextField
         fullWidth
         placeholder={`Search ${placeholder}...`}
@@ -60,7 +61,7 @@ const CustomMenuSearch = ({
               checked={selectedOptions.some((o) => o.id === option.id)}
             />
           )}
-          <ListItemText primary={option.name} />
+          <ListItemText primary={option[nameKey]} />
         </MenuItem>
       ))}
     </Menu>
