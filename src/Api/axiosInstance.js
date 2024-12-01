@@ -9,7 +9,7 @@ console.log("baseURL",baseURL);
 
 const axiosInstance = axios.create({
   baseURL, // Base URL from .env
-  timeout, // Timeout from .env
+  // timeout, // Timeout from .env
 });
 
 // Request Interceptor

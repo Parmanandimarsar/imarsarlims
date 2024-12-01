@@ -2,11 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   stateData: [],
-  districData:[],
+  districData: [],
   cityData: [],
-  areaData:[],
-  roleData:[],
-  centerData:[],
+  areaData: [],
+  roleData: [],
+  centerData: [],
+  zoneData: [],
+  departmentAcceData: [],
   loading: false,
   error: null,
 };
@@ -22,7 +24,7 @@ const locationMasterSlice = createSlice({
       state.stateData = action.payload;
       state.loading = false;
     },
-    setDistricData:(state, action) => {
+    setDistricData: (state, action) => {
       state.districData = action.payload;
       state.loading = false;
     },
@@ -42,6 +44,14 @@ const locationMasterSlice = createSlice({
       state.centerData = action.payload;
       state.loading = false;
     },
+    setZoneData: (state, action) => {
+      state.zoneData = action.payload;
+      state.loading = false;
+    },
+    setDepartmentAcceData: (state, action) => {
+      state.departmentAcceData = action.payload;
+      state.loading = false;
+    },
     setError: (state, action) => {
       state.error = action.payload;
       state.loading = false;
@@ -49,5 +59,16 @@ const locationMasterSlice = createSlice({
   },
 });
 
-export const { setLoading, setStateData,setDistricData, setCityData, setError,setAreaData,setRoleData,setCenterData } = locationMasterSlice.actions;
+export const {
+  setLoading,
+  setStateData,
+  setDistricData,
+  setCityData,
+  setError,
+  setAreaData,
+  setRoleData,
+  setCenterData,
+  setZoneData,
+  setDepartmentAcceData,
+} = locationMasterSlice.actions;
 export default locationMasterSlice.reducer;
