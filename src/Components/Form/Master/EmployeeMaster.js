@@ -126,7 +126,7 @@ const EmployeeMaster = () => {
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
     deptAccess: Yup.array()
-      .of( Yup.string().required("Department is required"))
+      .of(Yup.string().required("Department is required"))
       .min(1, "At least one department must be selected"),
     addEmpCentreAccess: Yup.array()
       .of(Yup.object().required("Centre is required"))
@@ -138,7 +138,6 @@ const EmployeeMaster = () => {
     city: Yup.object().required("City is required"),
   });
 
- 
   // Form submission handler
 
   const convertToBase64 = (file) => {
@@ -149,15 +148,13 @@ const EmployeeMaster = () => {
       reader.readAsDataURL(file); // Read file as Base64
     });
   };
-  
 
-  const onSubmit = async (values, { resetForm,setSubmitting }) => {
+  const onSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log("Form Submitted!", values);
 
     try {
       // Convert file to Base64
       const base64File = await convertToBase64(values.fileName); // Add 'await'
-    
 
       // Map additional properties for centre access
       const updatedAccess = values.addEmpCentreAccess.map((item) => ({
@@ -193,10 +190,10 @@ const EmployeeMaster = () => {
       // Send data to API
       const response = await postData(API_ENDPOINT, finaleData);
       console.log("API Response:", response);
+      // resetForm();
     } catch (error) {
       console.error("Error during submission:", error.message);
     }
-    resetForm()
   };
 
   return (
@@ -1627,6 +1624,7 @@ const EmployeeMaster = () => {
                 </Grid>
                 <div className="mt-6  flex items-end gap-4 ml-0 justify-end   p-2 ">
                   <button
+                  type="submit"
                     disabled={isSubmitting}
                     className="pr-5  pl-5 savebutton project-thim"
                   >
