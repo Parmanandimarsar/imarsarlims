@@ -29,6 +29,7 @@ import {
 } from "../../../redux/slices/actions/locationMasterActions";
 import { useDispatch, useSelector } from "react-redux";
 import useNotification from "../../ConstantComponents/Notifications/useNotification";
+import { fetchSalesTeamMemberData } from "../../../redux/slices/actions/EmpMasterAction";
 const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
 const ClientMaster = () => {
   const [centreType, setCentreType] = useState("");
@@ -45,6 +46,11 @@ const ClientMaster = () => {
     loading,
     error,
   } = useSelector((state) => state.locationMaster);
+  const {
+    salesTeamMemberData,
+    empLoading,
+    empError,
+  } = useSelector((state) => state.empMaster);
   const dispatch = useDispatch();
   const showNotification = useNotification();
   const initialValues = {
@@ -70,7 +76,7 @@ const ClientMaster = () => {
     empcentreaccess: "",
   };
   useEffect(() => {
-    showNotification('Data fetched successfully!', 'success');
+    // showNotification('Data fetched successfully!', 'success');
     dispatch(fetchStateData()); // State API call
     // dispatch(fetchDistricData());
     // dispatch(fetchCityData()); // City API call
@@ -78,7 +84,7 @@ const ClientMaster = () => {
     // dispatch(fetchRoleData());
     dispatch(fetchCenterData());
     dispatch(fetchRateType());
-    // dispatch(fetchZoneData());
+    dispatch(fetchSalesTeamMemberData());
     // dispatch(fetchDepartmentAcceData());
   }, []);
   // Validation schema

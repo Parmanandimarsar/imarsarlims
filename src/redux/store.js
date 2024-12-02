@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './slices/counterSlice'; // Example slice
-import locationMasterReducer from "./slices/locationMasterSlice"
+import locationMasterReducer from "./slices/CreateSlices/locationMasterSlice"
+import empMasterReducer from "./slices/CreateSlices/EmpMasterSlice"
 // Configure the Redux store
 const store = configureStore({
   reducer: {
-    counter: counterReducer, // Add more reducers here as needed
+   // Add more reducers here as needed
    locationMaster: locationMasterReducer,
+   empMaster:empMasterReducer
   },
 });
 

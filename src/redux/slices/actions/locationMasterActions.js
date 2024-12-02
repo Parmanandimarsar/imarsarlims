@@ -10,7 +10,7 @@ import {
   setZoneData,
   setDepartmentAcceData,
   setRateTypeData
-} from "../locationMasterSlice";
+} from "../CreateSlices/locationMasterSlice";
 import { postData, getData } from "../../../Api/apiServices";
 
 // Fetch State Data
