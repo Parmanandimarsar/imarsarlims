@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import {
@@ -16,9 +16,37 @@ import {
   Checkbox,
   ListItemText,
 } from "@mui/material";
+import {
+  // fetchAreaData,
+  // fetchCityData,
+  fetchStateData,
+  // fetchRoleData,
+  fetchCenterData,
+  fetchRateType,
+  // fetchDistricData,
+  // fetchZoneData,
+  // fetchDepartmentAcceData,
+} from "../../../redux/slices/actions/locationMasterActions";
+import { useDispatch, useSelector } from "react-redux";
+import useNotification from "../../ConstantComponents/Notifications/useNotification";
 const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
 const ClientMaster = () => {
   const [centreType, setCentreType] = useState("");
+  const {
+    stateData,
+    // cityData,
+    // districData,
+    // areaData,
+    // roleData,
+    centerData,
+    // zoneData,
+    // departmentAcceData,
+    rateTypeData,
+    loading,
+    error,
+  } = useSelector((state) => state.locationMaster);
+  const dispatch = useDispatch();
+  const showNotification = useNotification();
   const initialValues = {
     centreType: "",
     parentCentre: "",
@@ -32,16 +60,27 @@ const ClientMaster = () => {
     // centrePincode: "",
     state: "",
     // centreEmailID: "",
-
+    bankName: "",
     // minCashBooking: "",
     paymentMode: "",
     clientmrp: "",
     salesExecutive: "",
     documentType: "",
-    rateType: [],
-    empcentreaccess: [],
+    rateType: "",
+    empcentreaccess: "",
   };
-
+  useEffect(() => {
+    showNotification('Data fetched successfully!', 'success');
+    dispatch(fetchStateData()); // State API call
+    // dispatch(fetchDistricData());
+    // dispatch(fetchCityData()); // City API call
+    // dispatch(fetchAreaData());
+    // dispatch(fetchRoleData());
+    dispatch(fetchCenterData());
+    dispatch(fetchRateType());
+    // dispatch(fetchZoneData());
+    // dispatch(fetchDepartmentAcceData());
+  }, []);
   // Validation schema
   const validationSchema = Yup.object().shape({
     // centreType: Yup.string().required("Centre Type is required"),
@@ -69,7 +108,7 @@ const ClientMaster = () => {
     //   .typeError("Must be a number")
     //   .required("Min Cash Booking in % is required"),
   });
-  console.log("setFieldValue", initialValues);
+  console.log("rateTypeData", rateTypeData);
   // Form submission handler
   const onSubmit = (values, { setSubmitting }) => {
     console.log("Form Submitted!", values);
@@ -80,7 +119,7 @@ const ClientMaster = () => {
   };
 
   return (
-    <div className="mb-[50px] pl-2 " >
+    <div className="mb-[50px] pl-2 ">
       <Box className="bg-[#fff] rounded-lg shadow-lg" autoComplete="off">
         <Box className="flex justify-between items-center mb-1 project-thim text-white p-1 rounded-t-lg">
           <Typography> Client Master</Typography>
@@ -92,7 +131,7 @@ const ClientMaster = () => {
           onSubmit={onSubmit}
         >
           {({ isSubmitting, touched, errors, setFieldValue, values }) => (
-            console.log("errors", errors),
+            console.log("values", values),
             (
               <Form className="p-1">
                 <Grid container spacing={2}>
@@ -125,10 +164,8 @@ const ClientMaster = () => {
                                 Select
                               </MenuItem>
 
-                              <MenuItem value="Franchisee">Franchisee</MenuItem>
-                              <MenuItem value="sub Franchisee">
-                                Sub Franchisee
-                              </MenuItem>
+                              <MenuItem value="1">Franchisee</MenuItem>
+                              <MenuItem value="2">Sub Franchisee</MenuItem>
                             </Field>
                           </FormControl>
                         </Grid>
@@ -138,7 +175,7 @@ const ClientMaster = () => {
 
                   {/* Parent Centre Dropdown */}
                   {/* Conditionally Render Parent Centre Dropdown */}
-                  {centreType === "sub Franchisee" ? (
+                  {values.centreType === "2" ? (
                     <Grid item xs={12} sm={6} md={4} lg={3}>
                       <FormControl fullWidth>
                         <Grid container alignItems="center">
@@ -462,8 +499,11 @@ const ClientMaster = () => {
                               <MenuItem value="" disabled>
                                 Select
                               </MenuItem>
-                              <MenuItem value="state1">State 1</MenuItem>
-                              <MenuItem value="state2">State 2</MenuItem>
+                              {stateData.map((state) => (
+                                <MenuItem value={state.id}>
+                                  {state.state}
+                                </MenuItem>
+                              ))}
                             </Field>
                             <ErrorMessage
                               name="state"
@@ -605,8 +645,8 @@ const ClientMaster = () => {
                               <MenuItem value="" disabled>
                                 -Select-
                               </MenuItem>
-                              <MenuItem value="credit">credit</MenuItem>
-                              <MenuItem value="credit">cash</MenuItem>
+                              <MenuItem value="1">cash</MenuItem>
+                              <MenuItem value="2">credit</MenuItem>
                             </Field>
                             <ErrorMessage
                               name="category"
@@ -661,35 +701,24 @@ const ClientMaster = () => {
                         </Grid>
                         <Grid item xs={8}>
                           <FormControl fullWidth>
-                            <Select
-                              placeholder="select"
-                              multiple
+                            <Field
+                              as={Select}
                               className="mandatoryfield"
-                              value={values.rateType}
-                              onChange={(event) => {
-                                const {
-                                  target: { value },
-                                } = event;
-                                setFieldValue(
-                                  "rateType",
-                                  typeof value === "string"
-                                    ? value.split(",")
-                                    : value
-                                );
-                              }}
-                              renderValue={(selected) => selected.join(", ")}
+                              name="rateType"
+                              fullWidth
+                              variant="outlined"
+                              displayEmpty
+                              size="small"
+                              error={
+                                touched.rateType && !!errors.rateType
+                              }
                             >
-                              {names.map((name) => (
-                                <MenuItem key={name} value={name}>
-                                  <Checkbox
-                                    checked={values.rateType.includes(name)}
-                                    size="small"
-                                    sx={{ fontSize: "12px" }}
-                                  />
-                                  <ListItemText primary={name} />
-                                </MenuItem>
-                              ))}
-                            </Select>
+                              <MenuItem value="" disabled>
+                                -Select-
+                              </MenuItem>
+                            { rateTypeData.map((rate)=><MenuItem value={rate.rateTypeId}>{rate.rateType}</MenuItem>) }
+                             
+                            </Field>
                             <ErrorMessage
                               name="rateType"
                               component="div"
@@ -851,47 +880,35 @@ const ClientMaster = () => {
                         <Grid item xs={4} className="formlableborder">
                           <FormLabel>Emp Centre Access</FormLabel>
                         </Grid>
+
                         <Grid item xs={8}>
-                          <FormControl fullWidth>
-                            <Select
-                              multiple
-                              className="mandatoryfield"
-                              value={values.empcentreaccess}
-                              onChange={(event) => {
-                                const value = event.target.value;
-                                setFieldValue(
-                                  "empcentreaccess",
-                                  typeof value === "string"
-                                    ? value.split(",")
-                                    : value
-                                );
-                              }}
-                              renderValue={(selected) => selected.join(", ")}
-                              displayEmpty
-                              size="small"
-                              variant="outlined"
-                            >
-                              <MenuItem disabled value="">
-                                <em>Select Access Centres</em>
+                          <Field
+                            as={Select}
+                            name="empcentreaccess"
+                            fullWidth
+                            className="mandatoryfield"
+                            displayEmpty
+                            variant="outlined"
+                            size="small"
+                            error={
+                              touched.empcentreaccess &&
+                              !!errors.empcentreaccess
+                            }
+                          >
+                            <MenuItem value="" disabled>
+                              -Select-
+                            </MenuItem>
+                            {centerData.map((center) => (
+                              <MenuItem value={center.id}>
+                                {center.companyName}
                               </MenuItem>
-                              {names.map((name) => (
-                                <MenuItem key={name} value={name}>
-                                  <Checkbox
-                                    checked={values.empcentreaccess.includes(
-                                      name
-                                    )}
-                                    size="small"
-                                  />
-                                  <ListItemText primary={name} />
-                                </MenuItem>
-                              ))}
-                            </Select>
-                            <ErrorMessage
-                              name="empcentreaccess"
-                              component="div"
-                              className="text-red-600 text-xs"
-                            />
-                          </FormControl>
+                            ))}
+                          </Field>
+                          <ErrorMessage
+                            name="empcentreaccess"
+                            component="div"
+                            className="text-red-600 text-xs"
+                          />
                         </Grid>
                       </Grid>
                     </FormControl>
@@ -1035,14 +1052,27 @@ const ClientMaster = () => {
                         </Grid>
                         <Grid item xs={8}>
                           <Field
-                            as={TextField}
+                            as={Select}
                             name="bankName"
                             fullWidth
-                            placeholder="Enter Bank Name"
+                            className="mandatoryfield"
+                            displayEmpty
                             variant="outlined"
                             size="small"
                             error={touched.bankName && !!errors.bankName}
-                          />
+                          >
+                            {/* Placeholder */}
+                            <MenuItem value="" disabled>
+                              Select a Bank
+                            </MenuItem>
+
+                            {/* Options */}
+                            {centerData.map((center) => (
+                              <MenuItem key={center.id} value={center.id}>
+                                {center.companyName}
+                              </MenuItem>
+                            ))}
+                          </Field>
                           <ErrorMessage
                             name="bankName"
                             component="div"
@@ -1092,7 +1122,7 @@ const ClientMaster = () => {
                 <Divider className="divider" />
                 {/* Access Type Checkbox Group */}
                 <Grid container>
-                  <Grid item xs={12} sx={{ml:"7px"}}>
+                  <Grid item xs={12} sx={{ ml: "7px" }}>
                     <FormControl fullWidth>
                       <Grid container alignItems="center">
                         <Grid item xs={12}>

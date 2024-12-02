@@ -28,8 +28,11 @@ import {
   fetchRoleData,
   fetchCenterData,
   fetchDistricData,
+  fetchZoneData,
+  fetchDepartmentAcceData,
 } from "../../../redux/slices/actions/locationMasterActions";
-const names = ["Rate1", "Rate2", "Rate3", "Rate4"];
+import { convertToBase64 } from "../../ConstantComponents/FileUtils/fileUtils";
+
 const EmployeeMaster = () => {
   const API_ENDPOINT = "empMaster/SaveEmployee";
   const [imagePreview, setImagePreview] = useState(null);
@@ -44,7 +47,7 @@ const EmployeeMaster = () => {
     allowDueReport: "",
     authenticationdevice: "",
     bloodGroup: "",
-    centreId: "",
+    defaultcentre: "",
     defaultrole: "",
     designationId: "",
     disapproved: "",
@@ -71,8 +74,8 @@ const EmployeeMaster = () => {
     area: "",
     userName: "",
     deptAccess: [], // Multiple selection field
-    centre: [], // Multiple selection field
-    accessRole: [], // Multiple selection field
+    addEmpCentreAccess: [], // Multiple selection field
+    addEmpRoleAccess: [], // Multiple selection field
     // Add other fields accordingly
   };
   const dispatch = useDispatch();
@@ -83,12 +86,12 @@ const EmployeeMaster = () => {
     areaData,
     roleData,
     centerData,
+    zoneData,
+    departmentAcceData,
     loading,
     error,
   } = useSelector((state) => state.locationMaster);
-  console.log("districData", districData);
-  console.log("cityData", cityData);
-  console.log("centerData", centerData);
+
   useEffect(() => {
     dispatch(fetchStateData()); // State API call
     dispatch(fetchDistricData());
@@ -96,26 +99,94 @@ const EmployeeMaster = () => {
     dispatch(fetchAreaData());
     dispatch(fetchRoleData());
     dispatch(fetchCenterData());
+    dispatch(fetchZoneData());
+    dispatch(fetchDepartmentAcceData());
   }, []);
 
   if (loading) return <CircularProgress />;
   if (error) return <p>Error: {error}</p>;
   const validationSchema = Yup.object().shape({
-    // centreId: Yup.string().required("Centre Type is required"),
+    empCode: Yup.string().required("Employee Code is required"),
+    fName: Yup.string().required("First Name is required"),
+    lName: Yup.string().required("Last Name is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email ID is required"),
+    mobileNo: Yup.string()
+      .matches(/^[6-9]\d{9}$/, "Invalid mobile number")
+      .required("Mobile Number is required"),
+    dob: Yup.date()
+      .max(new Date(), "DOB cannot be in the future")
+      .required("Date of Birth is required"),
+    userName: Yup.string().required("User Name is required"),
+    defaultcentre: Yup.string().required("Default Centre is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+    deptAccess: Yup.array()
+      .of(Yup.string().required("Department is required"))
+      .min(1, "At least one department must be selected"),
+    addEmpCentreAccess: Yup.array()
+      .of(Yup.object().required("Centre is required"))
+      .min(1, "At least one centre must be selected"),
+    addEmpRoleAccess: Yup.array()
+      .of(Yup.object().required("Access Role is required"))
+      .min(1, "At least one access role must be selected"),
+    state: Yup.object().required("State is required"),
+    city: Yup.object().required("City is required"),
   });
-  console.log("setFieldValue", initialValues);
+
   // Form submission handler
-  const onSubmit = async (values, { setSubmitting }) => {
+
+
+
+  const onSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log("Form Submitted!", values);
 
     try {
-      const response = await postData(API_ENDPOINT, values); // Call the reusable service
-      // setMessage("Employee saved successfully!");
-      // setEmployee({ name: "", email: "", department: "" });
-      console.log("response", response);
-    } catch (err) {
-      // setError("Failed to save employee. Please try again."); // Error message
-      console.error(err);
+      // Convert file to Base64
+      const base64File = await convertToBase64(values.fileName); // Add 'await'
+
+      // Map additional properties for centre access
+      const updatedAccess = values.addEmpCentreAccess.map((item) => ({
+        id: 0,
+        isActive: true,
+        createdById: 0,
+        createdDateTime: new Date().toISOString(),
+        empId: 0,
+        centreId: item.id,
+      }));
+
+      // Map additional properties for role access
+      const addEmpRoleAccess = values.addEmpRoleAccess.map((item) => ({
+        id: 0,
+        isActive: true,
+        createdById: 0,
+        createdDateTime: new Date().toISOString(),
+        empId: 0,
+        roleId: item.id,
+      }));
+
+      // Prepare final data
+      const finaleData = {
+        ...values,
+        state: values.state.id,
+        city: values.city.id,
+        area: values.area.id,
+        deptAccess: values.deptAccess.join(","),
+        fileName: base64File, // Assign Base64 file
+        addEmpCentreAccess: updatedAccess,
+        addEmpRoleAccess: addEmpRoleAccess,
+      };
+      // Send data to API
+      const response = await postData(API_ENDPOINT, finaleData);
+      console.log("API Response:", response);
+      // resetForm();
+    } catch (error) {
+      console.error("Error during submission:", error.message);
     }
   };
 
@@ -789,12 +860,14 @@ const EmployeeMaster = () => {
                                 selected.join(", ") || "Select Department"
                               }
                             >
-                              {["HR", "Finance", "Operations"].map((dept) => (
-                                <MenuItem key={dept} value={dept}>
+                              {departmentAcceData.map((dept) => (
+                                <MenuItem key={dept} value={dept.id}>
                                   <Checkbox
-                                    checked={values.deptAccess.includes(dept)}
+                                    checked={values.deptAccess.includes(
+                                      dept.id
+                                    )}
                                   />
-                                  {dept}
+                                  {dept.subDeptName}
                                 </MenuItem>
                               ))}
                             </Field>
@@ -824,7 +897,7 @@ const EmployeeMaster = () => {
                         <Grid item xs={8}>
                           <FormControl fullWidth>
                             <TextField
-                              name="centre"
+                              name="addEmpCentreAccess"
                               onClick={(e) =>
                                 setAnchorElCenter(e.currentTarget)
                               }
@@ -833,8 +906,8 @@ const EmployeeMaster = () => {
                               displayEmpty
                               variant="outlined"
                               value={
-                                values.centre.length
-                                  ? values.centre
+                                values.addEmpCentreAccess.length
+                                  ? values.addEmpCentreAccess
                                       .map((dept) => dept.companyName)
                                       .join(", ")
                                   : ""
@@ -844,7 +917,7 @@ const EmployeeMaster = () => {
                               }}
                             ></TextField>
                             <ErrorMessage
-                              name="centre"
+                              name="addEmpCentreAccess"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -852,9 +925,9 @@ const EmployeeMaster = () => {
 
                           <CustomMenuSearch
                             options={centerData}
-                            selectedOptions={values.centre}
+                            selectedOptions={values.addEmpCentreAccess}
                             setSelectedOptions={(value) => {
-                              setFieldValue("centre", value);
+                              setFieldValue("addEmpCentreAccess", value);
                             }}
                             placeholder="Search Department"
                             anchorEl={anchorElCenter}
@@ -882,15 +955,15 @@ const EmployeeMaster = () => {
                         <Grid item xs={8}>
                           <FormControl fullWidth>
                             <TextField
-                              name="centre"
+                              name="addEmpRoleAccess"
                               onClick={(e) => setAnchorElRole(e.currentTarget)}
                               className="mandatoryfield"
                               placeholder="select center"
                               displayEmpty
                               variant="outlined"
                               value={
-                                values.accessRole.length
-                                  ? values.accessRole
+                                values.addEmpRoleAccess.length
+                                  ? values.addEmpRoleAccess
                                       .map((dept) => dept.roleName)
                                       .join(", ")
                                   : ""
@@ -901,15 +974,15 @@ const EmployeeMaster = () => {
                             />
 
                             <ErrorMessage
-                              name="accessRole"
+                              name="addEmpRoleAccess"
                               component="div"
                               className="text-red-600 text-xs"
                             />
                             <CustomMenuSearch
                               options={roleData}
-                              selectedOptions={values.accessRole}
+                              selectedOptions={values.addEmpRoleAccess}
                               setSelectedOptions={(value) => {
-                                setFieldValue("accessRole", value);
+                                setFieldValue("addEmpRoleAccess", value);
                               }}
                               placeholder="Search Department"
                               anchorEl={anchorElRole}
@@ -949,8 +1022,9 @@ const EmployeeMaster = () => {
                               <MenuItem value="" disabled>
                                 Select Zone
                               </MenuItem>
-                              <MenuItem value="1">Zone 1</MenuItem>
-                              <MenuItem value="2">Zone 2</MenuItem>
+                              {zoneData.map((data) => (
+                                <MenuItem value={data.id}>{data.zone}</MenuItem>
+                              ))}
                             </Field>
                             <ErrorMessage
                               name="zone"
@@ -982,7 +1056,7 @@ const EmployeeMaster = () => {
                               onClick={(e) => setAnchorElState(e.currentTarget)}
                               className="mandatoryfield"
                               placeholder="select state"
-                              value={values.state}
+                              value={values.state.state}
                               InputProps={{
                                 readOnly: true,
                               }}
@@ -1006,10 +1080,7 @@ const EmployeeMaster = () => {
                               }
                               setSelectedOptions={(value) => {
                                 const selectedItem = value[0];
-                                setFieldValue(
-                                  "state",
-                                  selectedItem?.state || ""
-                                );
+                                setFieldValue("state", selectedItem || "");
                               }}
                               placeholder="Search state"
                               anchorEl={anchorElState}
@@ -1120,7 +1191,7 @@ const EmployeeMaster = () => {
                               }
                               setSelectedOptions={(value) => {
                                 const selectedItem = value[0];
-                              
+
                                 setFieldValue("area", selectedItem || "");
                               }}
                               placeholder="Search area"
@@ -1193,25 +1264,27 @@ const EmployeeMaster = () => {
                           <FormControl fullWidth>
                             <Field
                               as={Select}
-                              name="centreId"
+                              name="defaultcentre"
                               fullWidth
                               displayEmpty
                               variant="outlined"
                               size="small"
-                              error={touched.centreId && !!errors.centreId}
+                              error={
+                                touched.defaultcentre && !!errors.defaultcentre
+                              }
                             >
                               <MenuItem value="" disabled>
                                 Select Default Centre
                               </MenuItem>
 
-                              {values?.centre.map((defcentre) => (
+                              {values?.addEmpCentreAccess.map((defcentre) => (
                                 <MenuItem value={defcentre.id}>
                                   {defcentre.companyName}{" "}
                                 </MenuItem>
                               ))}
                             </Field>
                             <ErrorMessage
-                              name="centreId"
+                              name="defaultcentre"
                               component="div"
                               className="text-red-600 text-xs"
                             />
@@ -1249,7 +1322,7 @@ const EmployeeMaster = () => {
                               <MenuItem value="" disabled>
                                 Select Default Role
                               </MenuItem>
-                              {values?.accessRole.map((defrole) => (
+                              {values?.addEmpRoleAccess.map((defrole) => (
                                 <MenuItem key={defrole.id} value={defrole.id}>
                                   {defrole.roleName}{" "}
                                   {/* Display the name or any other data */}
@@ -1275,12 +1348,13 @@ const EmployeeMaster = () => {
                           className="formlableborder mr-1"
                           sx={{ mr: "3px" }}
                         >
-                          <FormLabel>Profil-pic</FormLabel>
+                          <FormLabel>Profile-pic</FormLabel>
                         </Grid>
                         <Grid item xs={8}>
                           <input
                             type="file"
                             name="fileName"
+                            accept="image/jpeg, image/png" // Restrict file types
                             style={{
                               width: "100%",
                               boxSizing: "border-box",
@@ -1289,8 +1363,29 @@ const EmployeeMaster = () => {
                             className="mandatoryfield overflow-hidden"
                             onChange={(event) => {
                               const file = event.currentTarget.files[0];
-                              setFieldValue("fileName", file);
-                              setImagePreview(URL.createObjectURL(file));
+
+                              if (file) {
+                                const fileSizeKB = file.size / 1024; // Convert bytes to KB
+                                const fileType = file.type;
+
+                                // Validate file size and type
+                                if (fileSizeKB > 400) {
+                                  alert("File size must be less than 400KB.");
+                                  return;
+                                }
+                                if (
+                                  fileType !== "image/jpeg" &&
+                                  fileType !== "image/png"
+                                ) {
+                                  alert(
+                                    "Only JPG and PNG formats are allowed."
+                                  );
+                                  return;
+                                }
+
+                                setFieldValue("fileName", file);
+                                setImagePreview(URL.createObjectURL(file));
+                              }
                             }}
                           />
                         </Grid>
@@ -1300,78 +1395,148 @@ const EmployeeMaster = () => {
                 </Grid>
                 <Divider className="divider" />
                 <Grid container spacing={1}>
-                  <div className="w-full flex mt-2  pl-6">
+                  <div className="w-full flex mt-2 pl-6">
                     <Grid item xs={12}>
                       <FormControl fullWidth>
                         <Grid container alignItems="center">
                           <Grid item xs={12}>
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="isActive"
-                                  className="m-1"
-                                />
+                                <Field name="isActive">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "isActive",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
                               label="Active"
                             />
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="isSalesTeamMember"
-                                  className="m-1"
-                                />
+                                <Field name="isSalesTeamMember">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "isSalesTeamMember",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
                               label="Sales Team Member"
                             />
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="allowDueReport"
-                                  className="m-1"
-                                />
+                                <Field name="allowDueReport">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "allowDueReport",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
-                              label="allowDueReport"
+                              label="Allow Due Report"
                             />
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="rate"
-                                  className="m-1"
-                                />
+                                <Field name="rate">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "rate",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
                               label="Hide Rate"
                             />
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="disapproved"
-                                  className="m-1"
-                                />
+                                <Field name="disapproved">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "disapproved",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
-                              label="Dis.Approved"
+                              label="Disapproved"
                             />
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="isemailotp"
-                                  className="m-1 p-2"
-                                />
+                                <Field name="isemailotp">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "isemailotp",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
-                              label="LoginEmailOTP"
+                              label="Login Email OTP"
                             />
                             <FormControlLabel
                               control={
-                                <Field
-                                  type="checkbox"
-                                  name="authenticationdevice"
-                                  className="m-1 p-2"
-                                />
+                                <Field name="authenticationdevice">
+                                  {({ field, form }) => (
+                                    <input
+                                      type="checkbox"
+                                      {...field}
+                                      checked={field.value === 1}
+                                      onChange={() =>
+                                        form.setFieldValue(
+                                          "authenticationdevice",
+                                          field.value === 1 ? 0 : 1
+                                        )
+                                      }
+                                    />
+                                  )}
+                                </Field>
                               }
                               label="Authentication Device"
                             />
@@ -1381,6 +1546,7 @@ const EmployeeMaster = () => {
                     </Grid>
                   </div>
                 </Grid>
+
                 <Divider className="divider" />
                 <Grid>
                   <div className="flex pl-2 re">
@@ -1451,15 +1617,13 @@ const EmployeeMaster = () => {
                   </div>
                 </Grid>
                 <div className="mt-6  flex items-end gap-4 ml-0 justify-end   p-2 ">
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
+                  <button
+                  type="submit"
                     disabled={isSubmitting}
-                    className="mt-4  left-0"
+                    className="pr-5  pl-5 savebutton project-thim"
                   >
                     Save
-                  </Button>
+                  </button>
                 </div>
               </Form>
             )
