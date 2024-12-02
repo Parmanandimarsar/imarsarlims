@@ -31,6 +31,7 @@ import {
   fetchZoneData,
   fetchDepartmentAcceData,
 } from "../../../redux/slices/actions/locationMasterActions";
+import { convertToBase64 } from "../../ConstantComponents/FileUtils/fileUtils";
 
 const EmployeeMaster = () => {
   const API_ENDPOINT = "empMaster/SaveEmployee";
@@ -140,14 +141,7 @@ const EmployeeMaster = () => {
 
   // Form submission handler
 
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result); // Base64 string
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file); // Read file as Base64
-    });
-  };
+
 
   const onSubmit = async (values, { resetForm, setSubmitting }) => {
     console.log("Form Submitted!", values);

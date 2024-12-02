@@ -9,6 +9,7 @@ const initialState = {
   centerData: [],
   zoneData: [],
   departmentAcceData: [],
+  rateTypeData:[],
   loading: false,
   error: null,
 };
@@ -52,6 +53,10 @@ const locationMasterSlice = createSlice({
       state.departmentAcceData = action.payload;
       state.loading = false;
     },
+    setRateTypeData: (state, action) => {
+      state.rateTypeData = action.payload;
+      state.loading = false;
+    },
     setError: (state, action) => {
       state.error = action.payload;
       state.loading = false;
@@ -70,5 +75,6 @@ export const {
   setCenterData,
   setZoneData,
   setDepartmentAcceData,
+  setRateTypeData,
 } = locationMasterSlice.actions;
 export default locationMasterSlice.reducer;

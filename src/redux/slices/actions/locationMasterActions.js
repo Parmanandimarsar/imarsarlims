@@ -9,6 +9,7 @@ import {
   setCenterData,
   setZoneData,
   setDepartmentAcceData,
+  setRateTypeData
 } from "../locationMasterSlice";
 import { postData, getData } from "../../../Api/apiServices";
 
@@ -105,6 +106,18 @@ export const fetchDepartmentAcceData = (values) => async (dispatch) => {
       values
     );
     dispatch(setDepartmentAcceData(response)); // City data ko set karo
+  } catch (error) {
+    dispatch(setError(error.message)); // Error handle karo
+  }
+};
+export const fetchRateType = (values) => async (dispatch) => {
+  dispatch(setLoading());
+  try {
+    const response = await getData(
+      "rateTypeMaster",
+      values
+    );
+    dispatch(setRateTypeData(response)); // City data ko set karo
   } catch (error) {
     dispatch(setError(error.message)); // Error handle karo
   }
